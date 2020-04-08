@@ -5,8 +5,9 @@
       :label="timeRemaining"
       :disable="sessionOn"
       round
-      size="300%"
-      color="teal"
+      push
+      size="4em"
+      color="red"
     ></q-btn>
   </q-page>
 </template>
