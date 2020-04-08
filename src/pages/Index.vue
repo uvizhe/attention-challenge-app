@@ -1,5 +1,24 @@
 <template>
   <q-page class="flex flex-center">
+    <q-dialog v-model="ratingDialog" persistent transition-hide="scale">
+      <q-card>
+        <q-card-section align="center">
+          <div class="text-h6">Rate your session</div>
+        </q-card-section>
+        <q-card-section>
+          <q-rating
+            v-model="sessionScore"
+            size="3.5em"
+            color="yellow-14"
+            icon="star"
+          />
+        </q-card-section>
+        <q-card-actions align="around">
+          <q-btn flat label="Reset" color="primary" @click="sessionScore=0" />
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <q-btn
       @click="startSession"
       :label="timeRemaining"
@@ -8,7 +27,7 @@
       push
       size="4em"
       color="red"
-    ></q-btn>
+    />
   </q-page>
 </template>
 
@@ -25,6 +44,8 @@ export default {
       seconds: sessionDuration,
       sessionOn: false,
       signals: [],
+      ratingDialog: false,
+      sessionScore: 0,
       dingSound: new Audio('statics/sounds/Ding.mp3'),
       bowlSound: new Audio('statics/sounds/Bowl.mp3')
     }
@@ -65,6 +86,7 @@ export default {
         this.bowlSound.play()
         this.seconds = sessionDuration
         this.sessionOn = false
+        this.ratingDialog = true
       } else {
         // play sound at defined timestamps
         const ts = this.signals[this.signals.length - 1] - this.seconds
