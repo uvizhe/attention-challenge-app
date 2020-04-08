@@ -19,15 +19,24 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-    <q-btn
-      @click="startSession"
-      :label="timeRemaining"
-      :disable="sessionOn"
-      round
-      push
-      size="4em"
-      color="red"
-    />
+    <div class="row">
+      <apexchart class="no-wrap" style="margin: -50px" type="line" width="120%" height="250" :options="chart1Options" :series="series1" />
+    </div>
+    <div class="row">
+      <apexchart class="no-wrap" style="margin: -50px" type="line" width="120%" height="100" :options="chart2Options" :series="series2" />
+    </div>
+    <div class="row">
+      <q-btn
+        class="no-wrap"
+        @click="startSession"
+        :label="timeRemaining"
+        :disable="sessionOn"
+        round
+        push
+        size="4em"
+        color="red"
+      />
+    </div>
   </q-page>
 </template>
 
@@ -46,6 +55,21 @@ export default {
       signals: [],
       ratingDialog: false,
       sessionScore: 0,
+      chart1Options: { grid: { show: false }, xaxis: { floating: true, type: 'datetime', /* min: Date.parse('2020-03-29'), */ labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } }, yaxis: { floating: true, labels: { show: false } }, legend: { floating: true, position: 'left', offsetY: 10, fontSize: '16px' }, tooltip: { enabled: false }, chart: { toolbar: { show: false } } },
+      chart2Options: { grid: { row: { colors: ['#f899f8', '#f8bbf8', '#f8ddf8', '#ffffff'] } }, xaxis: { floating: true, labels: { show: false }, axisBorder: { show: false } }, yaxis: { floating: true, labels: { show: false } }, tooltip: { enabled: false }, chart: { toolbar: { show: false } } },
+      series1: [
+        {
+          name: 'me',
+          data: [{ x: '2020-03-29', y: 1 }, { x: '2020-03-30', y: 3 }, { x: '2020-03-31', y: 4 }, { x: '2020-04-01', y: 5 }, { x: '2020-04-02', y: 10 }, { x: '2020-04-06', y: 15 }, { x: '2020-04-08', y: 24 }, { x: '2020-04-09', y: 33 }]
+        },
+        {
+          name: 'Alex',
+          data: [{ x: '2020-03-23', y: 10 }, { x: '2020-03-28', y: 13 }, { x: '2020-03-31', y: 24 }, { x: '2020-04-01', y: 28 }, { x: '2020-04-02', y: 30 }, { x: '2020-04-06', y: 35 }]
+        }
+      ],
+      series2: [{
+        data: [1, 3, 2.3, 4, 0, 0.5, 0.4, 1.13, 1, 2.3, 1.4, 4, 0, 1.5, 0.4, 1.3, 3.1, 3, 2.1, 1.4, 3, 2.5, 0.4, 2.1, 1, 3, 2.3, 4, 1, 1.5]
+      }],
       dingSound: new Audio('statics/sounds/Ding.mp3'),
       bowlSound: new Audio('statics/sounds/Bowl.mp3')
     }
