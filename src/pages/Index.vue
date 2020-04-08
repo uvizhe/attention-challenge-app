@@ -2,8 +2,9 @@
   <q-page class="flex flex-center">
     <q-btn
       @click="startSession"
-      round
       :label="timeRemaining"
+      :disable="sessionOn"
+      round
       size="300%"
       color="teal"
     ></q-btn>
@@ -11,12 +12,18 @@
 </template>
 
 <script>
-const sessionDuration = 5 * 60
+import { randomSignals } from '../js/rsg'
+const sessionDuration = 15 * 60
+const rsgSignalCount = 5
+const rsgMinT = 60
+const rsgMaxT = 7 * 60
 export default {
   name: 'PageIndex',
   data () {
     return {
       seconds: sessionDuration,
+      sessionOn: false,
+      signals: [],
       dingSound: new Audio('statics/sounds/Ding.mp3'),
       bowlSound: new Audio('statics/sounds/Bowl.mp3')
     }
@@ -30,6 +37,8 @@ export default {
   },
   methods: {
     startSession () {
+      this.signals = randomSignals(this.seconds, rsgSignalCount, rsgMinT, rsgMaxT)
+      this.sessionOn = true
       this.dingSound.play()
       if (this.$q.platform.is.mobile) {
         cordova.plugins.backgroundMode.on('enable', () => {
@@ -52,8 +61,15 @@ export default {
         if (this.$q.platform.is.mobile) {
           cordova.plugins.backgroundMode.disable()
         }
-        this.seconds = sessionDuration
         this.bowlSound.play()
+        this.seconds = sessionDuration
+        this.sessionOn = false
+      } else {
+        // play sound at defined timestamps
+        const ts = this.signals[this.signals.length - 1] - this.seconds
+        if (this.signals.includes(ts)) {
+          this.dingSound.play()
+        }
       }
     }
   }
