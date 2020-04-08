@@ -16,7 +16,9 @@ export default {
   name: 'PageIndex',
   data () {
     return {
-      seconds: sessionDuration
+      seconds: sessionDuration,
+      dingSound: new Audio('statics/sounds/Ding.mp3'),
+      bowlSound: new Audio('statics/sounds/Bowl.mp3')
     }
   },
   computed: {
@@ -28,6 +30,7 @@ export default {
   },
   methods: {
     startSession () {
+      this.dingSound.play()
       if (this.$q.platform.is.mobile) {
         cordova.plugins.backgroundMode.on('enable', () => {
           this.runTimer()
@@ -50,6 +53,7 @@ export default {
           cordova.plugins.backgroundMode.disable()
         }
         this.seconds = sessionDuration
+        this.bowlSound.play()
       }
     }
   }
