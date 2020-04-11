@@ -3,6 +3,22 @@ import { LocalStorage } from 'quasar'
 
 const BACKEND = 'http://192.168.0.233:5000'
 
+export const getTotals = () => {
+  let totals = []
+  if (LocalStorage.has('totals')) {
+    totals = LocalStorage.getItem('totals')
+  }
+  return totals
+}
+
+export const getAvgs30 = () => {
+  let avgs30 = []
+  if (LocalStorage.has('avgs30')) {
+    avgs30 = LocalStorage.getItem('avgs30')
+  }
+  return avgs30
+}
+
 export const reportSession = async (user, score) => {
   const date = new Date()
   const dateString = date.toISOString().split('T').shift()
@@ -17,6 +33,7 @@ export const reportSession = async (user, score) => {
     res = await axios.post(BACKEND + '/session', data)
   } catch (e) {
     // FIXME: do something
+    // Если мы не получаем ответ от сервера, мы не прячем scoreDialog
     console.log(e)
   }
   let stats

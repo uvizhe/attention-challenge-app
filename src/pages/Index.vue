@@ -15,7 +15,7 @@
         </q-card-section>
         <q-card-actions align="around">
           <q-btn flat label="Reset" color="primary" @click="sessionScore=0" />
-          <q-btn flat label="OK" color="primary" v-close-popup />
+          <q-btn flat label="OK" color="primary" @click="reportScore" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -42,12 +42,17 @@
 
 <script>
 import { randomSignals } from '../js/rsg'
+import { getTotals, getAvgs30, reportSession } from '../js/database'
 const sessionDuration = 15 * 60
 const rsgSignalCount = 5
 const rsgMinT = 60
 const rsgMaxT = 7 * 60
 export default {
   name: 'PageIndex',
+  created () {
+    this.series1 = [{ data: getTotals() }]
+    this.series2 = [{ data: getAvgs30() }]
+  },
   data () {
     return {
       seconds: sessionDuration,
@@ -56,19 +61,21 @@ export default {
       ratingDialog: false,
       sessionScore: 0,
       chart1Options: { grid: { show: false }, xaxis: { floating: true, type: 'datetime', /* min: Date.parse('2020-03-29'), */ labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } }, yaxis: { floating: true, labels: { show: false } }, legend: { floating: true, position: 'left', offsetY: 10, fontSize: '16px' }, tooltip: { enabled: false }, chart: { toolbar: { show: false } } },
-      chart2Options: { grid: { row: { colors: ['#f899f8', '#f8bbf8', '#f8ddf8', '#ffffff'] } }, xaxis: { floating: true, labels: { show: false }, axisBorder: { show: false } }, yaxis: { floating: true, labels: { show: false } }, tooltip: { enabled: false }, chart: { toolbar: { show: false } } },
+      chart2Options: { grid: { row: { colors: ['#f877f8', '#f899f8', '#f8bbf8', '#f8ddf8', '#ffffff'] } }, xaxis: { floating: true, labels: { show: false }, axisBorder: { show: false } }, yaxis: { floating: true, labels: { show: false }, min: 0, max: 5, tickAmount: 5 }, tooltip: { enabled: false }, chart: { toolbar: { show: false } } },
       series1: [
         {
           name: 'me',
-          data: [{ x: '2020-03-29', y: 1 }, { x: '2020-03-30', y: 3 }, { x: '2020-03-31', y: 4 }, { x: '2020-04-01', y: 5 }, { x: '2020-04-02', y: 10 }, { x: '2020-04-06', y: 15 }, { x: '2020-04-08', y: 24 }, { x: '2020-04-09', y: 33 }]
-        },
+          data: [] // { x: '2020-03-29', y: 1 }, { x: '2020-03-30', y: 3 }, { x: '2020-03-31', y: 4 }, { x: '2020-04-01', y: 5 }, { x: '2020-04-02', y: 10 }, { x: '2020-04-06', y: 15 }, { x: '2020-04-08', y: 24 }, { x: '2020-04-09', y: 33 }]
+        }
+        /*
         {
           name: 'Alex',
-          data: [{ x: '2020-03-23', y: 10 }, { x: '2020-03-28', y: 13 }, { x: '2020-03-31', y: 24 }, { x: '2020-04-01', y: 28 }, { x: '2020-04-02', y: 30 }, { x: '2020-04-06', y: 35 }]
+          data: [] // { x: '2020-03-23', y: 10 }, { x: '2020-03-28', y: 13 }, { x: '2020-03-31', y: 24 }, { x: '2020-04-01', y: 28 }, { x: '2020-04-02', y: 30 }, { x: '2020-04-06', y: 35 }]
         }
+        */
       ],
       series2: [{
-        data: [1, 3, 2.3, 4, 0, 0.5, 0.4, 1.13, 1, 2.3, 1.4, 4, 0, 1.5, 0.4, 1.3, 3.1, 3, 2.1, 1.4, 3, 2.5, 0.4, 2.1, 1, 3, 2.3, 4, 1, 1.5]
+        data: [] // 1, 3, 2.3, 4, 0, 0.5, 0.4, 1.13, 1, 2.3, 1.4, 4, 0, 1.5, 0.4, 1.3, 3.1, 3, 2.1, 1.4, 3, 2.5, 0.4, 2.1, 1, 3, 2.3, 4, 1, 1.5]
       }],
       dingSound: new Audio('statics/sounds/Ding.mp3'),
       bowlSound: new Audio('statics/sounds/Bowl.mp3')
@@ -87,9 +94,7 @@ export default {
       this.sessionOn = true
       this.dingSound.play()
       if (this.$q.platform.is.mobile) {
-        cordova.plugins.backgroundMode.on('enable', () => {
-          this.runTimer()
-        })
+        cordova.plugins.backgroundMode.on('enable', this.runTimer)
         cordova.plugins.backgroundMode.enable()
       } else {
         this.runTimer()
@@ -105,6 +110,7 @@ export default {
       if (!this.seconds) {
         clearInterval(timer)
         if (this.$q.platform.is.mobile) {
+          cordova.plugins.backgroundMode.un('enable', this.runTimer)
           cordova.plugins.backgroundMode.disable()
         }
         this.bowlSound.play()
@@ -118,6 +124,13 @@ export default {
           this.dingSound.play()
         }
       }
+    },
+    async reportScore () {
+      const newStats = await reportSession('uvizhe', this.sessionScore)
+      this.series1 = [{ data: newStats[0] }]
+      this.series2 = [{ data: newStats[1] }]
+      this.sessionScore = 0
+      this.ratingDialog = false
     }
   }
 }
