@@ -21,8 +21,6 @@ export default {
         },
         yaxis: {
           floating: true,
-          min: 300,
-          max: 400,
           labels: { show: false }
         },
         legend: {
