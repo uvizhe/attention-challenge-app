@@ -9,6 +9,7 @@
           </q-avatar>
           Attention Challenge
         </q-toolbar-title>
+        <toolbar-buttons />
       </q-toolbar>
     </q-header>
 
@@ -20,7 +21,11 @@
 </template>
 
 <script>
+import ToolbarButtons from '../components/ToolbarButtons'
 export default {
+  components: {
+    ToolbarButtons
+  },
   data () {
     return {
     }
