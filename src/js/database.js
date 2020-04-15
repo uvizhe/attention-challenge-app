@@ -1,5 +1,7 @@
 import axios from 'axios'
+import { sha256 as SHA256 } from 'sha.js'
 import { LocalStorage } from 'quasar'
+import { log } from './logging'
 
 const BACKEND = 'http://192.168.0.233:5000'
 
@@ -19,9 +21,26 @@ export const getAvgs30 = () => {
   return avgs30
 }
 
+export const authenticate = async (user, pass) => {
+  const passHash = new SHA256().update(pass).digest('hex')
+  const data = {
+    userid: user,
+    password: passHash
+  }
+  let res
+  try {
+    res = await axios.post(BACKEND + '/auth', data)
+  } catch (e) {
+    // FIXME: do something
+  }
+  if (res.status === 200) {
+    LocalStorage.set('auth-token', res.data.token)
+    return true
+  }
+}
+
 export const reportSession = async (user, score) => {
   const date = new Date()
-  const dateString = date.toISOString().split('T').shift()
   const data = {
     userid: user,
     score: score,
@@ -34,10 +53,10 @@ export const reportSession = async (user, score) => {
   } catch (e) {
     // FIXME: do something
     // Если мы не получаем ответ от сервера, мы не прячем scoreDialog
-    console.log(e)
   }
   let stats
   if (!LocalStorage.has('totals')) {
+    log('FIRST EVER SESSION')
     // first ever session
     LocalStorage.set(
       'totals', [res.data.total])
@@ -45,10 +64,14 @@ export const reportSession = async (user, score) => {
       'avgs30', [res.data.average])
     stats = [[res.data.total], [res.data.average]]
   } else {
+    log('NOT FIRST EVER SESSION')
     const totals = LocalStorage.getItem('totals')
     let avgs30 = LocalStorage.getItem('avgs30')
     const lastSessionDate = totals.slice(-1).pop().x
-    if (lastSessionDate === dateString) {
+    log('lastSessionData = ' + lastSessionDate)
+    log('res.data.date= ' + res.data.date)
+    if (lastSessionDate === res.data.date) {
+      log('NEW SESSION THIS DAY')
       // new session this day
       totals.pop()
       avgs30.pop()
@@ -60,6 +83,8 @@ export const reportSession = async (user, score) => {
     }
     LocalStorage.set('totals', totals)
     LocalStorage.set('avgs30', avgs30)
+    log('totals: ' + totals.map(i => i.x + '=' + i.y).join(','))
+    log('avgs30: ' + avgs30)
     stats = [totals, avgs30]
   }
   return stats

@@ -7,6 +7,21 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'logs', component: () => import('pages/Logs.vue') }
     ]
+  },
+  {
+    path: '/enter',
+    component: () => import('pages/Entrance.vue'),
+    meta: { noAuthRequired: true }
+  },
+  {
+    path: '/signup',
+    component: () => import('pages/Signup.vue'),
+    meta: { noAuthRequired: true }
+  },
+  {
+    path: '/login',
+    component: () => import('pages/Login.vue'),
+    meta: { noAuthRequired: true }
   }
 ]
 
