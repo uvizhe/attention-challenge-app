@@ -37,6 +37,8 @@ export default {
   computed: {
     series: function () {
       return [{
+        // XXX: ПОПРОБУЙ НА ДЕСКТОПЕ!
+        // XXX: ПОПРОБУЙ ВЫНУТЬ ИЗ КОМПОНЕНТА ОБРАТНО
         data: this.data.filter(i => true) // FIXME: IDK why it needs a copy of the data
       }]
     }
