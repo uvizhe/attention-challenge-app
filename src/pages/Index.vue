@@ -11,7 +11,7 @@
       <q-btn
         class="no-wrap"
         @click="startSession"
-        :label="timeRemaining"
+        :label="buttonTitle"
         :disable="sessionOn"
         round
         push
@@ -56,6 +56,13 @@ export default {
     }
   },
   computed: {
+    buttonTitle: function () {
+      if (this.sessionOn) {
+        return this.timeRemaining
+      } else {
+        return 'Go'
+      }
+    },
     timeRemaining: function () {
       const min = String(Math.floor(this.seconds / 60))
       const sec = String(this.seconds % 60)
