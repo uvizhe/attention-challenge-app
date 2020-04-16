@@ -3,7 +3,76 @@ import { sha256 as SHA256 } from 'sha.js'
 import { LocalStorage } from 'quasar'
 import { log } from './logging'
 
-const BACKEND = 'http://192.168.0.233:5000'
+axios.defaults.baseURL = 'http://192.168.0.233:5000'
+if (LocalStorage.has('auth-token')) {
+  axios.defaults.headers.common.Authorization =
+    'Bearer ' + LocalStorage.getItem('auth-token')
+}
+
+export const authenticated = async () => {
+  if (LocalStorage.has('auth-token')) {
+    try {
+      await axios.get('/ping')
+      return true
+    } catch (e) {
+      // FIXME: do something like this
+      if (e.response) {
+        log(e.response.status)
+        log(e.response.data.msg)
+      } else {
+        // FIXME: timeout? what should we do?
+        log(e.message)
+      }
+    }
+  }
+  return false
+}
+
+export const authenticate = async (user, pass) => {
+  const passHash = new SHA256().update(pass).digest('hex')
+  const data = {
+    username: user,
+    password: passHash
+  }
+  let res
+  try {
+    res = await axios.post('/auth', data)
+  } catch (e) {
+    // FIXME: do something
+    return false
+  }
+  if (res.status === 200) {
+    LocalStorage.set('auth-token', res.data.token)
+    axios.defaults.headers.common.Authorization =
+      'Bearer ' + res.data.token
+    return true
+  }
+}
+
+export const signup = async (user, pass, email) => {
+  const passHash = new SHA256().update(pass).digest('hex')
+  const data = {
+    username: user,
+    password: passHash,
+    email: email
+  }
+  let res
+  try {
+    res = await axios.post('/newuser', data)
+  } catch (e) {
+    // FIXME: do something better
+    if (e.response) {
+      return false
+    }
+    throw Error
+  }
+  if (res.status === 200) {
+    LocalStorage.set('auth-token', res.data.token)
+    axios.defaults.headers.common.Authorization =
+      'Bearer ' + res.data.token
+    return true
+  }
+}
 
 export const getTotals = () => {
   let totals = []
@@ -21,24 +90,6 @@ export const getAvgs30 = () => {
   return avgs30
 }
 
-export const authenticate = async (user, pass) => {
-  const passHash = new SHA256().update(pass).digest('hex')
-  const data = {
-    userid: user,
-    password: passHash
-  }
-  let res
-  try {
-    res = await axios.post(BACKEND + '/auth', data)
-  } catch (e) {
-    // FIXME: do something
-  }
-  if (res.status === 200) {
-    LocalStorage.set('auth-token', res.data.token)
-    return true
-  }
-}
-
 export const reportSession = async (user, score) => {
   const date = new Date()
   const data = {
@@ -49,7 +100,7 @@ export const reportSession = async (user, score) => {
   }
   let res
   try {
-    res = await axios.post(BACKEND + '/session', data)
+    res = await axios.post('/session', data)
   } catch (e) {
     // FIXME: do something
     // Если мы не получаем ответ от сервера, мы не прячем scoreDialog

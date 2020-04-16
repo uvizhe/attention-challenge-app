@@ -1,3 +1,4 @@
+import { authenticated } from '../js/database'
 
 const routes = [
   {
@@ -6,22 +7,26 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'logs', component: () => import('pages/Logs.vue') }
-    ]
+    ],
+    beforeEnter: async (to, from, next) => {
+      if (!await authenticated()) {
+        next('/enter')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/enter',
-    component: () => import('pages/Entrance.vue'),
-    meta: { noAuthRequired: true }
+    component: () => import('pages/Entrance.vue')
   },
   {
     path: '/signup',
-    component: () => import('pages/Signup.vue'),
-    meta: { noAuthRequired: true }
+    component: () => import('pages/Signup.vue')
   },
   {
     path: '/login',
-    component: () => import('pages/Login.vue'),
-    meta: { noAuthRequired: true }
+    component: () => import('pages/Login.vue')
   }
 ]
 

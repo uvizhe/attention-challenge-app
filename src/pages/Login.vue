@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     async submit () {
+      this.authError = false
       if (await authenticate(this.username, this.password)) {
         this.$router.push('/')
       } else {

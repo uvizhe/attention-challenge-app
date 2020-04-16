@@ -1,8 +1,11 @@
 import { LocalStorage } from 'quasar'
+import { ping } from './database'
 
 export const authenticated = () => {
   if (LocalStorage.has('auth-token')) {
-    return true
+    if (ping()) {
+      return true
+    }
   }
   return false
 }
