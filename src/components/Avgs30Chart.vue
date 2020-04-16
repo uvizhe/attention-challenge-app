@@ -19,6 +19,8 @@ export default {
         xaxis: {
           floating: true,
           labels: { show: false },
+          min: 1,
+          max: 30,
           axisBorder: { show: false }
         },
         yaxis: {
