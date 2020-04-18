@@ -107,7 +107,6 @@ export const reportSession = async (user, score) => {
   }
   let stats
   if (!LocalStorage.has('totals')) {
-    log('FIRST EVER SESSION')
     // first ever session
     LocalStorage.set(
       'totals', [res.data.total])
@@ -115,14 +114,10 @@ export const reportSession = async (user, score) => {
       'avgs30', [res.data.average])
     stats = [[res.data.total], [res.data.average]]
   } else {
-    log('NOT FIRST EVER SESSION')
     const totals = LocalStorage.getItem('totals')
     let avgs30 = LocalStorage.getItem('avgs30')
     const lastSessionDate = totals.slice(-1).pop().x
-    log('lastSessionData = ' + lastSessionDate)
-    log('res.data.date= ' + res.data.date)
     if (lastSessionDate === res.data.date) {
-      log('NEW SESSION THIS DAY')
       // new session this day
       totals.pop()
       avgs30.pop()
@@ -134,9 +129,22 @@ export const reportSession = async (user, score) => {
     }
     LocalStorage.set('totals', totals)
     LocalStorage.set('avgs30', avgs30)
-    log('totals: ' + totals.map(i => i.x + '=' + i.y).join(','))
-    log('avgs30: ' + avgs30)
     stats = [totals, avgs30]
   }
   return stats
+}
+
+export const getStats = async () => {
+  let res
+  try {
+    res = await axios.get('/score')
+  } catch (e) {
+    // FIXME: do something better
+    if (e.response) {
+      return
+    }
+    throw Error
+  }
+  LocalStorage.set('totals', res.data.totals)
+  LocalStorage.set('avgs30', res.data.averages)
 }
