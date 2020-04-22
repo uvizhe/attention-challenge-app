@@ -3,10 +3,14 @@ import { sha256 as SHA256 } from 'sha.js'
 import { LocalStorage } from 'quasar'
 import { log } from './logging'
 
-axios.defaults.baseURL = 'http://192.168.0.233:5000'
+axios.defaults.baseURL = 'https://atchallenge.supersapiens.org'
 if (LocalStorage.has('auth-token')) {
   axios.defaults.headers.common.Authorization =
     'Bearer ' + LocalStorage.getItem('auth-token')
+}
+
+function DatabaseConnectionError (message) {
+  this.message = message
 }
 
 export const authenticated = async () => {
@@ -15,14 +19,7 @@ export const authenticated = async () => {
       await axios.get('/ping')
       return true
     } catch (e) {
-      // FIXME: do something like this
-      if (e.response) {
-        log(e.response.status)
-        log(e.response.data.msg)
-      } else {
-        // FIXME: timeout? what should we do?
-        log(e.message)
-      }
+      // FIXME: Call 911
     }
   }
   return false
@@ -38,8 +35,13 @@ export const authenticate = async (user, pass) => {
   try {
     res = await axios.post('/auth', data)
   } catch (e) {
-    // FIXME: do something
-    return false
+    if (e.response) {
+      log(e.response.status + ': ' + e.response.data.msg)
+      throw DatabaseConnectionError(e.response.data.msg)
+    } else {
+      log(e.message)
+      throw DatabaseConnectionError(e.message)
+    }
   }
   if (res.status === 200) {
     LocalStorage.set('auth-token', res.data.token)
@@ -60,11 +62,13 @@ export const signup = async (user, pass, email) => {
   try {
     res = await axios.post('/newuser', data)
   } catch (e) {
-    // FIXME: do something better
     if (e.response) {
-      return false
+      log(e.response.status + ': ' + e.response.data.msg)
+      throw DatabaseConnectionError(e.response.data.msg)
+    } else {
+      log(e.message)
+      throw DatabaseConnectionError(e.message)
     }
-    throw Error
   }
   if (res.status === 200) {
     LocalStorage.set('auth-token', res.data.token)
@@ -102,8 +106,13 @@ export const reportSession = async (user, score) => {
   try {
     res = await axios.post('/session', data)
   } catch (e) {
-    // FIXME: do something
-    // Если мы не получаем ответ от сервера, мы не прячем scoreDialog
+    if (e.response) {
+      log(e.response.status + ': ' + e.response.data.msg)
+      throw DatabaseConnectionError(e.response.data.msg)
+    } else {
+      log(e.message)
+      throw DatabaseConnectionError(e.message)
+    }
   }
   let stats
   if (!LocalStorage.has('totals')) {
@@ -139,11 +148,13 @@ export const getStats = async () => {
   try {
     res = await axios.get('/score')
   } catch (e) {
-    // FIXME: do something better
     if (e.response) {
-      return
+      log(e.response.status + ': ' + e.response.data.msg)
+      throw DatabaseConnectionError(e.response.data.msg)
+    } else {
+      log(e.message)
+      throw DatabaseConnectionError(e.message)
     }
-    throw Error
   }
   LocalStorage.set('totals', res.data.totals)
   LocalStorage.set('avgs30', res.data.averages)

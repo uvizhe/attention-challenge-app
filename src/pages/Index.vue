@@ -1,5 +1,6 @@
 <template>
   <q-page class="flex flex-center">
+    <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
     <rating-dialog :show="ratingDialog" @rated="reportScore" />
     <div class="row">
       <totals-chart :data="totalsChartData" />
@@ -48,6 +49,8 @@ export default {
       seconds: sessionDuration,
       sessionOn: false,
       signals: [],
+      error: false,
+      errMsg: '',
       ratingDialog: false,
       totalsChartData: [],
       avgs30ChartData: [],
@@ -56,6 +59,13 @@ export default {
     }
   },
   computed: {
+    errorBannerClass: function () {
+      let cls = 'absolute-top bg-red text-white text-center'
+      if (!this.error) {
+        cls += ' hidden'
+      }
+      return cls
+    },
     buttonTitle: function () {
       if (this.sessionOn) {
         return this.timeRemaining
@@ -70,6 +80,13 @@ export default {
     }
   },
   methods: {
+    showError (error) {
+      this.errMsg = error
+      this.error = true
+      setTimeout(() => {
+        this.error = false
+      }, 3000)
+    },
     startSession () {
       this.signals = randomSignals(this.seconds, rsgSignalCount, rsgMinT, rsgMaxT)
       this.sessionOn = true
@@ -107,7 +124,13 @@ export default {
       }
     },
     async reportScore (score) {
-      const newStats = await reportSession('uvizhe', score)
+      let newStats
+      try {
+        newStats = await reportSession('uvizhe', score)
+      } catch (e) {
+        this.showError(e)
+        return
+      }
       this.totalsChartData = newStats[0]
       this.avgs30ChartData = newStats[1]
       this.ratingDialog = false

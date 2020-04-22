@@ -73,25 +73,31 @@ export default {
     }
   },
   methods: {
+    showError (error) {
+      this.errMsg = error
+      this.error = true
+      setTimeout(() => {
+        this.error = false
+      }, 3000)
+    },
     async submit () {
       if (!(this.username && this.password && this.email)) {
-        this.errMsg = 'Please fill in all fields!'
+        this.showError('Please fill in all fields!')
       } else if (this.username.length < 2) {
-        this.errMsg = 'Username can\'t be shorter than 2 characters!'
+        this.showError('Username can\'t be shorter than 2 characters!')
       } else if (!/^[\w\d\-_]+$/.test(this.username)) {
-        this.errMsg = 'Username can contain _ - and ' +
-          'alphanumeric characters only!'
+        this.showError('Username can contain _ - and ' +
+          'alphanumeric characters only!')
       } else if (!/^.+@[^.]+\..+$/.test(this.email)) {
-        this.errMsg = 'Please provide a valid email!'
+        this.showError('Please provide a valid email!')
       } else {
-        if (await signup(this.username, this.password, this.email)) {
-          this.$router.push('/')
-          return
-        } else {
-          this.errMsg = 'This username already exists!'
+        try {
+          await signup(this.username, this.password, this.email)
+        } catch (e) {
+          this.showError(e)
         }
+        this.$router.push('/')
       }
-      this.error = true
     }
   }
 }

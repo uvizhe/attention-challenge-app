@@ -63,14 +63,21 @@ export default {
     }
   },
   methods: {
+    showError (error) {
+      this.errMsg = error
+      this.error = true
+      setTimeout(() => {
+        this.error = false
+      }, 3000)
+    },
     async submit () {
       this.authError = false
-      if (await authenticate(this.username, this.password)) {
-        this.$router.push('/')
-      } else {
-        this.error = 'Invalid username-password pair!'
-        this.authError = true
+      try {
+        await authenticate(this.username, this.password)
+      } catch (e) {
+        this.showError(e)
       }
+      this.$router.push('/')
     }
   }
 }
