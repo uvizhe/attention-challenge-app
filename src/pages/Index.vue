@@ -128,7 +128,7 @@ export default {
       try {
         newStats = await reportSession('uvizhe', score)
       } catch (e) {
-        this.showError(e)
+        this.showError(e.message)
         return
       }
       this.totalsChartData = newStats[0]

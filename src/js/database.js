@@ -10,7 +10,7 @@ if (LocalStorage.has('auth-token')) {
 }
 
 function DatabaseConnectionError (message) {
-  this.message = message
+  this.message = message || 'Unknown error'
 }
 
 export const authenticated = async () => {
@@ -37,10 +37,10 @@ export const authenticate = async (user, pass) => {
   } catch (e) {
     if (e.response) {
       log(e.response.status + ': ' + e.response.data.msg)
-      throw DatabaseConnectionError(e.response.data.msg)
+      throw new DatabaseConnectionError(e.response.data.msg)
     } else {
       log(e.message)
-      throw DatabaseConnectionError(e.message)
+      throw new DatabaseConnectionError(e.message)
     }
   }
   if (res.status === 200) {
@@ -64,10 +64,10 @@ export const signup = async (user, pass, email) => {
   } catch (e) {
     if (e.response) {
       log(e.response.status + ': ' + e.response.data.msg)
-      throw DatabaseConnectionError(e.response.data.msg)
+      throw new DatabaseConnectionError(e.response.data.msg)
     } else {
       log(e.message)
-      throw DatabaseConnectionError(e.message)
+      throw new DatabaseConnectionError(e.message)
     }
   }
   if (res.status === 200) {
@@ -108,10 +108,10 @@ export const reportSession = async (user, score) => {
   } catch (e) {
     if (e.response) {
       log(e.response.status + ': ' + e.response.data.msg)
-      throw DatabaseConnectionError(e.response.data.msg)
+      throw new DatabaseConnectionError(e.response.data.msg)
     } else {
       log(e.message)
-      throw DatabaseConnectionError(e.message)
+      throw new DatabaseConnectionError(e.message)
     }
   }
   let stats
@@ -150,10 +150,10 @@ export const getStats = async () => {
   } catch (e) {
     if (e.response) {
       log(e.response.status + ': ' + e.response.data.msg)
-      throw DatabaseConnectionError(e.response.data.msg)
+      throw new DatabaseConnectionError(e.response.data.msg)
     } else {
       log(e.message)
-      throw DatabaseConnectionError(e.message)
+      throw new DatabaseConnectionError(e.message)
     }
   }
   LocalStorage.set('totals', res.data.totals)

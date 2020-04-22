@@ -94,7 +94,7 @@ export default {
         try {
           await signup(this.username, this.password, this.email)
         } catch (e) {
-          this.showError(e)
+          this.showError(e.message)
         }
         this.$router.push('/')
       }

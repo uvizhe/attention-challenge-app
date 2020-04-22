@@ -75,7 +75,7 @@ export default {
       try {
         await authenticate(this.username, this.password)
       } catch (e) {
-        this.showError(e)
+        this.showError(e.message)
       }
       this.$router.push('/')
     }

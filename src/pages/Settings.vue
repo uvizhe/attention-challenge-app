@@ -48,7 +48,7 @@ export default {
       try {
         await getStats()
       } catch (e) {
-        this.showError(e)
+        this.showError(e.message)
       }
     }
   }
