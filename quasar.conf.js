@@ -145,7 +145,7 @@ module.exports = function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-      id: 'org.supersapiens.atchallenge2'
+      id: 'org.supersapiens.atchallenge'
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
@@ -173,7 +173,7 @@ module.exports = function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'attcha'
+        appId: 'atchallenge'
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

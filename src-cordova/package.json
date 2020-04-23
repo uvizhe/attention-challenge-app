@@ -1,6 +1,6 @@
 {
-  "name": "org.supersapiens.atchallenge2",
-  "displayName": "Attention Challenge 2",
+  "name": "org.supersapiens.atchallenge",
+  "displayName": "Attention Challenge",
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",

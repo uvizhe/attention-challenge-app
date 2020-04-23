@@ -1,4 +1,4 @@
-# Attention Challenge (attcha)
+# Attention Challenge (atchallenge)
 
 Attention Challenge social meditation app
 

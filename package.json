@@ -1,9 +1,9 @@
 {
-  "name": "attcha",
+  "name": "atchallenge",
   "version": "0.0.1",
   "description": "Attention Challenge social meditation app",
-  "productName": "Attention Challenge 2",
-  "cordovaId": "org.supersapiens.atchallenge2",
+  "productName": "Attention Challenge",
+  "cordovaId": "org.supersapiens.atchallenge",
   "capacitorId": "",
   "author": "Alexander Uvizhev <uvizhe@yandex.ru>",
   "private": true,
