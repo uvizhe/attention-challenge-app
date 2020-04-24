@@ -30,6 +30,7 @@ export default {
           max: 5,
           tickAmount: 5
         },
+        stroke: { lineCap: 'round' },
         tooltip: { enabled: false },
         chart: { toolbar: { show: false } }
       }

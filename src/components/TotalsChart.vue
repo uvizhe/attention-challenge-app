@@ -32,6 +32,17 @@ export default {
           floating: true,
           labels: { show: false }
         },
+        stroke: { lineCap: 'round' },
+        dataLabels: {
+          enabled: true,
+          offsetX: -1,
+          textAnchor: 'end',
+          formatter: (value, opts) => {
+            if (opts.dataPointIndex === this.data.length - 1) {
+              return value
+            }
+          }
+        },
         legend: {
           floating: true,
           position: 'left',
