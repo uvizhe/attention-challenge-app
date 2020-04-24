@@ -30,7 +30,12 @@ export default {
           fontSize: '16px'
         },
         tooltip: { enabled: false },
-        chart: { toolbar: { show: false } }
+        chart: {
+          toolbar: { show: false },
+          events: {
+            click: () => { this.$router.push('/addusers') }
+          }
+        }
       }
     }
   },

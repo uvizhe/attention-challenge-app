@@ -159,3 +159,19 @@ export const getStats = async () => {
   LocalStorage.set('totals', res.data.totals)
   LocalStorage.set('avgs30', res.data.averages)
 }
+
+export const getUsers = async () => {
+  let res
+  try {
+    res = await axios.get('/users')
+  } catch (e) {
+    if (e.response) {
+      log(e.response.status + ': ' + e.response.data.msg)
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      log(e.message)
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+  return res.data.users
+}
