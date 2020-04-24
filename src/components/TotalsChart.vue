@@ -36,6 +36,7 @@ export default {
         dataLabels: {
           enabled: true,
           offsetX: -1,
+          offsetY: 2,
           textAnchor: 'end',
           formatter: (value, opts) => {
             if (opts.dataPointIndex === this.data.length - 1) {
