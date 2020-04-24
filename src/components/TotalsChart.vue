@@ -1,5 +1,13 @@
 <template>
-  <apexchart class="no-wrap" style="margin: -50px" type="line" width="120%" height="250" :options="options" :series="series" />
+  <div>
+    <apexchart class="no-wrap" style="margin: -50px" type="line" width="120%" height="250" :options="options" :series="series" />
+    <q-fab
+      :class="fabClass"
+      @click="gotoAddUsers"
+      icon="group_add"
+      color="purple-5"
+    />
+  </div>
 </template>
 
 <script>
@@ -10,6 +18,7 @@ export default {
   },
   data () {
     return {
+      fabVisible: false,
       options: {
         grid: { show: false },
         xaxis: {
@@ -33,19 +42,37 @@ export default {
         chart: {
           toolbar: { show: false },
           events: {
-            click: () => { this.$router.push('/addusers') }
+            click: () => { this.showAddUsersButton() }
           }
         }
       }
     }
   },
   computed: {
+    fabClass: function () {
+      if (this.fabVisible) {
+        return 'absolute-center'
+      } else {
+        return 'hidden'
+      }
+    },
     series: function () {
       return [{
         // XXX: ПОПРОБУЙ НА ДЕСКТОПЕ!
         // XXX: ПОПРОБУЙ ВЫНУТЬ ИЗ КОМПОНЕНТА ОБРАТНО
         data: this.data.filter(i => true) // FIXME: IDK why it needs a copy of the data
       }]
+    }
+  },
+  methods: {
+    showAddUsersButton () {
+      this.fabVisible = true
+      setTimeout(() => {
+        this.fabVisible = false
+      }, 2000)
+    },
+    gotoAddUsers () {
+      this.$router.push('/addusers')
     }
   }
 }
