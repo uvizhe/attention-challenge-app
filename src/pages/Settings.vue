@@ -1,26 +1,30 @@
 <template>
   <q-page padding class="flex flex-center content-start">
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
-    <div class="text-h5 q-my-md">SETTINGS</div>
+    <page-header title="Settings" />
     <q-btn
       label="Restore chart data"
-      class="full-width q-mb-md"
-      color="primary"
+      class="full-width q-mb-lg q-py-md"
+      color="purple-5"
       @click="restoreData"
     />
     <q-btn
       label="Show debug logs"
-      class="full-width q-mb-md"
-      color="negative"
+      class="full-width q-mb-lg q-py-md"
+      color="red"
       @click="$router.push('/logs')"
     />
   </q-page>
 </template>
 
 <script>
+import PageHeader from 'components/PageHeader'
 import { getStats } from '../js/database'
 export default {
   // name: 'PageName',
+  components: {
+    PageHeader
+  },
   data () {
     return {
       error: false,
