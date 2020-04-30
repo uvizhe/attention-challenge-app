@@ -7,7 +7,6 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'addusers', component: () => import('pages/AddUsers.vue') },
-      { path: 'settings', component: () => import('pages/Settings.vue') },
       { path: 'logs', component: () => import('pages/Logs.vue') }
     ],
     beforeEnter: async (to, from, next) => {

@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { authenticate } from '../js/database'
+import { authenticate, getStats } from '../js/database'
 export default {
   // name: 'PageName',
   data () {
@@ -74,6 +74,7 @@ export default {
       this.authError = false
       try {
         await authenticate(this.username, this.password)
+        await getStats()
       } catch (e) {
         this.showError(e.message)
       }
