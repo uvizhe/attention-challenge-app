@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { sha256 as SHA256 } from 'sha.js'
 import { LocalStorage } from 'quasar'
-import { log } from './logging'
 
 axios.defaults.baseURL = 'https://atchallenge.supersapiens.org'
 if (LocalStorage.has('auth-token')) {
@@ -36,10 +35,8 @@ export const authenticate = async (user, pass) => {
     res = await axios.post('/auth', data)
   } catch (e) {
     if (e.response) {
-      log(e.response.status + ': ' + e.response.data.msg)
       throw new DatabaseConnectionError(e.response.data.msg)
     } else {
-      log(e.message)
       throw new DatabaseConnectionError(e.message)
     }
   }
@@ -63,10 +60,8 @@ export const signup = async (user, pass, email) => {
     res = await axios.post('/newuser', data)
   } catch (e) {
     if (e.response) {
-      log(e.response.status + ': ' + e.response.data.msg)
       throw new DatabaseConnectionError(e.response.data.msg)
     } else {
-      log(e.message)
       throw new DatabaseConnectionError(e.message)
     }
   }
@@ -107,10 +102,8 @@ export const reportSession = async (user, score) => {
     res = await axios.post('/session', data)
   } catch (e) {
     if (e.response) {
-      log(e.response.status + ': ' + e.response.data.msg)
       throw new DatabaseConnectionError(e.response.data.msg)
     } else {
-      log(e.message)
       throw new DatabaseConnectionError(e.message)
     }
   }
@@ -149,10 +142,8 @@ export const getStats = async () => {
     res = await axios.get('/score')
   } catch (e) {
     if (e.response) {
-      log(e.response.status + ': ' + e.response.data.msg)
       throw new DatabaseConnectionError(e.response.data.msg)
     } else {
-      log(e.message)
       throw new DatabaseConnectionError(e.message)
     }
   }
@@ -166,10 +157,8 @@ export const getUsers = async () => {
     res = await axios.get('/users')
   } catch (e) {
     if (e.response) {
-      log(e.response.status + ': ' + e.response.data.msg)
       throw new DatabaseConnectionError(e.response.data.msg)
     } else {
-      log(e.message)
       throw new DatabaseConnectionError(e.message)
     }
   }

@@ -6,8 +6,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-      { path: 'addusers', component: () => import('pages/AddUsers.vue') },
-      { path: 'logs', component: () => import('pages/Logs.vue') }
+      { path: 'addusers', component: () => import('pages/AddUsers.vue') }
     ],
     beforeEnter: async (to, from, next) => {
       if (!await authenticated()) {
