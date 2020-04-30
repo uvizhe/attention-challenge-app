@@ -1,13 +1,22 @@
 <template>
   <q-layout view="hHh lpR fFf">
 
-    <q-header reveal class="bg-primary text-white">
+    <q-header class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title>
           Attention Challenge
         </q-toolbar-title>
         <toolbar-buttons />
       </q-toolbar>
+      <q-bar :class="pageHeaderClass">
+        <q-btn
+          flat round
+          icon="arrow_back"
+          class="q-mr-sm"
+          @click="$router.go(-1)"
+        />
+        {{ pageHeaderTitle }}
+      </q-bar>
     </q-header>
 
     <q-page-container>
@@ -25,6 +34,18 @@ export default {
   },
   data () {
     return {
+    }
+  },
+  computed: {
+    pageHeaderClass: function () {
+      if (this.$store.state.app.pageHeader) {
+        return 'q-py-md'
+      } else {
+        return 'hidden'
+      }
+    },
+    pageHeaderTitle: function () {
+      return this.$store.state.app.pageHeaderTitle
     }
   }
 }

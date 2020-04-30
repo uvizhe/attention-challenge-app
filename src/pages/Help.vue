@@ -1,6 +1,5 @@
 <template>
   <q-page padding>
-    <page-header title="Help"/>
     <div>
       <p>
         Привет!<br/>
@@ -27,11 +26,7 @@
 </template>
 
 <script>
-import PageHeader from 'components/PageHeader'
 export default {
   // name: 'PageName',
-  components: {
-    PageHeader
-  }
 }
 </script>

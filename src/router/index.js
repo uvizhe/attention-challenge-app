@@ -26,5 +26,19 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
+  Router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.pageHeader)) {
+      // this route sets page header we need to display
+      Router.app.$store.commit(
+        'app/setPageHeaderVisible',
+        to.meta.pageHeader
+      )
+      next()
+    } else {
+      Router.app.$store.commit('app/setPageHeaderInvisible')
+      next() // make sure to always call next()!
+    }
+  })
+
   return Router
 }
