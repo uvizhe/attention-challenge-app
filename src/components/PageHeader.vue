@@ -1,5 +1,19 @@
 <template>
-  <div class="full-width q-mt-xs q-mb-lg text-h5 text-center text-uppercase">{{ title }}</div>
+  <div class="q-mb-md row no-wrap items-center">
+    <div class="col-shrink">
+      <q-btn
+        outline
+        color="primary"
+        icon="arrow_back"
+        style="width: 3em"
+        @click="$router.go(-1)"
+      />
+    </div>
+    <div
+      class="q-ml-lg text-h5 text-uppercase text-primary">
+      {{ title }}
+    </div>
+  </div>
 </template>
 
 <script>
