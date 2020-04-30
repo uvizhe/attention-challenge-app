@@ -1,5 +1,12 @@
 <template>
   <div>
+    <q-btn
+      flat
+      round
+      dense
+      icon="help"
+      @click="$router.push('/help')"
+    />
   </div>
 </template>
 
