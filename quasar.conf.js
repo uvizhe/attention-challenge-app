@@ -81,7 +81,14 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
-      }
+      },
+      env: ctx.dev
+        ? {
+          BACKEND: JSON.stringify('http://192.168.0.222:5000')
+        }
+        : {
+          BACKEND: JSON.stringify('https://atchallenge.supersapiens.org')
+        }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -145,7 +152,9 @@ module.exports = function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-      id: 'org.supersapiens.atchallenge'
+      id: ctx.dev
+        ? 'org.supersapiens.atchallenge_dev'
+        : 'org.supersapiens.atchallenge'
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { sha256 as SHA256 } from 'sha.js'
 import { LocalStorage } from 'quasar'
 
-axios.defaults.baseURL = 'https://atchallenge.supersapiens.org'
+axios.defaults.baseURL = process.env.BACKEND
 if (LocalStorage.has('auth-token')) {
   axios.defaults.headers.common.Authorization =
     'Bearer ' + LocalStorage.getItem('auth-token')
