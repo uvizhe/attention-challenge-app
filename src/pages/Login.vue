@@ -3,7 +3,7 @@
     <q-page-container>
       <q-page padding class="flex flex-center content-center">
         <div class="column items-center">
-          <q-banner :class="errorBannerClass">{{ error }}</q-banner>
+          <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
           <div class="text-h5 q-my-sm">LOGIN</div>
           <q-input
             outlined
@@ -50,13 +50,14 @@ export default {
       username: '',
       password: '',
       isPwd: true,
-      authError: false
+      error: false,
+      errMsg: ''
     }
   },
   computed: {
     errorBannerClass: function () {
       let cls = 'fixed-top bg-red text-white text-center'
-      if (!this.authError) {
+      if (!this.error) {
         cls += ' hidden'
       }
       return cls
@@ -71,14 +72,18 @@ export default {
       }, 3000)
     },
     async submit () {
-      this.authError = false
-      try {
-        await authenticate(this.username, this.password)
-        await getStats()
-      } catch (e) {
-        this.showError(e.message)
+      if (!(this.username && this.password)) {
+        this.showError('Please fill in all fields!')
+      } else {
+        try {
+          await authenticate(this.username, this.password)
+          await getStats()
+        } catch (e) {
+          this.showError(e.message)
+          return
+        }
+        this.$router.push('/')
       }
-      this.$router.push('/')
     }
   }
 }
