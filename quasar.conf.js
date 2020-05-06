@@ -82,12 +82,14 @@ module.exports = function (ctx) {
           }
         })
       },
-      env: ctx.dev
+      env: ctx.dev || process.env.DEV  // the latter is for specifying dev build with DEV=true
         ? {
-          BACKEND: JSON.stringify('http://192.168.0.222:5000')
+          BACKEND: JSON.stringify('http://192.168.0.222:5000'),
+          SESSION_DURATION: process.env.SESSION_DURATION || 1
         }
         : {
-          BACKEND: JSON.stringify('https://atchallenge.supersapiens.org')
+          BACKEND: JSON.stringify('https://atchallenge.supersapiens.org'),
+          SESSION_DURATION: 15 * 60
         }
     },
 

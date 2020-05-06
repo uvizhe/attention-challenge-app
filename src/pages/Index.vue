@@ -29,7 +29,7 @@ import TotalsChart from 'components/TotalsChart'
 import Avgs30Chart from 'components/Avgs30Chart'
 import { randomSignals } from '../js/rsg'
 import { getTotals, getAvgs30, reportSession } from '../js/database'
-const sessionDuration = 15 * 60
+const sessionDuration = process.env.SESSION_DURATION
 const rsgSignalCount = 5
 const rsgMinT = 60
 const rsgMaxT = 7 * 60
