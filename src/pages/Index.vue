@@ -1,24 +1,26 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page padding class="flex">
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
     <rating-dialog :show="ratingDialog" @rated="reportScore" />
-    <div class="row">
-      <totals-chart :data="totalsChartData" />
-    </div>
-    <div class="row">
-      <avgs30-chart :data="avgs30ChartData" />
-    </div>
-    <div class="row">
-      <q-btn
-        class="no-wrap"
-        @click="startSession"
-        :label="buttonTitle"
-        :disable="sessionOn"
-        round
-        push
-        size="4em"
-        color="red"
-      />
+    <div class="column justify-between full-width">
+      <div class="col-5 relative-position">
+        <totals-chart :data="totalsChartData" />
+      </div>
+      <div class="col-shrink relative-position">
+        <avgs30-chart :data="avgs30ChartData" />
+      </div>
+      <div class="col-grow relative-position">
+        <q-btn
+          class="absolute-center"
+          @click="startSession"
+          :label="buttonTitle"
+          :disable="sessionOn"
+          round
+          push
+          size="4em"
+          color="red"
+        />
+      </div>
     </div>
   </q-page>
 </template>
@@ -73,7 +75,7 @@ export default {
   },
   computed: {
     errorBannerClass: function () {
-      let cls = 'absolute-top bg-red text-white text-center'
+      let cls = 'absolute-top z-top bg-red text-white text-center'
       if (!this.error) {
         cls += ' hidden'
       }

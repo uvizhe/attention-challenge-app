@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <apexchart class="no-wrap" style="margin: -50px" type="line" width="120%" height="250" :options="options" :series="series" />
+  <div class="">
+    <apexchart class="chart" type="line" :options="options" :series="series" />
     <q-fab
       :class="fabClass"
       @click="gotoAddUsers"
@@ -35,7 +35,6 @@ export default {
         stroke: { lineCap: 'round' },
         dataLabels: {
           enabled: true,
-          offsetX: -1,
           offsetY: 2,
           textAnchor: 'end',
           formatter: (value, opts) => {
@@ -52,6 +51,7 @@ export default {
         },
         tooltip: { enabled: false },
         chart: {
+          sparkline: { enabled: true },
           toolbar: { show: false },
           events: {
             click: () => { this.showAddUsersButton() }

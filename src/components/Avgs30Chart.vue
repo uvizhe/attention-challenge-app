@@ -1,5 +1,7 @@
 <template>
-  <apexchart class="no-wrap" style="margin: -50px" type="line" width="120%" height="100" :options="options" :series="series" />
+  <div>
+    <apexchart class="chart" type="line" height="100" :options="options" :series="series" />
+  </div>
 </template>
 
 <script>
@@ -13,7 +15,7 @@ export default {
       options: {
         grid: {
           row: {
-            colors: ['#f877f8', '#f899f8', '#f8bbf8', '#f8ddf8', '#ffffff']
+            colors: ['#f855f8', '#f877f8', '#f899f8', '#f8bbf8', '#f8ddf8']
           }
         },
         xaxis: {
@@ -32,7 +34,10 @@ export default {
         },
         stroke: { lineCap: 'round' },
         tooltip: { enabled: false },
-        chart: { toolbar: { show: false } }
+        chart: {
+          sparkline: { enabled: true },
+          toolbar: { show: false }
+        }
       }
     }
   },
