@@ -33,6 +33,7 @@ const sessionDuration = 15 * 60
 const rsgSignalCount = 5
 const rsgMinT = 60
 const rsgMaxT = 7 * 60
+let permissions
 export default {
   name: 'PageIndex',
   components: {
@@ -41,8 +42,20 @@ export default {
     Avgs30Chart
   },
   created () {
+    if (this.$q.platform.is.mobile) {
+      permissions = cordova.plugins.permissions
+    }
     this.totalsChartData = getTotals()
     this.avgs30ChartData = getAvgs30()
+  },
+  mounted () {
+    if (this.$q.platform.is.mobile) {
+      permissions.checkPermission(permissions.FOREGROUND_SERVICE, function (status) {
+        if (!status.hasPermission) {
+          permissions.requestPermission(permissions.FOREGROUND_SERVICE, null, null)
+        }
+      })
+    }
   },
   data () {
     return {
