@@ -147,8 +147,10 @@ export const getStats = async () => {
       throw new DatabaseConnectionError(e.message)
     }
   }
-  LocalStorage.set('totals', res.data.totals)
-  LocalStorage.set('avgs30', res.data.averages)
+  if (res.data.totals.length) {
+    LocalStorage.set('totals', res.data.totals)
+    LocalStorage.set('avgs30', res.data.averages)
+  }
 }
 
 export const getUsers = async () => {
