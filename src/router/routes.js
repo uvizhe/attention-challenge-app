@@ -11,7 +11,11 @@ const routes = [
         component: () => import('pages/Help.vue'),
         meta: { pageHeader: 'Help' }
       },
-      { path: 'addusers', component: () => import('pages/AddUsers.vue') }
+      {
+        path: 'addusers',
+        component: () => import('pages/AddUsers.vue'),
+        meta: { pageHeader: 'Add users to the chart' }
+      }
     ],
     beforeEnter: async (to, from, next) => {
       if (!await authenticated()) {

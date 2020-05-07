@@ -9,13 +9,14 @@
         <toolbar-buttons />
       </q-toolbar>
       <q-bar :class="pageHeaderClass">
+        [
         <q-btn
           flat round
           icon="arrow_back"
-          class="q-mr-sm"
           @click="$router.go(-1)"
         />
-        {{ pageHeaderTitle }}
+        ]
+        <span class="q-ml-sm">&nbsp;{{ pageHeaderTitle }}</span>
       </q-bar>
     </q-header>
 
