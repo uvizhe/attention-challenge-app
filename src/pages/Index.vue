@@ -11,12 +11,11 @@
       </div>
       <div class="col-grow relative-position">
         <q-btn
-          class="absolute-center"
+          class="absolute-center shadow-up-5"
           @click="startSession"
           :label="buttonTitle"
           :disable="sessionOn"
           round
-          push
           size="4em"
           color="red"
         />
