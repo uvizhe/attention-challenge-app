@@ -1,17 +1,33 @@
 <template>
   <q-page padding>
-    <q-item v-for="user in users" :key="user.id" tag="label">
-      <q-item-section side top>
-        <q-checkbox v-model="check1" />
-      </q-item-section>
-
-      <q-item-section>
-        <q-item-label>{{ user[0] }}</q-item-label>
-        <q-item-label caption>
-          {{ user[1] }}
-        </q-item-label>
-      </q-item-section>
+    <q-list dense>
+      <q-item :inset-level="1" class="text-bold">
+        <q-item-section>
+          Username
+        </q-item-section>
+        <q-item-section side>
+          Score
+        </q-item-section>
       </q-item>
+      <q-item v-for="user in users" :key="user.id" tag="label">
+        <q-item-section side>
+          <q-checkbox v-model="user.checked" />
+        </q-item-section>
+        <q-item-section>
+          {{ user.user }}
+        </q-item-section>
+        <q-item-section side>
+          {{ user.score }}
+        </q-item-section>
+      </q-item>
+    </q-list>
+    <q-btn
+      label="Add to chart"
+      class="full-width q-mt-md"
+      size="large"
+      color="purple-5"
+      @click="addUsers"
+    />
   </q-page>
 </template>
 
@@ -20,12 +36,27 @@ import { getUsers } from '../js/database'
 export default {
   // name: 'PageName',
   async created () {
-    this.users = await getUsers()
+    const users = await getUsers()
+    this.users = this.prepareUserList(users)
   },
   data () {
     return {
       users: [],
       check1: false
+    }
+  },
+  methods: {
+    prepareUserList (users) {
+      return users.map(i => {
+        return {
+          user: i[0],
+          score: i[1],
+          checked: false
+        }
+      })
+    },
+    addUsers () {
+      this.$router.go(-1)
     }
   }
 }
