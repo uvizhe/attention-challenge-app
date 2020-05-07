@@ -23,7 +23,7 @@
     </q-list>
     <q-btn
       label="Add to chart"
-      class="full-width q-mt-md"
+      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
       size="large"
       color="purple-5"
       @click="addUsers"
