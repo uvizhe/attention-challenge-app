@@ -15,7 +15,7 @@ export default {
       options: {
         grid: {
           row: {
-            colors: ['#f855f8', '#f877f8', '#f899f8', '#f8bbf8', '#f8ddf8']
+            colors: ['#f868f8', '#f888f8', '#f8a8f8', '#f8c8f8', '#f8e8f8']
           }
         },
         xaxis: {

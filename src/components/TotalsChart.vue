@@ -35,7 +35,8 @@ export default {
         stroke: { lineCap: 'round' },
         dataLabels: {
           enabled: true,
-          offsetY: 2,
+          offsetX: -2,
+          offsetY: 5,
           textAnchor: 'end',
           formatter: (value, opts) => {
             if (opts.dataPointIndex === this.data.length - 1) {
