@@ -1,8 +1,11 @@
 <template>
   <div class="">
     <apexchart class="chart" type="line" :options="options" :series="series" />
-    <q-fab
-      :class="fabClass"
+    <q-btn
+      round
+      :class="btnClass"
+      :disable="!btnClickable"
+      size="large"
       @click="gotoAddUsers"
       icon="group_add"
       color="purple-5"
@@ -18,7 +21,9 @@ export default {
   },
   data () {
     return {
-      fabVisible: false,
+      btnVisible: false,
+      btnClickable: false,
+      btnTimer: null,
       options: {
         grid: { show: false },
         xaxis: {
@@ -62,8 +67,8 @@ export default {
     }
   },
   computed: {
-    fabClass: function () {
-      if (this.fabVisible) {
+    btnClass: function () {
+      if (this.btnVisible) {
         return 'absolute-center'
       } else {
         return 'hidden'
@@ -79,10 +84,27 @@ export default {
   },
   methods: {
     showAddUsersButton () {
-      this.fabVisible = true
-      setTimeout(() => {
-        this.fabVisible = false
-      }, 2000)
+      if (!this.btnVisible) {
+        if (this.btnTimer) {
+          clearTimeout(this.btnTimer)
+        }
+        setTimeout(() => { // this design is due to @click fires twice it seems
+          this.btnVisible = true
+          this.btnClickable = true
+        }, 10)
+        this.btnTimer = setTimeout(() => {
+          this.btnVisible = false
+          this.btnClickable = false
+        }, 2000)
+      } else {
+        if (this.btnTimer) {
+          clearTimeout(this.btnTimer)
+        }
+        setTimeout(() => {
+          this.btnVisible = false
+          this.btnClickable = false
+        }, 10)
+      }
     },
     gotoAddUsers () {
       this.$router.push('/addusers')
