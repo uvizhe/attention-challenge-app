@@ -1,6 +1,7 @@
 export default function () {
   return {
     pageHeader: false,
-    pageHeaderTitle: ''
+    pageHeaderTitle: '',
+    totalsChartUser0Data: []
   }
 }

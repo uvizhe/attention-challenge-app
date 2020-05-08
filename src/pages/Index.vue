@@ -4,7 +4,7 @@
     <rating-dialog :show="ratingDialog" @rated="reportScore" />
     <div class="column justify-between full-width">
       <div class="col-5 relative-position">
-        <totals-chart :data="totalsChartData" />
+        <totals-chart />
       </div>
       <div class="col-shrink relative-position">
         <avgs30-chart :data="avgs30ChartData" />
@@ -46,7 +46,7 @@ export default {
     if (this.$q.platform.is.mobile) {
       permissions = cordova.plugins.permissions
     }
-    this.totalsChartData = getTotals()
+    this.$store.commit('app/setTotalsChartUser0Data', getTotals())
     this.avgs30ChartData = getAvgs30()
   },
   mounted () {
@@ -66,7 +66,6 @@ export default {
       error: false,
       errMsg: '',
       ratingDialog: false,
-      totalsChartData: [],
       avgs30ChartData: [],
       dingSound: new Audio('statics/sounds/Ding.mp3'),
       bowlSound: new Audio('statics/sounds/Bowl.mp3')
@@ -145,7 +144,7 @@ export default {
         this.showError(e.message)
         return
       }
-      this.totalsChartData = newStats[0]
+      this.$store.commit('app/setTotalsChartUser0Data', newStats[0])
       this.avgs30ChartData = newStats[1]
       this.ratingDialog = false
     }

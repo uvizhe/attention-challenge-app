@@ -16,9 +16,6 @@
 <script>
 export default {
   name: 'TotalsChart',
-  props: {
-    data: Array
-  },
   data () {
     return {
       btnVisible: false,
@@ -44,7 +41,8 @@ export default {
           offsetY: 5,
           textAnchor: 'end',
           formatter: (value, opts) => {
-            if (opts.dataPointIndex === this.data.length - 1) {
+            const dataSeries = this.series[opts.seriesIndex].data
+            if (opts.dataPointIndex === dataSeries.length - 1) {
               return value
             }
           }
@@ -75,11 +73,15 @@ export default {
       }
     },
     series: function () {
-      return [{
-        // XXX: ПОПРОБУЙ НА ДЕСКТОПЕ!
-        // XXX: ПОПРОБУЙ ВЫНУТЬ ИЗ КОМПОНЕНТА ОБРАТНО
-        data: this.data.filter(i => true) // FIXME: IDK why it needs a copy of the data
-      }]
+      const series = [
+        {
+          name: 'me',
+          data: this.$store.state.app.totalsChartUser0Data.slice()
+          // Apex chart somehow interfers with data so we need a copy
+          // to avoid unintentional Vuex state changes.
+        }
+      ]
+      return series
     }
   },
   methods: {
