@@ -166,3 +166,17 @@ export const getUsers = async () => {
   }
   return res.data.users
 }
+
+export const getFriendTotals = async (user) => {
+  let res
+  try {
+    res = await axios.get('/totals/' + user)
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+  return res.data.totals
+}

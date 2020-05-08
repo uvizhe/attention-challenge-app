@@ -46,7 +46,7 @@ export default {
     if (this.$q.platform.is.mobile) {
       permissions = cordova.plugins.permissions
     }
-    this.$store.commit('app/setTotalsChartUser0Data', getTotals())
+    this.$store.commit('app/setTotalsChartUserData', getTotals())
     this.avgs30ChartData = getAvgs30()
   },
   mounted () {
@@ -144,7 +144,7 @@ export default {
         this.showError(e.message)
         return
       }
-      this.$store.commit('app/setTotalsChartUser0Data', newStats[0])
+      this.$store.commit('app/setTotalsChartUserData', newStats[0])
       this.avgs30ChartData = newStats[1]
       this.ratingDialog = false
     }

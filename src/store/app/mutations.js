@@ -8,6 +8,14 @@ export function setPageHeaderInvisible (state) {
   state.pageHeader = false
 }
 
-export function setTotalsChartUser0Data (state, totalsData) {
-  state.totalsChartUser0Data = totalsData
+export function setTotalsChartUserData (state, totalsData) {
+  state.totalsChartUserData = totalsData
+}
+
+export function setTotalsChartFriend0Data (state, totalsData) {
+  state.totalsChartFriend0Data = totalsData
+}
+
+export function setTotalsChartFriends (state, users) {
+  state.totalsChartFriends = users
 }

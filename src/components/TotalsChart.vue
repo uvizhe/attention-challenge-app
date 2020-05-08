@@ -76,11 +76,36 @@ export default {
       const series = [
         {
           name: 'me',
-          data: this.$store.state.app.totalsChartUser0Data.slice()
+          data: this.$store.state.app.totalsChartUserData.slice()
           // Apex chart somehow interfers with data so we need a copy
           // to avoid unintentional Vuex state changes.
         }
       ]
+      const friends = this.$store.state.app.totalsChartFriends
+      if (friends.length) {
+        series.push({
+          name: friends[0],
+          data: this.$store.state.app.totalsChartFriend0Data.slice()
+        })
+      }
+      if (friends.length > 1) {
+        series.push({
+          name: friends[1],
+          data: this.$store.state.app.totalsChartFriend1Data.slice()
+        })
+      }
+      if (friends.length > 2) {
+        series.push({
+          name: friends[2],
+          data: this.$store.state.app.totalsChartFriend2Data.slice()
+        })
+      }
+      if (friends.length > 3) {
+        series.push({
+          name: friends[3],
+          data: this.$store.state.app.totalsChartFriend3Data.slice()
+        })
+      }
       return series
     }
   },
