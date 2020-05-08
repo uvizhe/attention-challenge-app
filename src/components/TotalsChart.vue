@@ -10,6 +10,16 @@
       icon="group_add"
       color="purple-5"
     />
+    <q-card flat class="absolute-top-left">
+      <q-card-section>
+        <div class="text-primary">
+          me
+        </div>
+        <div class="text-green">
+          you
+        </div>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -46,12 +56,6 @@ export default {
               return value
             }
           }
-        },
-        legend: {
-          floating: true,
-          position: 'left',
-          offsetY: 10,
-          fontSize: '16px'
         },
         tooltip: { enabled: false },
         chart: {
