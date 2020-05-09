@@ -59,7 +59,6 @@ export default {
       const users = this.users
         .filter(i => i.checked)
         .map(i => i.user)
-      console.log(users)
       this.$store.dispatch('app/addUsersToTotalsChart', users)
       this.$router.go(-1)
     }
