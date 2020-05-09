@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <apexchart class="chart" type="line" :options="options" :series="series" />
+    <apexchart class="chart" type="area" :options="options" :series="series" />
     <q-btn
       round
       :class="btnClass"
@@ -44,7 +44,10 @@ export default {
           floating: true,
           labels: { show: false }
         },
-        stroke: { lineCap: 'round' },
+        stroke: {
+          curve: 'straight',
+          lineCap: 'round'
+        },
         dataLabels: {
           enabled: true,
           offsetX: -2,
