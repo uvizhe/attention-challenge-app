@@ -167,6 +167,18 @@ export const getUsers = async () => {
   return res.data.users
 }
 
+export const saveFriends = (usersArray) => {
+  LocalStorage.set('friends', usersArray)
+}
+
+export const getFriends = () => {
+  let users = []
+  if (LocalStorage.has('friends')) {
+    users = LocalStorage.getItem('friends')
+  }
+  return users
+}
+
 export const getFriendTotals = async (user) => {
   let res
   try {

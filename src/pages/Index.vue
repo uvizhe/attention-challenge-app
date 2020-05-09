@@ -29,7 +29,8 @@ import RatingDialog from 'components/RatingDialog'
 import TotalsChart from 'components/TotalsChart'
 import Avgs30Chart from 'components/Avgs30Chart'
 import { randomSignals } from '../js/rsg'
-import { getTotals, getAvgs30, reportSession } from '../js/database'
+import { getTotals, getAvgs30, getFriends, reportSession }
+  from '../js/database'
 const sessionDuration = process.env.SESSION_DURATION
 const rsgSignalCount = 5
 const rsgMinT = 60
@@ -46,6 +47,7 @@ export default {
     if (this.$q.platform.is.mobile) {
       permissions = cordova.plugins.permissions
     }
+    this.$store.dispatch('app/addUsersToTotalsChart', getFriends())
     this.$store.commit('app/setTotalsChartUserData', getTotals())
     this.avgs30ChartData = getAvgs30()
   },

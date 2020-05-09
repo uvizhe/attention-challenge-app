@@ -47,11 +47,12 @@ export default {
   },
   methods: {
     prepareUserList (users) {
+      const friends = this.$store.state.app.totalsChartFriends
       return users.map(i => {
         return {
           user: i[0],
           score: i[1],
-          checked: false
+          checked: friends.includes(i[0])
         }
       })
     },
