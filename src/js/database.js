@@ -180,9 +180,20 @@ export const getFriends = () => {
 }
 
 export const getFriendTotals = async (user) => {
+  const userTotals = getTotals()
+  const since = userTotals.length >= 7
+    ? userTotals[0].x
+    : undefined
+  const last = since
+    ? undefined
+    : 7
+  const params = {
+    since: since,
+    last: last
+  }
   let res
   try {
-    res = await axios.get('/totals/' + user)
+    res = await axios.get('/totals/' + user, { params: params })
   } catch (e) {
     if (e.response) {
       throw new DatabaseConnectionError(e.response.data.msg)
