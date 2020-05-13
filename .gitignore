@@ -10,7 +10,8 @@ node_modules
 /src-cordova/node_modules
 /src-cordova/platforms
 /src-cordova/plugins
-/src-cordova/www
+/src-cordova/www/*
+!/src-cordova/www/.gitkeep
 
 # Capacitor related directories and files
 /src-capacitor/www
