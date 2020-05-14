@@ -10,16 +10,6 @@
       icon="group_add"
       color="purple-5"
     />
-    <q-card flat class="absolute-top-left">
-      <q-card-section>
-        <div class="text-primary">
-          me
-        </div>
-        <div class="text-green">
-          you
-        </div>
-      </q-card-section>
-    </q-card>
   </div>
 </template>
 
