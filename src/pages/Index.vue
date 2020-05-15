@@ -128,7 +128,7 @@ export default {
     async reportScore (score) {
       let newStats
       try {
-        newStats = await reportSession('uvizhe', score)
+        newStats = await reportSession(score)
       } catch (e) {
         this.showError(e.message)
         return

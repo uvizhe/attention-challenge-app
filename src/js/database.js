@@ -89,10 +89,9 @@ export const getAvgs30 = () => {
   return avgs30
 }
 
-export const reportSession = async (user, score) => {
+export const reportSession = async (score) => {
   const date = new Date()
   const data = {
-    userid: user,
     score: score,
     timestamp: date.getTime(),
     tzoffset: date.getTimezoneOffset()
