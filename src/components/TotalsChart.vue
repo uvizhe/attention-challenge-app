@@ -25,7 +25,6 @@ export default {
         grid: { show: false },
         xaxis: {
           floating: true,
-          type: 'datetime',
           labels: { show: false },
           axisBorder: { show: false },
           axisTicks: { show: false }
@@ -73,40 +72,46 @@ export default {
       const series = [
         {
           name: 'me',
-          data: this.$store.state.app.totalsChartUserData.slice()
-          // Apex chart somehow interfers with data so we need a copy
-          // to avoid unintentional Vuex state changes.
+          data: this.getAsSeries(
+            this.$store.state.app.totalsChartUserData)
         }
       ]
       const friends = this.$store.state.app.totalsChartFriends
       if (friends.length) {
         series.push({
           name: friends[0],
-          data: this.$store.state.app.totalsChartFriend0Data.slice()
+          data: this.getAsSeries(
+            this.$store.state.app.totalsChartFriend0Data)
         })
       }
       if (friends.length > 1) {
         series.push({
           name: friends[1],
-          data: this.$store.state.app.totalsChartFriend1Data.slice()
+          data: this.getAsSeries(
+            this.$store.state.app.totalsChartFriend1Data)
         })
       }
       if (friends.length > 2) {
         series.push({
           name: friends[2],
-          data: this.$store.state.app.totalsChartFriend2Data.slice()
+          data: this.getAsSeries(
+            this.$store.state.app.totalsChartFriend2Data)
         })
       }
       if (friends.length > 3) {
         series.push({
           name: friends[3],
-          data: this.$store.state.app.totalsChartFriend3Data.slice()
+          data: this.getAsSeries(
+            this.$store.state.app.totalsChartFriend3Data)
         })
       }
       return series
     }
   },
   methods: {
+    getAsSeries (totals) {
+      return Object.keys(totals).sort().map(k => totals[k])
+    },
     showAddUsersButton () {
       if (!this.btnVisible) {
         if (this.btnTimer) {

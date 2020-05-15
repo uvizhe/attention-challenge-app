@@ -74,7 +74,7 @@ export const signup = async (user, pass, email) => {
 }
 
 export const getTotals = () => {
-  let totals = []
+  let totals = {}
   if (LocalStorage.has('totals')) {
     totals = LocalStorage.getItem('totals')
   }
@@ -111,20 +111,18 @@ export const reportSession = async (user, score) => {
   if (!LocalStorage.has('totals')) {
     // first ever session
     LocalStorage.set(
-      'totals', [res.data.total])
+      'totals', res.data.total)
     LocalStorage.set(
       'avgs30', [res.data.average])
-    stats = [[res.data.total], [res.data.average]]
+    stats = [res.data.total, [res.data.average]]
   } else {
     const totals = LocalStorage.getItem('totals')
     let avgs30 = LocalStorage.getItem('avgs30')
-    const lastSessionDate = totals.slice(-1).pop().x
-    if (lastSessionDate === res.data.date) {
+    if (res.data.date in totals) {
       // new session this day
-      totals.pop()
       avgs30.pop()
     }
-    totals.push(res.data.total)
+    Object.assign(totals, res.data.total)
     avgs30.push(res.data.average)
     if (avgs30.length > 30) {
       avgs30 = avgs30.slice(-30)
@@ -147,7 +145,7 @@ export const getStats = async () => {
       throw new DatabaseConnectionError(e.message)
     }
   }
-  if (res.data.totals.length) {
+  if (res.data.averages.length) {
     LocalStorage.set('totals', res.data.totals)
     LocalStorage.set('avgs30', res.data.averages)
   }
@@ -181,8 +179,8 @@ export const getFriends = () => {
 
 export const getFriendTotals = async (user) => {
   const userTotals = getTotals()
-  const since = userTotals.length >= 7
-    ? userTotals[0].x
+  const since = Object.keys(userTotals).length >= 7
+    ? Object.keys(userTotals).sort().pop()
     : undefined
   const last = since
     ? undefined
