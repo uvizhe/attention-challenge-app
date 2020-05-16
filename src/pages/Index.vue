@@ -7,7 +7,7 @@
         <totals-chart />
       </div>
       <div class="col-shrink relative-position">
-        <avgs30-chart :data="avgs30ChartData" />
+        <avgs30-chart />
       </div>
       <div class="col-grow relative-position">
         <q-btn
@@ -29,7 +29,7 @@ import RatingDialog from 'components/RatingDialog'
 import TotalsChart from 'components/TotalsChart'
 import Avgs30Chart from 'components/Avgs30Chart'
 import { randomSignals } from '../js/rsg'
-import { getTotals, getAvgs30, getFriends, reportSession }
+import { getTotals, getAvgs30, getFriends }
   from '../js/database'
 const sessionDuration = process.env.SESSION_DURATION
 const rsgSignalCount = 5
@@ -45,7 +45,7 @@ export default {
   created () {
     this.$store.dispatch('app/addUsersToTotalsChart', getFriends())
     this.$store.commit('app/setTotalsChartUserData', getTotals())
-    this.avgs30ChartData = getAvgs30()
+    this.$store.commit('app/setAvgs30ChartData', getAvgs30())
   },
   data () {
     return {
@@ -55,7 +55,6 @@ export default {
       error: false,
       errMsg: '',
       ratingDialog: false,
-      avgs30ChartData: [],
       dingSound: new Audio('statics/sounds/Ding.mp3'),
       bowlSound: new Audio('statics/sounds/Bowl.mp3')
     }
@@ -126,15 +125,12 @@ export default {
       }
     },
     async reportScore (score) {
-      let newStats
       try {
-        newStats = await reportSession(score)
+        await this.$store.dispatch('app/reportSession', score)
       } catch (e) {
         this.showError(e.message)
         return
       }
-      this.$store.commit('app/setTotalsChartUserData', newStats[0])
-      this.avgs30ChartData = newStats[1]
       this.ratingDialog = false
     }
   }

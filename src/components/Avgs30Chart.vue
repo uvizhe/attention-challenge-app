@@ -7,9 +7,6 @@
 <script>
 export default {
   name: 'Avgs30Chart',
-  props: {
-    data: Array
-  },
   data () {
     return {
       options: {
@@ -44,7 +41,7 @@ export default {
   computed: {
     series: function () {
       return [{
-        data: this.data
+        data: this.$store.state.app.avgs30ChartData
       }]
     }
   }

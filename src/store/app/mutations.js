@@ -1,3 +1,5 @@
+import { setAvgs30, setTotals } from '../../js/database'
+
 export function setPageHeaderVisible (state, title) {
   state.pageHeaderTitle = title
   state.pageHeader = true
@@ -8,7 +10,13 @@ export function setPageHeaderInvisible (state) {
   state.pageHeader = false
 }
 
+export function setAvgs30ChartData (state, avgs30Data) {
+  setAvgs30(avgs30Data)
+  state.avgs30ChartData = avgs30Data
+}
+
 export function setTotalsChartUserData (state, totalsData) {
+  setTotals(totalsData)
   state.totalsChartUserData = totalsData
 }
 
