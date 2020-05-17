@@ -41,7 +41,7 @@ export default {
   computed: {
     series: function () {
       return [{
-        data: this.$store.state.app.avgs30ChartData
+        data: this.$store.state.app.avgs30
       }]
     }
   }

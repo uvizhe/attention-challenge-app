@@ -72,45 +72,42 @@ export default {
       const series = [
         {
           name: 'me',
-          data: this.getAsSeries(
-            this.$store.state.app.totalsChartUserData)
+          data: this.getSeries(0)
         }
       ]
-      const friends = this.$store.state.app.totalsChartFriends
+      const friends = this.$store.state.app.friends
       if (friends.length) {
         series.push({
           name: friends[0],
-          data: this.getAsSeries(
-            this.$store.state.app.totalsChartFriend0Data)
+          data: this.getSeries(1)
         })
       }
       if (friends.length > 1) {
         series.push({
           name: friends[1],
-          data: this.getAsSeries(
-            this.$store.state.app.totalsChartFriend1Data)
+          data: this.getSeries(2)
         })
       }
       if (friends.length > 2) {
         series.push({
           name: friends[2],
-          data: this.getAsSeries(
-            this.$store.state.app.totalsChartFriend2Data)
+          data: this.getSeries(3)
         })
       }
       if (friends.length > 3) {
         series.push({
           name: friends[3],
-          data: this.getAsSeries(
-            this.$store.state.app.totalsChartFriend3Data)
+          data: this.getSeries(4)
         })
       }
       return series
     }
   },
   methods: {
-    getAsSeries (totals) {
-      return Object.keys(totals).sort().map(k => totals[k])
+    getSeries (pos) {
+      const multiUserSeries = this.$store.state.app.totals
+      return Object.keys(multiUserSeries).sort()
+        .map(date => multiUserSeries[date][pos])
     },
     showAddUsersButton () {
       if (!this.btnVisible) {

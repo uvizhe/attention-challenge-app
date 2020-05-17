@@ -81,7 +81,7 @@ export const getAvgs30 = () => {
   return avgs30
 }
 
-export const setAvgs30 = (avgs30) => {
+export const saveAvgs30 = (avgs30) => {
   LocalStorage.set('avgs30', avgs30)
 }
 
@@ -93,7 +93,7 @@ export const getTotals = () => {
   return totals
 }
 
-export const setTotals = (totals) => {
+export const saveTotals = (totals) => {
   LocalStorage.set('totals', totals)
 }
 
@@ -128,10 +128,7 @@ export const getStats = async () => {
       throw new DatabaseConnectionError(e.message)
     }
   }
-  if (res.data.averages.length) {
-    LocalStorage.set('totals', res.data.totals)
-    LocalStorage.set('avgs30', res.data.averages)
-  }
+  return res.data
 }
 
 export const getUsers = async () => {
@@ -163,7 +160,7 @@ export const getFriends = () => {
 export const getFriendTotals = async (user) => {
   const userTotals = getTotals()
   const since = Object.keys(userTotals).length >= 7
-    ? Object.keys(userTotals).sort().pop()
+    ? Object.keys(userTotals).sort().shift()
     : undefined
   const last = since
     ? undefined

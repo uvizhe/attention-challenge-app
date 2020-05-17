@@ -69,7 +69,7 @@ export default {
       }
     },
     prepareUserList (users) {
-      const friends = this.$store.state.app.totalsChartFriends
+      const friends = this.$store.state.app.friends
       return users.map(i => {
         return {
           user: i[0],
@@ -82,7 +82,7 @@ export default {
       const users = this.users
         .filter(i => i.checked)
         .map(i => i.user)
-      this.$store.dispatch('app/addUsersToTotalsChart', users)
+      this.$store.dispatch('app/addFriends', users)
       this.$router.go(-1)
     }
   }

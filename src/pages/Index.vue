@@ -29,8 +29,6 @@ import RatingDialog from 'components/RatingDialog'
 import TotalsChart from 'components/TotalsChart'
 import Avgs30Chart from 'components/Avgs30Chart'
 import { randomSignals } from '../js/rsg'
-import { getTotals, getAvgs30, getFriends }
-  from '../js/database'
 const sessionDuration = process.env.SESSION_DURATION
 const rsgSignalCount = 5
 const rsgMinT = 60
@@ -43,9 +41,7 @@ export default {
     Avgs30Chart
   },
   created () {
-    this.$store.dispatch('app/addUsersToTotalsChart', getFriends())
-    this.$store.commit('app/setTotalsChartUserData', getTotals())
-    this.$store.commit('app/setAvgs30ChartData', getAvgs30())
+    this.$store.dispatch('app/initData')
   },
   data () {
     return {
