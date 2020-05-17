@@ -56,6 +56,7 @@ export async function addFriends (context, friends) {
   const newFriends = friends.sort()
   if (prevFriends.length === newFriends.length &&
     prevFriends.every((val, idx) => val === newFriends[idx])) {
+    // if all the friends are the same
     return
   }
   context.commit('setFriends', newFriends)
