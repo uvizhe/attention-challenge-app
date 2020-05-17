@@ -40,7 +40,6 @@ export default {
         dataLabels: {
           enabled: true,
           offsetX: -2,
-          offsetY: 5,
           textAnchor: 'end',
           formatter: (value, opts) => {
             const dataSeries = this.series[opts.seriesIndex].data
