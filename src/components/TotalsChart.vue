@@ -41,11 +41,8 @@ export default {
           enabled: true,
           offsetX: -2,
           textAnchor: 'end',
-          formatter: (value, opts) => {
-            const dataSeries = this.series[opts.seriesIndex].data
-            if (opts.dataPointIndex === dataSeries.length - 1) {
-              return value
-            }
+          formatter: (value, { seriesIndex, dataPointIndex }) => {
+            return this.dataPointLabel(value, seriesIndex, dataPointIndex)
           }
         },
         tooltip: { enabled: false },
@@ -107,6 +104,28 @@ export default {
       const multiUserSeries = this.$store.state.app.totals
       return Object.keys(multiUserSeries).sort()
         .map(date => multiUserSeries[date][pos])
+    },
+    dataPointLabel (value, seriesIndex, dataPointIndex) {
+      const dataSeries = this.series[seriesIndex].data
+      const name = this.series[seriesIndex].name
+      const friendsAmount = this.series.length - 1
+      const seriesLength = dataSeries.length
+      const offset = Math.floor(0.15 * seriesLength) || 1
+      const spaceRequired = friendsAmount * offset
+      if (dataPointIndex === dataSeries.length - 1) {
+        if (name !== 'me' && spaceRequired >= 2 / 3 * seriesLength) {
+          return 'name (value)'
+        } else {
+          return value
+        }
+      } else if (name !== 'me') {
+        if (spaceRequired < 2 / 3 * seriesLength) {
+          const spot = seriesLength - offset * seriesIndex - 1
+          if (dataPointIndex === spot) {
+            return name
+          }
+        }
+      }
     },
     showAddUsersButton () {
       if (!this.btnVisible) {
