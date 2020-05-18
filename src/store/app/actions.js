@@ -12,6 +12,7 @@ export function initData (context) {
   context.commit('setTotals', getTotals())
   context.commit('setFriends', getFriends())
   context.dispatch('syncWithFriends')
+  context.commit('setInitialized')
 }
 
 export async function syncWithFriends (context) {

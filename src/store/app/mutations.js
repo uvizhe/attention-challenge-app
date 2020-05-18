@@ -8,6 +8,10 @@ export function setPageHeaderInvisible (state) {
   state.pageHeader = false
 }
 
+export function setInitialized (state) {
+  state.initialized = true
+}
+
 export function setAvgs30 (state, avgs30) {
   state.avgs30 = avgs30
 }

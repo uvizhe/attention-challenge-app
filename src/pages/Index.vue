@@ -41,7 +41,10 @@ export default {
     Avgs30Chart
   },
   created () {
-    this.$store.dispatch('app/initData')
+    if (!this.$store.state.app.initialized) {
+      this.$store.dispatch('app/initData')
+      document.addEventListener('resume', this.onResume, false)
+    }
   },
   data () {
     return {
@@ -77,6 +80,9 @@ export default {
     }
   },
   methods: {
+    onResume () {
+      this.$store.dispatch('app/syncWithFriends')
+    },
     showError (error) {
       this.errMsg = error
       this.error = true
