@@ -157,11 +157,11 @@ export const getFriends = () => {
   return users
 }
 
-export const getFriendTotals = async (user) => {
+export const getFriendTotals = async (user, since = undefined) => {
   const userTotals = getTotals()
-  const since = Object.keys(userTotals).length >= 7
-    ? Object.keys(userTotals).sort().shift()
-    : undefined
+  if (!since && Object.keys(userTotals).length >= 7) {
+    since = Object.keys(userTotals).sort().shift()
+  }
   const last = since
     ? undefined
     : 7

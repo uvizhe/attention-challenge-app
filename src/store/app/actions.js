@@ -3,12 +3,30 @@ import {
   saveAvgs30, saveTotals, saveFriends,
   postSession, getFriendTotals
 } from '../../js/database'
-import { appendValue, addSeries, removeSeries } from '../../js/series'
+import {
+  appendValues, addSeries, removeSeries
+} from '../../js/series'
 
-export async function initData (context) {
+export function initData (context) {
   context.commit('setAvgs30', getAvgs30())
   context.commit('setTotals', getTotals())
   context.commit('setFriends', getFriends())
+  context.dispatch('syncWithFriends')
+}
+
+export async function syncWithFriends (context) {
+  let totals = context.state.totals
+  const friends = context.state.friends
+  const lastDate = Object.keys(totals).sort().pop()
+  for (let i = 0; i < friends.length; i++) {
+    totals = appendValues(
+      totals,
+      await getFriendTotals(friends[i], lastDate),
+      i + 1
+    )
+  }
+  context.commit('setTotals', totals)
+  saveTotals(context.state.totals)
 }
 
 export async function reportSession (context, score) {
@@ -28,7 +46,7 @@ export async function reportSession (context, score) {
       avgs30 = avgs30.slice(-30)
     }
   }
-  totals = appendValue(totals, stats.total)
+  totals = appendValues(totals, stats.total)
   context.commit('setAvgs30', avgs30)
   context.commit('setTotals', totals)
   saveAvgs30(context.state.avgs30)

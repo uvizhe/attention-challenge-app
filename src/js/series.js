@@ -7,25 +7,30 @@ function deepCopy (multiSeries) {
   return copy
 }
 
-export function appendValue (multiSeries, dateValue, pos = 0) {
+export function appendValues (multiSeries, datesValues, pos = 0) {
   /*
     pos: 0 - user, 1..4 - friends
   */
   const newMultiSeries = deepCopy(multiSeries)
-  const [date, value] = Object.entries(dateValue).pop()
-  if (!Object.keys(newMultiSeries).length) {
-    // series is empty yet
-    newMultiSeries[date] = [value]
-  } else {
-    if (date in newMultiSeries) {
-      newMultiSeries[date].splice(pos, 1, value)
+  let lastDate = Object.keys(newMultiSeries).sort().pop()
+  const dates = Object.keys(datesValues).sort()
+  for (const date of dates) {
+    const value = datesValues[date]
+    if (!Object.keys(newMultiSeries).length) {
+      // series is empty yet (the only case is we add user's score)
+      newMultiSeries[date] = [value]
     } else {
-      const lastDate = Object.keys(newMultiSeries).sort().pop()
-      const lastValues = newMultiSeries[lastDate]
-      newMultiSeries[date] = lastValues.slice(0, pos)
-        .concat(value)
-        .concat(lastValues.slice(pos + 1))
+      if (date in newMultiSeries) {
+        newMultiSeries[date].splice(pos, 1, value)
+      } else {
+        // we suppose to get only newer dates
+        const lastValues = newMultiSeries[lastDate]
+        newMultiSeries[date] = lastValues.slice(0, pos)
+          .concat(value)
+          .concat(lastValues.slice(pos + 1))
+      }
     }
+    lastDate = date
   }
   return newMultiSeries
 }
