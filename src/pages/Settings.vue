@@ -10,7 +10,7 @@
           size="lg"
         />
       </q-item-section>
-      <q-item-section>
+      <q-item-section @click="wakeLock=!wakeLock">
         <q-item-label>Keep screen on through session</q-item-label>
         <q-item-label caption>In case the timer stops when screen is off</q-item-label>
       </q-item-section>
