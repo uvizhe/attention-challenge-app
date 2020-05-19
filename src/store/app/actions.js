@@ -1,9 +1,11 @@
 import {
-  getAvgs30, getTotals, getStats, getFriends,
+  getAvgs30, getTotals, getFriends,
   saveAvgs30, saveTotals, saveFriends,
-  postSession, getFriendTotals,
   saveConfig, getConfig
-} from '../../js/database'
+} from '../../js/localdb'
+import {
+  getStats, getFriendTotals, postSession
+} from '../../js/remotedb'
 import {
   appendValues, addSeries, removeSeries
 } from '../../js/series'

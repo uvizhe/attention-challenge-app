@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { authenticate } from '../js/database'
+import { authenticate } from '../js/remotedb'
 export default {
   // name: 'PageName',
   data () {

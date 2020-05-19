@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { signup } from '../js/database'
+import { signup } from '../js/remotedb'
 export default {
   // name: 'PageName',
   data () {

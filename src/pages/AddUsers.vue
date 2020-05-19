@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { getUsers } from '../js/database'
+import { getUsers } from '../js/remotedb'
 export default {
   // name: 'PageName',
   async created () {

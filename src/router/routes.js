@@ -1,4 +1,4 @@
-import { authenticated } from '../js/database'
+import { authenticated } from '../js/remotedb'
 
 const routes = [
   {
