@@ -97,6 +97,26 @@ export const saveTotals = (totals) => {
   LocalStorage.set('totals', totals)
 }
 
+export const saveConfig = (parameter, value) => {
+  const key = '_config:' + parameter
+  LocalStorage.set(key, value)
+}
+
+export const getConfig = (parameter = undefined) => {
+  if (parameter) {
+    const key = '_config:' + parameter
+    return LocalStorage.getItem(key)
+  }
+  const config = {}
+  for (const key of LocalStorage.getAllKeys()) {
+    if (key.startsWith('_config:')) {
+      const parameter = key.substring(8)
+      config[parameter] = LocalStorage.getItem(key)
+    }
+  }
+  return config
+}
+
 export const postSession = async (score) => {
   const date = new Date()
   const data = {

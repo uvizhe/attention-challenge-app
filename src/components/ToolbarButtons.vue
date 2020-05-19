@@ -3,7 +3,12 @@
     <q-btn
       flat
       round
-      dense
+      icon="settings"
+      @click="$router.push('/settings')"
+    />
+    <q-btn
+      flat
+      round
       icon="help"
       @click="$router.push('/help')"
     />

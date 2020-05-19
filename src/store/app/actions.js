@@ -1,18 +1,32 @@
 import {
   getAvgs30, getTotals, getStats, getFriends,
   saveAvgs30, saveTotals, saveFriends,
-  postSession, getFriendTotals
+  postSession, getFriendTotals,
+  saveConfig, getConfig
 } from '../../js/database'
 import {
   appendValues, addSeries, removeSeries
 } from '../../js/series'
 
+export function setWakeLock (context, value) {
+  context.commit('setConfig', { parameter: 'wakeLock', value: value })
+  saveConfig('wakeLock', value)
+}
+
 export function initData (context) {
+  context.dispatch('restoreConfig')
   context.commit('setAvgs30', getAvgs30())
   context.commit('setTotals', getTotals())
   context.commit('setFriends', getFriends())
   context.dispatch('syncWithFriends')
   context.commit('setInitialized')
+}
+
+export async function restoreConfig (context) {
+  const config = getConfig()
+  for (const [key, value] of Object.entries(config)) {
+    context.commit('setConfig', { parameter: key, value: value })
+  }
 }
 
 export async function syncWithFriends (context) {

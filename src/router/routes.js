@@ -12,6 +12,11 @@ const routes = [
         meta: { pageHeader: 'Help' }
       },
       {
+        path: 'settings',
+        component: () => import('pages/Settings.vue'),
+        meta: { pageHeader: 'Settings' }
+      },
+      {
         path: 'addusers',
         component: () => import('pages/AddUsers.vue'),
         meta: { pageHeader: 'Add users to the chart' }

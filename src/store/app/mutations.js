@@ -8,6 +8,10 @@ export function setPageHeaderInvisible (state) {
   state.pageHeader = false
 }
 
+export function setConfig (state, { parameter, value }) {
+  state[parameter] = value
+}
+
 export function setInitialized (state) {
   state.initialized = true
 }

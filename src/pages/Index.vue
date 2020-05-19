@@ -97,6 +97,9 @@ export default {
       if (this.$q.platform.is.mobile) {
         cordova.plugins.backgroundMode.on('enable', this.runTimer)
         cordova.plugins.backgroundMode.enable()
+        if (this.$store.state.app.wakeLock) {
+          cordova.plugins.backgroundMode.wakeUp()
+        }
       } else {
         this.runTimer()
       }
