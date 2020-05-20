@@ -54,6 +54,7 @@ export default {
       error: false,
       errMsg: '',
       ratingDialog: false,
+      silentSound: new Audio('statics/sounds/Silence.mp3'),
       dingSound: new Audio('statics/sounds/Ding.mp3'),
       bowlSound: new Audio('statics/sounds/Bowl.mp3')
     }
@@ -91,18 +92,18 @@ export default {
       }, 3000)
     },
     startSession () {
+      if (this.$store.state.app.wakeLock) {
+        window.plugins.insomnia.keepAwake()
+      } else {
+        // IDK why background service stops so this 15min silent track
+        // is an attempt to fix the issue
+        this.silentSound.play()
+      }
       this.signals = randomSignals(this.seconds, rsgSignalCount, rsgMinT, rsgMaxT)
       this.sessionOn = true
       this.dingSound.play()
-      if (this.$q.platform.is.mobile) {
-        cordova.plugins.backgroundMode.on('enable', this.runTimer)
-        cordova.plugins.backgroundMode.enable()
-        if (this.$store.state.app.wakeLock) {
-          window.plugins.insomnia.keepAwake()
-        }
-      } else {
-        this.runTimer()
-      }
+      cordova.plugins.backgroundMode.on('enable', this.runTimer)
+      cordova.plugins.backgroundMode.enable()
     },
     runTimer () {
       const timer = setInterval(() => {
@@ -113,18 +114,25 @@ export default {
     checkTime (timer) {
       if (!this.seconds) {
         clearInterval(timer)
-        if (this.$q.platform.is.mobile) {
-          if (this.$store.state.app.wakeLock) {
-            window.plugins.insomnia.allowSleepAgain()
-          }
-          cordova.plugins.backgroundMode.un('enable', this.runTimer)
-          cordova.plugins.backgroundMode.disable()
+        if (this.$store.state.app.wakeLock) {
+          window.plugins.insomnia.allowSleepAgain()
         }
+        cordova.plugins.backgroundMode.un('enable', this.runTimer)
+        cordova.plugins.backgroundMode.disable()
         this.bowlSound.play()
         this.seconds = sessionDuration
         this.sessionOn = false
         this.ratingDialog = true
       } else {
+        /* XXX: this should work but it's not :( Investigate it
+        if (cordova.plugins.backgroundMode.isActive()) {
+          // handle background process notification
+          cordova.plugins.backgroundMode.configure({
+            title: this.timeRemaining,
+            text: this.timeRemaining
+          })
+        }
+        */
         // play sound at defined timestamps
         const ts = this.signals[this.signals.length - 1] - this.seconds
         if (this.signals.includes(ts)) {
