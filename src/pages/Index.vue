@@ -49,17 +49,12 @@ export default {
   mounted () {
     if (this.$q.platform.is.android) {
       // eslint-disable-next-line no-undef
-      this.silentSound = new Media(
-        '/android_asset/www/statics/sounds/Silence.mp3')
-      // eslint-disable-next-line no-undef
       this.dingSound = new Media(
         '/android_asset/www/statics/sounds/Ding.mp3')
       // eslint-disable-next-line no-undef
       this.bowlSound = new Media(
         '/android_asset/www/statics/sounds/Bowl.mp3')
     } else if (this.$q.platform.is.ios) {
-      // eslint-disable-next-line no-undef
-      this.silentSound = new Media('statics/sounds/Silence.mp3')
       // eslint-disable-next-line no-undef
       this.dingSound = new Media('statics/sounds/Ding.mp3')
       // eslint-disable-next-line no-undef
@@ -74,7 +69,6 @@ export default {
       error: false,
       errMsg: '',
       ratingDialog: false,
-      silentSound: undefined,
       dingSound: undefined,
       bowlSound: undefined
     }
@@ -114,16 +108,15 @@ export default {
     startSession () {
       if (this.$store.state.app.wakeLock) {
         window.plugins.insomnia.keepAwake()
-      } else {
-        // IDK why background service stops so this 15min silent track
-        // is an attempt to fix the issue
-        this.silentSound.play()
       }
       this.signals = randomSignals(this.seconds, rsgSignalCount, rsgMinT, rsgMaxT)
       this.sessionOn = true
       this.dingSound.play()
-      cordova.plugins.backgroundMode.on('enable', this.runTimer)
+      cordova.plugins.backgroundMode.on('activate', function () {
+        cordova.plugins.backgroundMode.disableWebViewOptimizations()
+      })
       cordova.plugins.backgroundMode.enable()
+      this.runTimer()
     },
     runTimer () {
       const timer = setInterval(() => {
@@ -137,10 +130,7 @@ export default {
         if (this.$store.state.app.wakeLock) {
           window.plugins.insomnia.allowSleepAgain()
         }
-        cordova.plugins.backgroundMode.un('enable', this.runTimer)
         cordova.plugins.backgroundMode.disable()
-        this.silentSound.stop()
-        this.silentSound.release()
         this.bowlSound.play()
         this.seconds = sessionDuration
         this.sessionOn = false
