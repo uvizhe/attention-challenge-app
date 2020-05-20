@@ -46,6 +46,26 @@ export default {
       document.addEventListener('resume', this.onResume, false)
     }
   },
+  mounted () {
+    if (this.$q.platform.is.android) {
+      // eslint-disable-next-line no-undef
+      this.silentSound = new Media(
+        '/android_asset/www/statics/sounds/Silence.mp3')
+      // eslint-disable-next-line no-undef
+      this.dingSound = new Media(
+        '/android_asset/www/statics/sounds/Ding.mp3')
+      // eslint-disable-next-line no-undef
+      this.bowlSound = new Media(
+        '/android_asset/www/statics/sounds/Bowl.mp3')
+    } else if (this.$q.platform.is.ios) {
+      // eslint-disable-next-line no-undef
+      this.silentSound = new Media('statics/sounds/Silence.mp3')
+      // eslint-disable-next-line no-undef
+      this.dingSound = new Media('statics/sounds/Ding.mp3')
+      // eslint-disable-next-line no-undef
+      this.bowlSound = new Media('statics/sounds/Bowl.mp3')
+    }
+  },
   data () {
     return {
       seconds: sessionDuration,
@@ -54,9 +74,9 @@ export default {
       error: false,
       errMsg: '',
       ratingDialog: false,
-      silentSound: new Audio('statics/sounds/Silence.mp3'),
-      dingSound: new Audio('statics/sounds/Ding.mp3'),
-      bowlSound: new Audio('statics/sounds/Bowl.mp3')
+      silentSound: undefined,
+      dingSound: undefined,
+      bowlSound: undefined
     }
   },
   computed: {
@@ -119,6 +139,8 @@ export default {
         }
         cordova.plugins.backgroundMode.un('enable', this.runTimer)
         cordova.plugins.backgroundMode.disable()
+        this.silentSound.stop()
+        this.silentSound.release()
         this.bowlSound.play()
         this.seconds = sessionDuration
         this.sessionOn = false
