@@ -98,7 +98,7 @@ export default {
         cordova.plugins.backgroundMode.on('enable', this.runTimer)
         cordova.plugins.backgroundMode.enable()
         if (this.$store.state.app.wakeLock) {
-          cordova.plugins.backgroundMode.wakeUp()
+          window.plugins.insomnia.keepAwake()
         }
       } else {
         this.runTimer()
@@ -114,6 +114,9 @@ export default {
       if (!this.seconds) {
         clearInterval(timer)
         if (this.$q.platform.is.mobile) {
+          if (this.$store.state.app.wakeLock) {
+            window.plugins.insomnia.allowSleepAgain()
+          }
           cordova.plugins.backgroundMode.un('enable', this.runTimer)
           cordova.plugins.backgroundMode.disable()
         }
