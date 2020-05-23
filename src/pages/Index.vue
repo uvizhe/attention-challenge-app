@@ -61,10 +61,17 @@ export default {
       this.bowlSound = new Media('statics/sounds/Bowl.mp3')
     }
   },
+  beforeRouteLeave (to, from, next) {
+    if (this.sessionOn) {
+      this.stopTimer()
+    }
+    next()
+  },
   data () {
     return {
       seconds: sessionDuration,
       sessionOn: false,
+      timer: null,
       signals: [],
       error: false,
       errMsg: '',
@@ -119,21 +126,24 @@ export default {
       this.runTimer()
     },
     runTimer () {
-      const timer = setInterval(() => {
+      this.timer = setInterval(() => {
         this.seconds -= 1
-        this.checkTime(timer)
+        this.checkTime()
       }, 1000)
     },
-    checkTime (timer) {
+    stopTimer () {
+      clearInterval(this.timer)
+      if (this.$store.state.app.wakeLock) {
+        window.plugins.insomnia.allowSleepAgain()
+      }
+      cordova.plugins.backgroundMode.disable()
+      this.seconds = sessionDuration
+      this.sessionOn = false
+    },
+    checkTime () {
       if (!this.seconds) {
-        clearInterval(timer)
-        if (this.$store.state.app.wakeLock) {
-          window.plugins.insomnia.allowSleepAgain()
-        }
-        cordova.plugins.backgroundMode.disable()
+        this.stopTimer()
         this.bowlSound.play()
-        this.seconds = sessionDuration
-        this.sessionOn = false
         this.ratingDialog = true
       } else {
         /* XXX: this should work but it's not :( Investigate it
