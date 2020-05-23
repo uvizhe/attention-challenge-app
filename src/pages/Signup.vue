@@ -97,6 +97,7 @@ export default {
           this.showError(e.message)
           return
         }
+        this.$store.dispatch('app/setUsername', this.username)
         this.$router.push('/')
       }
     }

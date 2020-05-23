@@ -31,6 +31,11 @@ export async function restoreConfig (context) {
   }
 }
 
+export function setUsername (context, username) {
+  context.commit('setConfig', { parameter: 'username', value: username })
+  saveConfig('username', username)
+}
+
 export async function syncWithFriends (context) {
   let totals = context.state.totals
   const friends = context.state.friends
