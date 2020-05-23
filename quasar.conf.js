@@ -1,7 +1,14 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+function versionFromWebpack () {
+  return require('./package.json').version
+}
+function getVersion () {
+  return process.env.VERSION_STRING || versionFromWebpack()
+}
 
 module.exports = function (ctx) {
+  const version = getVersion()
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -85,10 +92,12 @@ module.exports = function (ctx) {
       env: ctx.dev || process.env.DEV  // the latter is for specifying dev build with DEV=true
         ? {
           BACKEND: JSON.stringify('http://192.168.0.222:5000'),
+          VERSION: JSON.stringify(version),
           SESSION_DURATION: process.env.SESSION_DURATION || 1
         }
         : {
           BACKEND: JSON.stringify('https://atchallenge.supersapiens.org'),
+          VERSION: JSON.stringify(version),
           SESSION_DURATION: 15 * 60
         }
     },
@@ -156,7 +165,8 @@ module.exports = function (ctx) {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
       id: ctx.dev
         ? 'org.supersapiens.atchallenge_dev'
-        : 'org.supersapiens.atchallenge'
+        : 'org.supersapiens.atchallenge',
+      version: version
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor

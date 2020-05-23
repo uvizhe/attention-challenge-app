@@ -17,6 +17,10 @@
         />
         ]
         <span class="q-ml-sm">&nbsp;{{ pageHeaderTitle }}</span>
+        <q-space />
+        <div v-if="$router.currentRoute.path.match('/help$')">
+          v{{ version }}
+        </div>
       </q-bar>
     </q-header>
 
@@ -35,6 +39,7 @@ export default {
   },
   data () {
     return {
+      version: process.env.VERSION
     }
   },
   computed: {
