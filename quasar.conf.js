@@ -58,7 +58,13 @@ module.exports = function (ctx) {
       plugins: [
         'LocalStorage',
         'SessionStorage'
-      ]
+      ],
+
+      config: {
+        cordova: {
+          backButtonExit: false
+        }
+      }
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
