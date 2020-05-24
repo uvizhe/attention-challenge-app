@@ -32,7 +32,7 @@ import { randomSignals } from '../js/rsg'
 const sessionDuration = process.env.SESSION_DURATION
 const rsgSignalCount = 5
 const rsgMinT = 60
-const rsgMaxT = 7 * 60
+const rsgMaxT = 5 * 60
 export default {
   name: 'PageIndex',
   components: {
