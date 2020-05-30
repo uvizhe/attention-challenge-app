@@ -3,6 +3,7 @@ export default function () {
     pageHeader: false,
     pageHeaderTitle: '',
     /* Config variables BEGIN */
+    sessionDuration: 15 * 60,
     wakeLock: false,
     username: '',
     /* Config variables END */

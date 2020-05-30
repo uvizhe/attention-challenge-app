@@ -1,5 +1,12 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+function conditionalDevVariables () {
+  let varsDict = {}
+  if (process.env.SESSION_DURATION) {
+    varsDict.SESSION_DURATION = process.env.SESSION_DURATION
+  }
+  return varsDict
+}
 function versionFromWebpack () {
   return require('./package.json').version
 }
@@ -99,12 +106,11 @@ module.exports = function (ctx) {
         ? {
           BACKEND: JSON.stringify('http://192.168.0.222:5000'),
           VERSION: JSON.stringify(version),
-          SESSION_DURATION: process.env.SESSION_DURATION || 1
+          ...conditionalDevVariables()
         }
         : {
           BACKEND: JSON.stringify('https://atchallenge.supersapiens.org'),
-          VERSION: JSON.stringify(version),
-          SESSION_DURATION: 15 * 60
+          VERSION: JSON.stringify(version)
         }
     },
 

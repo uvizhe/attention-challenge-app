@@ -50,7 +50,6 @@ import RatingDialog from 'components/RatingDialog'
 import TotalsChart from 'components/TotalsChart'
 import Avgs30Chart from 'components/Avgs30Chart'
 import { randomSignals } from '../js/rsg'
-const sessionDuration = process.env.SESSION_DURATION
 export default {
   name: 'PageIndex',
   components: {
@@ -63,6 +62,9 @@ export default {
       this.$store.dispatch('app/initData')
       document.addEventListener('resume', this.onResume, false)
     }
+    this.sessionDuration = process.env.SESSION_DURATION ||
+      this.$store.state.app.sessionDuration
+    this.seconds = this.sessionDuration
   },
   mounted () {
     if (this.$q.platform.is.android) {
@@ -87,7 +89,8 @@ export default {
   },
   data () {
     return {
-      seconds: sessionDuration,
+      sessionDuration: 0,
+      seconds: 0,
       sessionOn: false,
       timer: null,
       signals: [],
@@ -166,7 +169,7 @@ export default {
         window.plugins.insomnia.allowSleepAgain()
       }
       cordova.plugins.backgroundMode.disable()
-      this.seconds = sessionDuration
+      this.seconds = this.sessionDuration
       this.sessionOn = false
     },
     checkTime () {

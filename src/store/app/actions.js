@@ -10,6 +10,11 @@ import {
   appendValues, addSeries, removeSeries
 } from '../../js/series'
 
+export function setSessionDuration (context, value) {
+  context.commit('setConfig', { parameter: 'sessionDuration', value: value })
+  saveConfig('sessionDuration', value)
+}
+
 export function setWakeLock (context, value) {
   context.commit('setConfig', { parameter: 'wakeLock', value: value })
   saveConfig('wakeLock', value)
