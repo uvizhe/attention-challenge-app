@@ -9,15 +9,36 @@
       <div class="col-shrink relative-position">
         <avgs30-chart />
       </div>
-      <div class="col-grow relative-position">
+      <div class="row col-grow relative-position justify-between items-center">
+        <q-btn v-if="!sessionOn"
+          icon="remove"
+          round
+          color="purple-5"
+          class="q-mx-md"
+          @click="adjustSession(-1)"
+        />
         <q-btn
           class="absolute-center shadow-up-5"
           @click="startSession"
-          :label="buttonTitle"
           :disable="sessionOn"
           round
-          size="4em"
+          size="60px"
           color="red"
+        >
+          <div class="big-red-btn-title relative-position">
+            {{ buttonTitle }}
+            <div v-if="!sessionOn"
+              class="big-red-btn-subtitle absolute-center text-red-2 text-lowercase">
+              {{ sessionDurationMin }}&nbsp;min
+            </div>
+          </div>
+        </q-btn>
+        <q-btn v-if="!sessionOn"
+          icon="add"
+          round
+          color="purple-5"
+          class="q-mx-md"
+          @click="adjustSession(1)"
         />
       </div>
     </div>
@@ -92,6 +113,9 @@ export default {
         return 'Go'
       }
     },
+    sessionDurationMin: function () {
+      return this.seconds / 60
+    },
     timeRemaining: function () {
       const min = String(Math.floor(this.seconds / 60))
       const sec = String(this.seconds % 60)
@@ -108,6 +132,14 @@ export default {
       setTimeout(() => {
         this.error = false
       }, 3000)
+    },
+    adjustSession (min) {
+      this.seconds += Number(min) * 60
+      if (this.seconds < 5 * 60) {
+        this.seconds = 5 * 60
+      } else if (this.seconds > 30 * 60) {
+        this.seconds = 30 * 60
+      }
     },
     startSession () {
       if (this.$store.state.app.wakeLock) {
