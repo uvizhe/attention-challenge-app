@@ -30,9 +30,6 @@ import TotalsChart from 'components/TotalsChart'
 import Avgs30Chart from 'components/Avgs30Chart'
 import { randomSignals } from '../js/rsg'
 const sessionDuration = process.env.SESSION_DURATION
-const rsgSignalCount = 5
-const rsgMinT = 60
-const rsgMaxT = 5 * 60
 export default {
   name: 'PageIndex',
   components: {
@@ -116,7 +113,7 @@ export default {
       if (this.$store.state.app.wakeLock) {
         window.plugins.insomnia.keepAwake()
       }
-      this.signals = randomSignals(this.seconds, rsgSignalCount, rsgMinT, rsgMaxT)
+      this.signals = randomSignals(this.seconds)
       this.sessionOn = true
       this.dingSound.play()
       cordova.plugins.backgroundMode.on('activate', function () {
