@@ -29,7 +29,7 @@
             {{ buttonTitle }}
             <div v-if="!sessionOn"
               class="big-red-btn-subtitle absolute-center text-red-2 text-lowercase">
-              {{ sessionDurationMin }}&nbsp;min
+              {{ sessionDurationMin }}&nbsp;{{ $t('rbMin') }}
             </div>
           </div>
         </q-btn>
@@ -65,6 +65,7 @@ export default {
     this.sessionDuration = process.env.SESSION_DURATION ||
       this.$store.state.app.sessionDuration
     this.seconds = this.sessionDuration
+    this.$i18n.locale = 'ru'
   },
   mounted () {
     if (this.$q.platform.is.android) {
@@ -113,7 +114,7 @@ export default {
       if (this.sessionOn) {
         return this.timeRemaining
       } else {
-        return 'Go'
+        return this.$t('rbText')
       }
     },
     sessionDurationMin: function () {
