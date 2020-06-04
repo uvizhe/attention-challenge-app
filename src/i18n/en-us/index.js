@@ -27,6 +27,5 @@ export default {
   addUsersTableUsername: 'Username',
   addUsersTableScore: 'Score',
   addUsersButton: 'Add to chart',
-  rbText: 'Go',
   rbMin: 'min'
 }

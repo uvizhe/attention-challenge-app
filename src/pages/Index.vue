@@ -26,10 +26,16 @@
           color="red"
         >
           <div class="big-red-btn-title relative-position">
-            {{ buttonTitle }}
-            <div v-if="!sessionOn"
-              class="big-red-btn-subtitle absolute-center text-red-2 text-lowercase">
-              {{ sessionDurationMin }}&nbsp;{{ $t('rbMin') }}
+
+            <div v-if="!sessionOn">
+              <q-icon name="play_arrow" />
+              <div
+                class="big-red-btn-subtitle absolute-bottom text-red-2 text-lowercase">
+                {{ sessionDurationMin }}&nbsp;{{ $t('rbMin') }}
+              </div>
+            </div>
+            <div v-else>
+              {{ buttonTitle }}
             </div>
           </div>
         </q-btn>
