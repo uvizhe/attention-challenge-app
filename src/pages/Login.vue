@@ -4,13 +4,15 @@
       <q-page padding class="flex flex-center content-center">
         <div class="column items-center">
           <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
-          <div class="text-h5 q-my-sm">LOGIN</div>
+          <div class="text-h5 q-my-sm text-uppercase">
+            {{ $t('loginTitle') }}
+          </div>
           <q-input
             outlined
             class="q-my-sm login-input"
             maxlength="50"
             v-model="username"
-            label="Username"
+            :label="$t('loginUsername')"
           />
           <q-input
             outlined
@@ -18,7 +20,7 @@
             maxlength="500"
             v-model="password"
             :type="isPwd ? 'password' : 'text'"
-            label="Password"
+            :label="$t('loginPassword')"
           >
             <template v-slot:append>
               <q-icon
@@ -30,7 +32,7 @@
           </q-input>
           <q-btn
             class="q-ma-md entrance-button"
-            label="Enter"
+            :label="$t('loginButton')"
             color="purple-5"
             size="xl"
             @click="submit"
@@ -45,6 +47,9 @@
 import { authenticate } from '../js/remotedb'
 export default {
   // name: 'PageName',
+  created () {
+    this.$i18n.locale = this.$q.lang.getLocale()
+  },
   data () {
     return {
       username: '',
@@ -73,7 +78,7 @@ export default {
     },
     async submit () {
       if (!(this.username && this.password)) {
-        this.showError('Please fill in all fields!')
+        this.showError(this.$t('signupError0'))
       } else {
         try {
           await authenticate(this.username, this.password)
