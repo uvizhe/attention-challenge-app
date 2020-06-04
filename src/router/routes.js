@@ -9,17 +9,17 @@ const routes = [
       {
         path: 'help',
         component: () => import('pages/Help.vue'),
-        meta: { pageHeader: 'Help' }
+        meta: { pageHeader: 'pageHeaderHelp' }
       },
       {
         path: 'settings',
         component: () => import('pages/Settings.vue'),
-        meta: { pageHeader: 'Settings' }
+        meta: { pageHeader: 'pageHeaderSettings' }
       },
       {
         path: 'addusers',
         component: () => import('pages/AddUsers.vue'),
-        meta: { pageHeader: 'Add users to the chart' }
+        meta: { pageHeader: 'pageHeaderAddUsers' }
       }
     ],
     beforeEnter: async (to, from, next) => {

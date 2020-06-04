@@ -1,13 +1,13 @@
 <template>
   <q-page padding>
-    <q-banner :class="noticeBannerClass">You can select only 4 users</q-banner>
+    <q-banner :class="noticeBannerClass">{{ $t('addUsersBanner') }}</q-banner>
     <q-list dense>
       <q-item :inset-level="1" class="text-bold">
         <q-item-section>
-          Username
+          {{ $t('addUsersTableUsername') }}
         </q-item-section>
         <q-item-section side>
-          Score
+          {{ $t('addUsersTableScore') }}
         </q-item-section>
       </q-item>
       <q-item v-for="(user, idx) in users" :key="user.id" tag="label">
@@ -23,7 +23,7 @@
       </q-item>
     </q-list>
     <q-btn
-      label="Add to chart"
+      :label="$t('addUsersButton')"
       class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
       size="large"
       color="purple-5"

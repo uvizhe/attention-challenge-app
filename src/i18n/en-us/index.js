@@ -1,4 +1,7 @@
 export default {
+  pageHeaderSettings: 'Settings',
+  pageHeaderHelp: 'Help',
+  pageHeaderAddUsers: 'Add friends to the chart',
   entranceNewUser: 'Sign up',
   entranceExistingUser: 'Login',
   signupTitle: 'New user',
@@ -14,6 +17,14 @@ export default {
   loginUsername: 'Username',
   loginPassword: 'Password',
   loginButton: 'Enter',
+  settingsDurationText: 'Default session duration (minutes)',
+  settingsWakeLockText: 'Keep screen on during session',
+  settingsWakeLockHint: 'In case the timer stops when screen is off',
+  settingsButton: 'Save Settings',
+  addUsersBanner: 'You can select only 4 users',
+  addUsersTableUsername: 'Username',
+  addUsersTableScore: 'Score',
+  addUsersButton: 'Add to chart',
   rbText: 'Go',
   rbMin: 'min'
 }

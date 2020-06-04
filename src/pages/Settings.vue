@@ -21,7 +21,7 @@
         </div>
       </q-item-section>
       <q-item-section>
-        <q-item-label>Default session duration (minutes)</q-item-label>
+        <q-item-label>{{ $t('settingsDurationText') }}</q-item-label>
       </q-item-section>
     </q-item>
     <q-item class="q-my-md">
@@ -35,12 +35,12 @@
         />
       </q-item-section>
       <q-item-section @click="wakeLock=!wakeLock">
-        <q-item-label>Keep screen on during session</q-item-label>
-        <q-item-label caption>In case the timer stops when screen is off</q-item-label>
+        <q-item-label>{{ $t('settingsWakeLockText') }}</q-item-label>
+        <q-item-label caption>{{ $t('settingsWakeLockHint') }}</q-item-label>
       </q-item-section>
     </q-item>
     <q-btn
-      label="Save Settings"
+      :label="$t('settingsButton')"
       class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
       size="large"
       color="purple-5"

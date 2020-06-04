@@ -1,4 +1,7 @@
 export default {
+  pageHeaderSettings: 'Настройки',
+  pageHeaderHelp: 'Помощь',
+  pageHeaderAddUsers: 'Добавить друзей на график',
   entranceNewUser: 'Начать',
   entranceExistingUser: 'Продолжить',
   signupTitle: 'Регистрация',
@@ -14,5 +17,13 @@ export default {
   loginUsername: 'Логин',
   loginPassword: 'Пароль',
   loginButton: 'Войти',
+  settingsDurationText: 'Время сессии по умолчанию (минут)',
+  settingsWakeLockText: 'Не гасить экран во время сессии',
+  settingsWakeLockHint: 'На случай, если таймер останавливается при выключенном экране',
+  settingsButton: 'Сохранить настройки',
+  addUsersBanner: 'Можно выбрать только 4 пользователя',
+  addUsersTableUsername: 'Логин',
+  addUsersTableScore: 'Балл',
+  addUsersButton: 'Добавить на график',
   rbMin: 'мин'
 }

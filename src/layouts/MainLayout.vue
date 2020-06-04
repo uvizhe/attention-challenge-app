@@ -51,7 +51,12 @@ export default {
       }
     },
     pageHeaderTitle: function () {
-      return this.$store.state.app.pageHeaderTitle
+      const titleString = this.$store.state.app.pageHeaderTitle
+      console.log(titleString)
+      if (titleString) {
+        return this.$t(titleString)
+      }
+      return ''
     }
   }
 }
