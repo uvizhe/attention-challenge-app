@@ -2,6 +2,20 @@
   <q-page padding>
     <q-item class="q-my-md">
       <q-item-section avatar>
+        <q-select
+          outlined
+          emit-value
+          map-options
+          v-model="locale"
+          :options="langOptions"
+        />
+      </q-item-section>
+      <q-item-section>
+        <q-item-label>{{ $t('settingsLanguageText') }}</q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-item class="q-my-md">
+      <q-item-section avatar>
         <div class="row no-wrap items-center">
         <q-btn
           round
@@ -54,13 +68,24 @@ export default {
   // name: 'PageName',
   data () {
     return {
+      locale: '',
       wakeLock: false,
       duration: 15
     }
   },
+  beforeRouteLeave (to, from, next) {
+    this.$i18n.locale = this.locale
+    next()
+  },
   mounted () {
+    this.locale = this.$i18n.locale
     this.duration = this.$store.state.app.sessionDuration / 60
     this.wakeLock = this.$store.state.app.wakeLock
+  },
+  computed: {
+    langOptions () {
+      return this.$store.state.app.languages
+    }
   },
   methods: {
     adjustSession (min) {
@@ -72,6 +97,7 @@ export default {
       }
     },
     saveSettings () {
+      this.$store.dispatch('app/setLocale', this.locale)
       this.$store.dispatch('app/setSessionDuration', this.duration * 60)
       this.$store.dispatch('app/setWakeLock', this.wakeLock)
       this.$router.go(-1)

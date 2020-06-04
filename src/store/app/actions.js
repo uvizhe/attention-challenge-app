@@ -1,3 +1,4 @@
+import { Quasar } from 'quasar'
 import {
   getAvgs30, getTotals, getFriends,
   saveAvgs30, saveTotals, saveFriends,
@@ -9,6 +10,20 @@ import {
 import {
   appendValues, addSeries, removeSeries
 } from '../../js/series'
+
+export function setLocale (context, value) {
+  context.commit('setConfig', { parameter: 'locale', value: value })
+  saveConfig('locale', value)
+}
+
+export function setLocaleIfNotSet (context) {
+  if (!context.state.locale) {
+    context.commit('setConfig', {
+      parameter: 'locale',
+      value: Quasar.lang.getLocale()
+    })
+  }
+}
 
 export function setSessionDuration (context, value) {
   context.commit('setConfig', { parameter: 'sessionDuration', value: value })
@@ -22,6 +37,7 @@ export function setWakeLock (context, value) {
 
 export function initData (context) {
   context.dispatch('restoreConfig')
+  context.dispatch('setLocaleIfNotSet')
   context.commit('setAvgs30', getAvgs30())
   context.commit('setTotals', getTotals())
   context.commit('setFriends', getFriends())

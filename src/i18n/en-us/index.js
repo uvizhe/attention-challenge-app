@@ -17,6 +17,7 @@ export default {
   loginUsername: 'Username',
   loginPassword: 'Password',
   loginButton: 'Enter',
+  settingsLanguageText: 'App language',
   settingsDurationText: 'Default session duration (minutes)',
   settingsWakeLockText: 'Keep screen on during session',
   settingsWakeLockHint: 'In case the timer stops when screen is off',

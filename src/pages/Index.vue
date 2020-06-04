@@ -60,12 +60,12 @@ export default {
   created () {
     if (!this.$store.state.app.initialized) {
       this.$store.dispatch('app/initData')
+      this.$i18n.locale = this.$store.state.app.locale
       document.addEventListener('resume', this.onResume, false)
     }
     this.sessionDuration = process.env.SESSION_DURATION ||
       this.$store.state.app.sessionDuration
     this.seconds = this.sessionDuration
-    this.$i18n.locale = 'ru'
   },
   mounted () {
     if (this.$q.platform.is.android) {
