@@ -1,7 +1,10 @@
 <template>
   <q-page padding>
     <q-item class="q-my-md">
-      <q-item-section avatar>
+      <q-item-section>
+        <q-item-label>{{ $t('settingsLanguageText') }}</q-item-label>
+      </q-item-section>
+      <q-item-section side>
         <q-select
           outlined
           emit-value
@@ -10,12 +13,13 @@
           :options="langOptions"
         />
       </q-item-section>
-      <q-item-section>
-        <q-item-label>{{ $t('settingsLanguageText') }}</q-item-label>
-      </q-item-section>
     </q-item>
     <q-item class="q-my-md">
-      <q-item-section avatar>
+      <q-item-section>
+        <q-item-label>{{ $t('settingsDurationText') }}</q-item-label>
+        <q-item-label caption>{{ $t('settingsDurationHint') }}</q-item-label>
+      </q-item-section>
+      <q-item-section side>
         <div class="row no-wrap items-center">
         <q-btn
           round
@@ -34,12 +38,13 @@
         />
         </div>
       </q-item-section>
-      <q-item-section>
-        <q-item-label>{{ $t('settingsDurationText') }}</q-item-label>
-      </q-item-section>
     </q-item>
     <q-item class="q-my-md">
-      <q-item-section avatar>
+      <q-item-section @click="wakeLock=!wakeLock">
+        <q-item-label>{{ $t('settingsWakeLockText') }}</q-item-label>
+        <q-item-label caption>{{ $t('settingsWakeLockHint') }}</q-item-label>
+      </q-item-section>
+      <q-item-section side>
         <q-toggle
           v-model="wakeLock"
           color="purple-5"
@@ -47,10 +52,6 @@
           unchecked-icon="clear"
           size="lg"
         />
-      </q-item-section>
-      <q-item-section @click="wakeLock=!wakeLock">
-        <q-item-label>{{ $t('settingsWakeLockText') }}</q-item-label>
-        <q-item-label caption>{{ $t('settingsWakeLockHint') }}</q-item-label>
       </q-item-section>
     </q-item>
     <q-btn
