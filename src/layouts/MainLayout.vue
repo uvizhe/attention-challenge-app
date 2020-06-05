@@ -18,7 +18,7 @@
         ]
         <span class="q-ml-sm">&nbsp;{{ pageHeaderTitle }}</span>
         <q-space />
-        <div v-if="$router.currentRoute.path.match('/help$')">
+        <div v-if="$router.currentRoute.path.match('/about')">
           v{{ version }}
         </div>
       </q-bar>

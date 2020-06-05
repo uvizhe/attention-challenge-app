@@ -10,7 +10,7 @@
       flat
       round
       icon="help"
-      @click="$router.push('/help')"
+      @click="$router.push('/about')"
     />
   </div>
 </template>

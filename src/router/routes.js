@@ -7,9 +7,9 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') },
       {
-        path: 'help',
-        component: () => import('pages/Help.vue'),
-        meta: { pageHeader: 'pageHeaderHelp' }
+        path: 'about',
+        component: () => import('pages/About.vue'),
+        meta: { pageHeader: 'pageHeaderAbout' }
       },
       {
         path: 'settings',
