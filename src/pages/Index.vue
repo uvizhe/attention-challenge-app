@@ -71,7 +71,6 @@ export default {
     }
     this.sessionDuration = process.env.SESSION_DURATION ||
       this.$store.state.app.sessionDuration
-    this.seconds = this.sessionDuration
   },
   mounted () {
     if (this.$q.platform.is.android) {
@@ -124,7 +123,7 @@ export default {
       }
     },
     sessionDurationMin: function () {
-      return this.seconds / 60
+      return this.sessionDuration / 60
     },
     timeRemaining: function () {
       const min = String(Math.floor(this.seconds / 60))
@@ -144,14 +143,15 @@ export default {
       }, 3000)
     },
     adjustSession (min) {
-      this.seconds += Number(min) * 60
-      if (this.seconds < 5 * 60) {
-        this.seconds = 5 * 60
-      } else if (this.seconds > 30 * 60) {
-        this.seconds = 30 * 60
+      this.sessionDuration += Number(min) * 60
+      if (this.sessionDuration < 5 * 60) {
+        this.sessionDuration = 5 * 60
+      } else if (this.sessionDuration > 30 * 60) {
+        this.sessionDuration = 30 * 60
       }
     },
     startSession () {
+      this.seconds = this.sessionDuration
       if (this.$store.state.app.wakeLock) {
         window.plugins.insomnia.keepAwake()
       }
@@ -176,7 +176,6 @@ export default {
         window.plugins.insomnia.allowSleepAgain()
       }
       cordova.plugins.backgroundMode.disable()
-      this.seconds = this.sessionDuration
       this.sessionOn = false
     },
     checkTime () {
@@ -203,7 +202,10 @@ export default {
     },
     async reportScore (score) {
       try {
-        await this.$store.dispatch('app/reportSession', score)
+        await this.$store.dispatch('app/reportSession', {
+          score: score,
+          duration: this.sessionDuration
+        })
       } catch (e) {
         this.showError(e.message)
         return

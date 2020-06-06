@@ -74,10 +74,11 @@ export const signup = async (user, pass, email) => {
   }
 }
 
-export const postSession = async (score) => {
+export const postSession = async (score, duration) => {
   const date = new Date()
   const data = {
     score: score,
+    duration: Math.floor(duration / 60), // in minutes
     timestamp: date.getTime(),
     tzoffset: date.getTimezoneOffset()
   }

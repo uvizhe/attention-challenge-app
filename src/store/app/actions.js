@@ -72,8 +72,8 @@ export async function syncWithFriends (context) {
   saveTotals(context.state.totals)
 }
 
-export async function reportSession (context, score) {
-  const stats = await postSession(score)
+export async function reportSession (context, payload) {
+  const stats = await postSession(payload.score, payload.duration)
   let avgs30 = context.getters.avgs30Copy
   let totals = context.state.totals
   if (!avgs30.length) {
