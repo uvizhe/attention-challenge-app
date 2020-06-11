@@ -102,7 +102,7 @@ export default {
           return
         }
         this.$store.dispatch('app/setUsername', this.username)
-        this.$router.push('/')
+        this.$router.replace('/')
       }
     }
   }

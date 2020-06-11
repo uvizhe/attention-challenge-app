@@ -32,11 +32,7 @@ const routes = [
   },
   {
     path: '/enter',
-    component: () => import('pages/Entrance.vue')
-  },
-  {
-    path: '/signup',
-    component: () => import('pages/Signup.vue'),
+    component: () => import('pages/Entrance.vue'),
     beforeEnter: async (to, from, next) => {
       // This guard prevents user from accessing signup page after signup
       if (await authenticated()) {
@@ -47,16 +43,12 @@ const routes = [
     }
   },
   {
+    path: '/signup',
+    component: () => import('pages/Signup.vue')
+  },
+  {
     path: '/login',
-    component: () => import('pages/Login.vue'),
-    beforeEnter: async (to, from, next) => {
-      // This guard prevents user from accessing login page after login
-      if (await authenticated()) {
-        next('/')
-      } else {
-        next()
-      }
-    }
+    component: () => import('pages/Login.vue')
   },
   {
     path: '/recover',
