@@ -38,6 +38,11 @@
             @click="submit"
           />
         </div>
+        <router-link to="/recover"
+          class="absolute-bottom text-center q-mb-lg"
+        >
+          {{ $t('loginRecovery') }}
+        </router-link>
       </q-page>
     </q-page-container>
   </q-layout>

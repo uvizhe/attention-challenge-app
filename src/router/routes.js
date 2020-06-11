@@ -57,6 +57,14 @@ const routes = [
         next()
       }
     }
+  },
+  {
+    path: '/recover',
+    component: () => import('pages/Recover.vue')
+  },
+  {
+    path: '/recover-info',
+    component: () => import('pages/RecoverInfo.vue')
   }
 ]
 

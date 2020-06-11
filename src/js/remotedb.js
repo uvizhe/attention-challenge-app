@@ -74,6 +74,22 @@ export const signup = async (user, pass, email) => {
   }
 }
 
+export const recover = async (email, locale) => {
+  const data = {
+    email: email,
+    locale: locale
+  }
+  try {
+    await axios.post('/recover', data)
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+}
+
 export const postSession = async (score, duration) => {
   const date = new Date()
   const data = {
