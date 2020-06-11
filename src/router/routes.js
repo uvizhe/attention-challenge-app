@@ -36,11 +36,27 @@ const routes = [
   },
   {
     path: '/signup',
-    component: () => import('pages/Signup.vue')
+    component: () => import('pages/Signup.vue'),
+    beforeEnter: async (to, from, next) => {
+      // This guard prevents user from accessing signup page after signup
+      if (await authenticated()) {
+        next('/')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/login',
-    component: () => import('pages/Login.vue')
+    component: () => import('pages/Login.vue'),
+    beforeEnter: async (to, from, next) => {
+      // This guard prevents user from accessing login page after login
+      if (await authenticated()) {
+        next('/')
+      } else {
+        next()
+      }
+    }
   }
 ]
 
