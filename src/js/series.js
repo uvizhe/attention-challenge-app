@@ -7,6 +7,21 @@ function deepCopy (multiSeries) {
   return copy
 }
 
+function crop (multiSeries, len = 90) {
+  const msDates = Object.keys(multiSeries).sort()
+  let excess = msDates.length - len
+  if (excess > 0) {
+    for (const date of msDates) {
+      delete multiSeries[date]
+      excess -= 1
+      if (excess === 0) {
+        break
+      }
+    }
+  }
+  return multiSeries
+}
+
 export function appendValues (multiSeries, datesValues, pos = 0) {
   /*
     pos: 0 - user, 1..4 - friends
@@ -32,7 +47,7 @@ export function appendValues (multiSeries, datesValues, pos = 0) {
     }
     lastDate = date
   }
-  return newMultiSeries
+  return crop(newMultiSeries)
 }
 
 export function addSeries (multiSeries, newSeries, pos) {
@@ -76,7 +91,7 @@ export function addSeries (multiSeries, newSeries, pos) {
     prevDate = date
     prevNewSeriesValue = newMultiSeries[date].slice(pos, pos + 1).pop()
   }
-  return newMultiSeries
+  return crop(newMultiSeries)
 }
 
 export function removeSeries (multiSeries, pos) {
@@ -99,5 +114,5 @@ export function removeSeries (multiSeries, pos) {
   for (const date of datesToRemove) {
     delete newMultiSeries[date]
   }
-  return newMultiSeries
+  return crop(newMultiSeries)
 }

@@ -9,7 +9,7 @@ export default {
   name: 'Avgs30Chart',
   data () {
     return {
-      options: {
+      optionsDefault: {
         grid: {
           row: {
             colors: ['#f868f8', '#f888f8', '#f8a8f8', '#f8c8f8', '#f8e8f8']
@@ -39,6 +39,14 @@ export default {
     }
   },
   computed: {
+    options: function () {
+      const avgsLength = this.series[0].data.length
+      const options = JSON.parse(JSON.stringify(this.optionsDefault))
+      if (avgsLength > 30) {
+        options.xaxis.max = avgsLength
+      }
+      return options
+    },
     series: function () {
       return [{
         data: this.$store.state.app.avgs30

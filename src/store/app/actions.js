@@ -85,8 +85,8 @@ export async function reportSession (context, payload) {
       avgs30.pop()
     }
     avgs30.push(stats.average)
-    if (avgs30.length > 30) {
-      avgs30 = avgs30.slice(-30)
+    if (avgs30.length > 90) {
+      avgs30 = avgs30.slice(-90)
     }
   }
   totals = appendValues(totals, stats.total)
