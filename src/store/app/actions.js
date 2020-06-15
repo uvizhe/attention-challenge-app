@@ -1,7 +1,7 @@
 import { Quasar } from 'quasar'
 import {
-  getAvgs30, getTotals, getFriends,
-  saveAvgs30, saveTotals, saveFriends,
+  getAvgs, getTotals, getFriends,
+  saveAvgs, saveTotals, saveFriends,
   saveConfig, getConfig
 } from '../../js/localdb'
 import {
@@ -10,6 +10,11 @@ import {
 import {
   appendValues, addSeries, removeSeries
 } from '../../js/series'
+import { updateChartsData } from '../../js/maintenance'
+
+export function maintenance (context) {
+  updateChartsData()
+}
 
 export function setLocale (context, value) {
   context.commit('setConfig', { parameter: 'locale', value: value })
@@ -36,9 +41,10 @@ export function setWakeLock (context, value) {
 }
 
 export function initData (context) {
+  context.dispatch('maintenance')
   context.dispatch('restoreConfig')
   context.dispatch('setLocaleIfNotSet')
-  context.commit('setAvgs30', getAvgs30())
+  context.commit('setAvgs', getAvgs())
   context.commit('setTotals', getTotals())
   context.commit('setFriends', getFriends())
   context.dispatch('syncWithFriends')
@@ -74,25 +80,25 @@ export async function syncWithFriends (context) {
 
 export async function reportSession (context, payload) {
   const stats = await postSession(payload.score, payload.duration)
-  let avgs30 = context.getters.avgs30Copy
+  let avgs = context.getters.avgsCopy
   let totals = context.state.totals
-  if (!avgs30.length) {
+  if (!avgs.length) {
     // first ever session
-    avgs30 = [stats.average]
+    avgs = [stats.average]
   } else {
     if (stats.date in totals) {
       // new session this day
-      avgs30.pop()
+      avgs.pop()
     }
-    avgs30.push(stats.average)
-    if (avgs30.length > 90) {
-      avgs30 = avgs30.slice(-90)
+    avgs.push(stats.average)
+    if (avgs.length > 90) {
+      avgs = avgs.slice(-90)
     }
   }
   totals = appendValues(totals, stats.total)
-  context.commit('setAvgs30', avgs30)
+  context.commit('setAvgs', avgs)
   context.commit('setTotals', totals)
-  saveAvgs30(context.state.avgs30)
+  saveAvgs(context.state.avgs)
   saveTotals(context.state.totals)
 }
 
@@ -100,14 +106,14 @@ export async function fetchStats (context) {
   const stats = await getStats()
   let totals = {}
   if (stats.averages.length) {
-    context.commit('setAvgs30', stats.averages)
+    context.commit('setAvgs', stats.averages)
     totals = addSeries(
       context.state.totals,
       stats.totals,
       0
     )
     context.commit('setTotals', totals)
-    saveAvgs30(context.state.avgs30)
+    saveAvgs(context.state.avgs)
     saveTotals(context.state.totals)
   }
 }

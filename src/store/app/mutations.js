@@ -16,8 +16,8 @@ export function setInitialized (state) {
   state.initialized = true
 }
 
-export function setAvgs30 (state, avgs30) {
-  state.avgs30 = avgs30
+export function setAvgs (state, avgs) {
+  state.avgs = avgs
 }
 
 export function setTotals (state, totals) {

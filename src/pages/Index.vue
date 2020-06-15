@@ -7,7 +7,7 @@
         <totals-chart />
       </div>
       <div class="col-shrink relative-position">
-        <avgs30-chart />
+        <avgs-chart />
       </div>
       <div class="row col-grow relative-position justify-between items-center">
         <q-btn v-if="!sessionOn"
@@ -54,14 +54,14 @@
 <script>
 import RatingDialog from 'components/RatingDialog'
 import TotalsChart from 'components/TotalsChart'
-import Avgs30Chart from 'components/Avgs30Chart'
+import AvgsChart from 'components/AvgsChart'
 import { randomSignals } from '../js/rsg'
 export default {
   name: 'PageIndex',
   components: {
     RatingDialog,
     TotalsChart,
-    Avgs30Chart
+    AvgsChart
   },
   created () {
     if (!this.$store.state.app.initialized) {

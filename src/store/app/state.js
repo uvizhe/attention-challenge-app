@@ -10,7 +10,7 @@ export default function () {
     /* Config variables END */
     initialized: false,
     // TODO: move these below to config variables
-    avgs30: [],
+    avgs: [],
     totals: {},
     friends: [],
     languages: [

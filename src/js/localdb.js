@@ -1,15 +1,15 @@
 import { LocalStorage } from 'quasar'
 
-export const saveAvgs30 = (avgs30) => {
-  LocalStorage.set('avgs30', avgs30)
+export const saveAvgs = (avgs) => {
+  LocalStorage.set('avgs', avgs)
 }
 
-export const getAvgs30 = () => {
-  let avgs30 = []
-  if (LocalStorage.has('avgs30')) {
-    avgs30 = LocalStorage.getItem('avgs30')
+export const getAvgs = () => {
+  let avgs = []
+  if (LocalStorage.has('avgs')) {
+    avgs = LocalStorage.getItem('avgs')
   }
-  return avgs30
+  return avgs
 }
 
 export const saveTotals = (totals) => {
