@@ -1,6 +1,7 @@
 <template>
   <q-layout>
     <q-page-container>
+      <q-linear-progress indeterminate :class="progressClass" />
       <q-page padding class="flex flex-center content-center">
         <div class="column items-center">
           <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
@@ -13,6 +14,7 @@
             maxlength="50"
             v-model="username"
             :label="$t('signupUsername')"
+            :disable="wait"
           />
           <q-input
             outlined
@@ -21,6 +23,7 @@
             type="email"
             v-model="email"
             :label="$t('signupEmail')"
+            :disable="wait"
           />
           <q-input
             outlined
@@ -29,6 +32,7 @@
             v-model="password"
             :type="isPwd ? 'password' : 'text'"
             :label="$t('signupPassword')"
+            :disable="wait"
           >
             <template v-slot:append>
               <q-icon
@@ -44,6 +48,7 @@
             color="purple-5"
             size="xl"
             @click="submit"
+            :disable="wait"
           />
         </div>
       </q-page>
@@ -65,7 +70,8 @@ export default {
       email: '',
       isPwd: true,
       error: false,
-      errMsg: ''
+      errMsg: '',
+      wait: false
     }
   },
   computed: {
@@ -75,6 +81,9 @@ export default {
         cls += ' hidden'
       }
       return cls
+    },
+    progressClass: function () {
+      return this.wait ? '' : 'invisible'
     }
   },
   methods: {
@@ -96,11 +105,14 @@ export default {
         this.showError(this.$t('signupError3'))
       } else {
         try {
+          this.wait = true
           await signup(this.username, this.password, this.email)
         } catch (e) {
+          this.wait = false
           this.showError(e.message)
           return
         }
+        this.wait = false
         this.$store.dispatch('app/setUsername', this.username)
         this.$router.replace('/')
       }

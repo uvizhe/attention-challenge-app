@@ -1,5 +1,6 @@
 <template>
   <q-layout>
+    <q-linear-progress indeterminate :class="progressClass" />
     <q-page padding class="flex flex-center content-center">
       <div class="column items-center">
         <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
@@ -11,6 +12,7 @@
           type="email"
           v-model="email"
           :label="$t('signupEmail')"
+          :disable="wait"
         />
         <q-btn
           class="q-ma-md entrance-button"
@@ -18,6 +20,7 @@
           color="purple-5"
           size="xl"
           @click="submit"
+          :disable="wait"
         />
       </div>
     </q-page>
@@ -31,7 +34,8 @@ export default {
     return {
       email: '',
       error: false,
-      errMsg: ''
+      errMsg: '',
+      wait: false
     }
   },
   computed: {
@@ -41,6 +45,9 @@ export default {
         cls += ' hidden'
       }
       return cls
+    },
+    progressClass: function () {
+      return this.wait ? '' : 'invisible'
     }
   },
   methods: {
@@ -56,11 +63,14 @@ export default {
         this.showError(this.$t('signupError3'))
       } else {
         try {
+          this.wait = true
           await recover(this.email, this.$q.lang.getLocale())
         } catch (e) {
+          this.wait = false
           this.showError(e.message)
           return
         }
+        this.wait = false
         this.$router.replace('/recover-info')
       }
     }
