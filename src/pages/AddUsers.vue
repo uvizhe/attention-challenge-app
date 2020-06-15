@@ -1,6 +1,7 @@
 <template>
-  <q-page padding>
+  <q-page>
     <q-banner :class="noticeBannerClass">{{ $t('addUsersBanner') }}</q-banner>
+    <q-linear-progress indeterminate :class="progressClass" />
     <q-list dense>
       <q-item :inset-level="1" class="text-bold">
         <q-item-section>
@@ -37,13 +38,16 @@ import { getUsers } from '../js/remotedb'
 export default {
   // name: 'PageName',
   async created () {
+    this.wait = true
     const users = await getUsers()
     this.users = this.prepareUserList(users)
+    this.wait = false
   },
   data () {
     return {
       users: [],
-      limitNotification: false
+      limitNotification: false,
+      wait: false
     }
   },
   computed: {
@@ -53,6 +57,9 @@ export default {
         cls += ' hidden'
       }
       return cls
+    },
+    progressClass: function () {
+      return this.wait ? '' : 'invisible'
     }
   },
   methods: {
