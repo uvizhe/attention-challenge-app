@@ -52,7 +52,6 @@ export default {
     },
     pageHeaderTitle: function () {
       const titleString = this.$store.state.app.pageHeaderTitle
-      console.log(titleString)
       if (titleString) {
         return this.$t(titleString)
       }
