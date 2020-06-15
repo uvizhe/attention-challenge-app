@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="flex">
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
-    <rating-dialog :show="ratingDialog" @rated="reportScore" />
+    <rating-dialog :show="ratingDialog" :wait="ratingDialogWait" @rated="reportScore" />
     <div class="column justify-between full-width">
       <div class="col-5 relative-position">
         <totals-chart />
@@ -103,6 +103,7 @@ export default {
       error: false,
       errMsg: '',
       ratingDialog: false,
+      ratingDialogWait: false,
       dingSound: undefined,
       bowlSound: undefined
     }
@@ -202,14 +203,17 @@ export default {
     },
     async reportScore (score) {
       try {
+        this.ratingDialogWait = true
         await this.$store.dispatch('app/reportSession', {
           score: score,
           duration: this.sessionDuration
         })
       } catch (e) {
+        this.ratingDialogWait = false
         this.showError(e.message)
         return
       }
+      this.ratingDialogWait = false
       this.ratingDialog = false
     }
   }
