@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
-    "apexcharts": "^3.18.1",
+    "apexcharts": "^3.19.2",
     "axios": "^0.18.1",
     "quasar": "^1.0.0",
     "sha.js": "^2.4.11",
