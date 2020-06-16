@@ -38,6 +38,14 @@
               {{ buttonTitle }}
             </div>
           </div>
+          <q-tooltip
+            v-model="deferralWarning"
+            :no-parent-event="true"
+            max-width="70%"
+            content-class="text-justify"
+          >
+            {{ $t('indexBellsDeferralWarning') }}
+          </q-tooltip>
         </q-btn>
         <q-btn v-if="!sessionOn"
           icon="add"
@@ -56,6 +64,7 @@ import RatingDialog from 'components/RatingDialog'
 import TotalsChart from 'components/TotalsChart'
 import AvgsChart from 'components/AvgsChart'
 import { randomSignals } from '../js/rsg'
+import { MIN_SESSION, MAX_SESSION } from '../js/constants'
 export default {
   name: 'PageIndex',
   components: {
@@ -71,6 +80,7 @@ export default {
     }
     this.sessionDuration = process.env.SESSION_DURATION ||
       this.$store.state.app.sessionDuration
+    this.bellsDeferral = this.$store.state.app.bellsDeferral
   },
   mounted () {
     if (this.$q.platform.is.android) {
@@ -96,10 +106,12 @@ export default {
   data () {
     return {
       sessionDuration: 0,
+      bellsDeferral: 0,
       seconds: 0,
       sessionOn: false,
       timer: null,
       signals: [],
+      deferralWarning: false,
       error: false,
       errMsg: '',
       ratingDialog: false,
@@ -145,10 +157,21 @@ export default {
     },
     adjustSession (min) {
       this.sessionDuration += Number(min) * 60
-      if (this.sessionDuration < 5 * 60) {
-        this.sessionDuration = 5 * 60
-      } else if (this.sessionDuration > 30 * 60) {
-        this.sessionDuration = 30 * 60
+      if (this.sessionDuration < MIN_SESSION * 60) {
+        this.sessionDuration = MIN_SESSION * 60
+      } else if (this.sessionDuration > MAX_SESSION * 60) {
+        this.sessionDuration = MAX_SESSION * 60
+      }
+      if (this.sessionDuration - this.bellsDeferral < MIN_SESSION * 60) {
+        this.bellsDeferral = this.sessionDuration - MIN_SESSION * 60
+        if (this.bellsDeferral < 0) {
+          this.bellsDeferral = 0
+        } else {
+          this.deferralWarning = true
+          setTimeout(() => {
+            this.deferralWarning = false
+          }, 3500)
+        }
       }
     },
     startSession () {
@@ -156,7 +179,7 @@ export default {
       if (this.$store.state.app.wakeLock) {
         window.plugins.insomnia.keepAwake()
       }
-      this.signals = randomSignals(this.seconds)
+      this.signals = randomSignals(this.sessionDuration - this.bellsDeferral, this.bellsDeferral)
       this.sessionOn = true
       this.dingSound.play()
       cordova.plugins.backgroundMode.on('activate', function () {

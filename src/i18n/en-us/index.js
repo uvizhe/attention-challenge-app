@@ -24,6 +24,8 @@ export default {
   settingsLanguageText: 'App language',
   settingsDurationText: 'Default session duration',
   settingsDurationHint: 'From 5 to 30 minutes',
+  settingsDeferBellsText: 'Defer bells for N minutes',
+  settingsDeferBellsHint: 'To help you tune in. Maximum value depends on session duration',
   settingsWakeLockText: 'Keep screen on during session',
   settingsWakeLockHint: 'In case the timer stops when screen is off',
   settingsButton: 'Save Settings',
@@ -42,5 +44,6 @@ export default {
   addUsersTableScore: 'Score',
   addUsersButton: 'Add to chart',
   addUsersSearch: 'Search user',
+  indexBellsDeferralWarning: 'Bells deferral has been adjusted for this session',
   rbMin: 'min'
 }

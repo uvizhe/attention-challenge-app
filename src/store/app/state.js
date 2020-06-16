@@ -4,6 +4,7 @@ export default function () {
     pageHeaderTitle: '',
     /* Config variables BEGIN */
     sessionDuration: 15 * 60,
+    bellsDeferral: 0,
     wakeLock: false,
     username: '',
     locale: '',

@@ -40,6 +40,31 @@
       </q-item-section>
     </q-item>
     <q-item class="q-my-md">
+      <q-item-section>
+        <q-item-label>{{ $t('settingsDeferBellsText') }}</q-item-label>
+        <q-item-label caption>{{ $t('settingsDeferBellsHint') }}</q-item-label>
+      </q-item-section>
+      <q-item-section side>
+        <div class="row no-wrap items-center">
+        <q-btn
+          round
+          size="sm"
+          icon="remove"
+          color="purple-5"
+          @click="adjustDeferral(-1)"
+        />
+        <div class="settings-duration text-center">{{ deferral }}</div>
+        <q-btn
+          round
+          size="sm"
+          icon="add"
+          color="purple-5"
+          @click="adjustDeferral(1)"
+        />
+        </div>
+      </q-item-section>
+    </q-item>
+    <q-item class="q-my-md">
       <q-item-section @click="wakeLock=!wakeLock">
         <q-item-label>{{ $t('settingsWakeLockText') }}</q-item-label>
         <q-item-label caption>{{ $t('settingsWakeLockHint') }}</q-item-label>
@@ -65,13 +90,15 @@
 </template>
 
 <script>
+import { MIN_SESSION, MAX_SESSION } from '../js/constants'
 export default {
   // name: 'PageName',
   data () {
     return {
       locale: '',
       wakeLock: false,
-      duration: 15
+      duration: 15,
+      deferral: 0
     }
   },
   beforeRouteLeave (to, from, next) {
@@ -81,6 +108,7 @@ export default {
   mounted () {
     this.locale = this.$i18n.locale
     this.duration = this.$store.state.app.sessionDuration / 60
+    this.deferral = this.$store.state.app.bellsDeferral / 60
     this.wakeLock = this.$store.state.app.wakeLock
   },
   computed: {
@@ -91,15 +119,28 @@ export default {
   methods: {
     adjustSession (min) {
       this.duration += Number(min)
-      if (this.duration < 5) {
-        this.duration = 5
-      } else if (this.duration > 30) {
-        this.duration = 30
+      if (this.duration < MIN_SESSION) {
+        this.duration = MIN_SESSION
+      } else if (this.duration > MAX_SESSION) {
+        this.duration = MAX_SESSION
+      }
+      if (this.duration - this.deferral < MIN_SESSION) {
+        this.deferral = this.duration - MIN_SESSION
+      }
+    },
+    adjustDeferral (min) {
+      const change = Number(min)
+      if (this.duration - this.deferral - change >= MIN_SESSION) {
+        this.deferral += change
+        if (this.deferral < 0) {
+          this.deferral = 0
+        }
       }
     },
     saveSettings () {
       this.$store.dispatch('app/setLocale', this.locale)
       this.$store.dispatch('app/setSessionDuration', this.duration * 60)
+      this.$store.dispatch('app/setBellsDeferral', this.deferral * 60)
       this.$store.dispatch('app/setWakeLock', this.wakeLock)
       this.$router.go(-1)
     }

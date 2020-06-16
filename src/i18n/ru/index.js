@@ -24,6 +24,8 @@ export default {
   settingsLanguageText: 'Язык приложения',
   settingsDurationText: 'Длина сессии по умолчанию',
   settingsDurationHint: 'От 5 до 30 минут',
+  settingsDeferBellsText: 'Отложить звоночки на N минут',
+  settingsDeferBellsHint: 'Для погружения в медитацию. Максимальное значение зависит от длины сессии',
   settingsWakeLockText: 'Не гасить экран во время сессии',
   settingsWakeLockHint: 'На случай, если таймер останавливается при выключенном экране',
   settingsButton: 'Сохранить настройки',
@@ -42,5 +44,6 @@ export default {
   addUsersTableScore: 'Балл',
   addUsersButton: 'Добавить на график',
   addUsersSearch: 'Поиск пользователей',
+  indexBellsDeferralWarning: 'Настройка отложенных звоночков изменена для этой сессии',
   rbMin: 'мин'
 }

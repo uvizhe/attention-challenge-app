@@ -3,7 +3,7 @@ const STANDARD_SESSION = 15 * 60
 const SHORT_SESSION = 10 * 60
 const STANDARD_MIN_T = 1 * 60
 
-export const randomSignals = (session) => {
+export const randomSignals = (session, offset = 0) => {
   /*
     We suppose that mean interval value (minT+maxT)/2 == session/signal_count
     from what follows that for session=15*60, signal_count=5 and minT=1*60
@@ -39,7 +39,11 @@ export const randomSignals = (session) => {
     signals.splice(randomPos, 0, interval)
     signalsLeft = SIGNAL_COUNT - signals.length
   }
-  signals.push(session)
+  // apply offset
+  signals.push(session + offset)
+  if (offset) {
+    signals[0] += offset
+  }
   // substitute interval lengths with timestamps
   for (let i = 1; i < signals.length - 1; i++) {
     signals[i] = signals[i - 1] + signals[i]

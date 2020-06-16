@@ -17,6 +17,7 @@ export function maintenance (context) {
 }
 
 export function setLocale (context, value) {
+  if (context.state.locale === value) return
   context.commit('setConfig', { parameter: 'locale', value: value })
   saveConfig('locale', value)
 }
@@ -31,11 +32,19 @@ export function setLocaleIfNotSet (context) {
 }
 
 export function setSessionDuration (context, value) {
+  if (context.state.sessionDuration === value) return
   context.commit('setConfig', { parameter: 'sessionDuration', value: value })
   saveConfig('sessionDuration', value)
 }
 
+export function setBellsDeferral (context, value) {
+  if (context.state.bellsDeferral === value) return
+  context.commit('setConfig', { parameter: 'bellsDeferral', value: value })
+  saveConfig('bellsDeferral', value)
+}
+
 export function setWakeLock (context, value) {
+  if (context.state.wakeLock === value) return
   context.commit('setConfig', { parameter: 'wakeLock', value: value })
   saveConfig('wakeLock', value)
 }
