@@ -41,5 +41,6 @@ export default {
   addUsersTableUsername: 'Логин',
   addUsersTableScore: 'Балл',
   addUsersButton: 'Добавить на график',
+  addUsersSearch: 'Поиск пользователей',
   rbMin: 'мин'
 }
