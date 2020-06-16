@@ -114,7 +114,7 @@ export default {
       const spaceRequired = friendsAmount * offset
       if (dataPointIndex === dataSeries.length - 1) {
         if (name !== 'me' && spaceRequired >= 2 / 3 * seriesLength) {
-          return 'name (value)'
+          return name + '(' + value + ')'
         } else {
           return value
         }
