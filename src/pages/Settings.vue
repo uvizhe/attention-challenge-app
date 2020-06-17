@@ -27,6 +27,7 @@
           icon="remove"
           color="purple-5"
           @click="adjustSession(-1)"
+          :disable="lowerSessionLimit"
         />
         <div class="settings-duration text-center">{{ duration }}</div>
         <q-btn
@@ -35,6 +36,7 @@
           icon="add"
           color="purple-5"
           @click="adjustSession(1)"
+          :disable="upperSessionLimit"
         />
         </div>
       </q-item-section>
@@ -52,6 +54,7 @@
           icon="remove"
           color="purple-5"
           @click="adjustDeferral(-1)"
+          :disable="lowerDeferralLimit"
         />
         <div class="settings-duration text-center">{{ deferral }}</div>
         <q-btn
@@ -60,6 +63,7 @@
           icon="add"
           color="purple-5"
           @click="adjustDeferral(1)"
+          :disable="upperDeferralLimit"
         />
         </div>
       </q-item-section>
@@ -114,6 +118,18 @@ export default {
   computed: {
     langOptions () {
       return this.$store.state.app.languages
+    },
+    lowerSessionLimit () {
+      return this.duration === MIN_SESSION
+    },
+    upperSessionLimit () {
+      return this.duration === MAX_SESSION
+    },
+    lowerDeferralLimit () {
+      return this.deferral === 0
+    },
+    upperDeferralLimit () {
+      return this.duration - this.deferral === MIN_SESSION
     }
   },
   methods: {

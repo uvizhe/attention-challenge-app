@@ -16,6 +16,7 @@
           color="purple-5"
           class="q-mx-md"
           @click="adjustSession(-1)"
+          :disable="lowerSessionLimit"
         />
         <q-btn
           class="absolute-center shadow-up-5"
@@ -53,6 +54,7 @@
           color="purple-5"
           class="q-mx-md"
           @click="adjustSession(1)"
+          :disable="upperSessionLimit"
         />
       </div>
     </div>
@@ -144,6 +146,12 @@ export default {
     },
     sessionDurationMin: function () {
       return this.sessionDuration / 60
+    },
+    lowerSessionLimit () {
+      return this.sessionDuration / 60 === MIN_SESSION
+    },
+    upperSessionLimit () {
+      return this.sessionDuration / 60 === MAX_SESSION
     },
     timeRemaining: function () {
       const min = String(Math.floor(this.seconds / 60))
