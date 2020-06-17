@@ -21,6 +21,7 @@ export default {
   recoverButton: 'Восстановить',
   recoverInfo: 'Восстановление доступа с помощью зарегистрированной почты',
   recoverInfo2: 'Логин и инструкции по замене пароля высланы на указанную почту.',
+  waitingHint: 'Похоже, что-то не так со связью...',
   settingsLanguageText: 'Язык приложения',
   settingsDurationText: 'Длина сессии по умолчанию',
   settingsDurationHint: 'От 5 до 30 минут',

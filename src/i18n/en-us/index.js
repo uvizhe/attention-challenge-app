@@ -21,6 +21,7 @@ export default {
   recoverButton: 'Recover',
   recoverInfo: 'Recover access with email you registered',
   recoverInfo2: 'Your username and instructions on how to reset your password was sent to the specified email.',
+  waitingHint: 'Hmm, looks like a connectivity issue...',
   settingsLanguageText: 'App language',
   settingsDurationText: 'Default session duration',
   settingsDurationHint: 'From 5 to 30 minutes',
