@@ -98,6 +98,13 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
+    if (!to.path.startsWith('/app')) {
+      next(false)
+    } else {
+      next()
+    }
+  },
+  beforeRouteUpdate (to, from, next) {
     if (this.sessionOn) {
       this.stopTimer()
     }

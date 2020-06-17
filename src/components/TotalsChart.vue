@@ -151,7 +151,7 @@ export default {
       }
     },
     gotoAddUsers () {
-      this.$router.push('/addusers')
+      this.$router.push('/app/addusers')
     }
   }
 }

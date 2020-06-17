@@ -1,57 +1,53 @@
 <template>
-  <q-layout>
-    <q-page-container>
-      <q-linear-progress indeterminate :class="progressClass" />
-      <q-page padding class="flex flex-center content-center">
-        <div class="column items-center">
-          <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
-          <div class="text-h5 q-my-sm text-uppercase">
-            {{ $t('loginTitle') }}
-          </div>
-          <q-input
-            outlined
-            class="q-my-sm login-input"
-            maxlength="50"
-            v-model="username"
-            :label="$t('loginUsername')"
-            :disable="wait"
-          />
-          <q-input
-            outlined
-            class="q-my-sm login-input"
-            maxlength="500"
-            v-model="password"
-            :type="isPwd ? 'password' : 'text'"
-            :label="$t('loginPassword')"
-            :disable="wait"
-          >
-            <template v-slot:append>
-              <q-icon
-                :name="isPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPwd = !isPwd"
-              />
-            </template>
-          </q-input>
-          <q-btn
-            class="q-ma-md entrance-button"
-            :label="$t('loginButton')"
-            color="purple-5"
-            size="xl"
-            @click="submit"
-            :disable="wait"
-          />
-        </div>
-        <router-link to="/recover"
-          class="absolute-bottom text-center q-mb-lg"
-          :disabled="wait"
-          :event="wait ? '' : 'click'"
-        >
-          {{ $t('loginRecovery') }}
-        </router-link>
-      </q-page>
-    </q-page-container>
-  </q-layout>
+<q-page padding class="flex flex-center content-center">
+  <q-linear-progress indeterminate :class="progressClass" />
+  <div class="column items-center">
+    <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
+    <div class="text-h5 q-my-sm text-uppercase">
+      {{ $t('loginTitle') }}
+    </div>
+    <q-input
+      outlined
+      class="q-my-sm login-input"
+      maxlength="50"
+      v-model="username"
+      :label="$t('loginUsername')"
+      :disable="wait"
+    />
+    <q-input
+      outlined
+      class="q-my-sm login-input"
+      maxlength="500"
+      v-model="password"
+      :type="isPwd ? 'password' : 'text'"
+      :label="$t('loginPassword')"
+      :disable="wait"
+    >
+      <template v-slot:append>
+        <q-icon
+          :name="isPwd ? 'visibility_off' : 'visibility'"
+          class="cursor-pointer"
+          @click="isPwd = !isPwd"
+        />
+      </template>
+    </q-input>
+    <q-btn
+      class="q-ma-md entrance-button"
+      :label="$t('loginButton')"
+      color="purple-5"
+      size="xl"
+      @click="submit"
+      :disable="wait"
+    />
+  </div>
+  <router-link to="/recover"
+    class="absolute-bottom text-center q-mb-lg"
+    :disabled="wait"
+    :event="wait ? '' : 'click'"
+  >
+    {{ $t('loginRecovery') }}
+  </router-link>
+</q-page>
 </template>
 
 <script>
@@ -80,7 +76,8 @@ export default {
       return cls
     },
     progressClass: function () {
-      return this.wait ? '' : 'invisible'
+      const cls = 'fixed-top'
+      return this.wait ? cls : cls.concat(' invisible')
     }
   },
   methods: {
@@ -106,7 +103,7 @@ export default {
         }
         this.wait = false
         this.$store.dispatch('app/setUsername', this.username)
-        this.$router.replace('/')
+        this.$router.replace('/app')
       }
     }
   }

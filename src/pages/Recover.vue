@@ -1,30 +1,28 @@
 <template>
-  <q-layout>
-    <q-linear-progress indeterminate :class="progressClass" />
-    <q-page padding class="flex flex-center content-center">
-      <div class="column items-center">
-        <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
-        <div class="q-my-sm text-center">{{ $t('recoverInfo') }}</div>
-        <q-input
-          outlined
-          class="q-my-sm login-input"
-          maxlength="50"
-          type="email"
-          v-model="email"
-          :label="$t('signupEmail')"
-          :disable="wait"
-        />
-        <q-btn
-          class="q-ma-md entrance-button"
-          :label="$t('recoverButton')"
-          color="purple-5"
-          size="xl"
-          @click="submit"
-          :disable="wait"
-        />
-      </div>
-    </q-page>
-  </q-layout>
+<q-page padding class="flex flex-center content-center">
+  <q-linear-progress indeterminate :class="progressClass" />
+  <div class="column items-center">
+    <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
+    <div class="q-my-sm text-center">{{ $t('recoverInfo') }}</div>
+    <q-input
+      outlined
+      class="q-my-sm login-input"
+      maxlength="50"
+      type="email"
+      v-model="email"
+      :label="$t('signupEmail')"
+      :disable="wait"
+    />
+    <q-btn
+      class="q-ma-md entrance-button"
+      :label="$t('recoverButton')"
+      color="purple-5"
+      size="xl"
+      @click="submit"
+      :disable="wait"
+    />
+  </div>
+</q-page>
 </template>
 <script>
 import { recover } from '../js/remotedb'
@@ -47,7 +45,8 @@ export default {
       return cls
     },
     progressClass: function () {
-      return this.wait ? '' : 'invisible'
+      const cls = 'fixed-top'
+      return this.wait ? cls : cls.concat(' invisible')
     }
   },
   methods: {

@@ -1,5 +1,9 @@
 import { LocalStorage } from 'quasar'
 
+export const authenticated = () => {
+  return LocalStorage.has('auth-token')
+}
+
 export const saveAvgs = (avgs) => {
   LocalStorage.set('avgs', avgs)
 }

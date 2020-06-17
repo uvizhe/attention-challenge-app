@@ -13,16 +13,16 @@ function DatabaseConnectionError (message) {
   this.message = message || 'Unknown error'
 }
 
-export const authenticated = async () => {
-  if (LocalStorage.has('auth-token')) {
-    try {
-      await axios.get('/ping')
-      return true
-    } catch (e) {
-      // FIXME: Call 911
+export const authorize = async () => {
+  try {
+    await axios.get('/ping')
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
     }
   }
-  return false
 }
 
 export const authenticate = async (user, pass) => {

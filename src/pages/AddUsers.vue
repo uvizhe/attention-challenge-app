@@ -163,7 +163,7 @@ export default {
         .filter(i => i.checked)
         .map(i => i.user)
       this.$store.dispatch('app/addFriends', users)
-      this.$router.go(-1)
+      this.$router.replace('/app')
     }
   }
 }

@@ -142,7 +142,7 @@ export default {
       this.$store.dispatch('app/setSessionDuration', this.duration * 60)
       this.$store.dispatch('app/setBellsDeferral', this.deferral * 60)
       this.$store.dispatch('app/setWakeLock', this.wakeLock)
-      this.$router.go(-1)
+      this.$router.replace('/app')
     }
   }
 }

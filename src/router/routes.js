@@ -1,8 +1,44 @@
-import { authenticated } from '../js/remotedb'
+import { authenticated } from '../js/localdb'
 
 const routes = [
   {
     path: '/',
+    component: () => import('layouts/Blank.vue'),
+    children: [
+      { path: '', component: () => import('pages/Entrance.vue') },
+      {
+        path: '/signup',
+        component: () => import('pages/Signup.vue')
+      },
+      {
+        path: '/login',
+        component: () => import('pages/Login.vue')
+      },
+      {
+        path: '/recover',
+        component: () => import('pages/Recover.vue')
+      },
+      {
+        path: '/recover-info',
+        component: () => import('pages/RecoverInfo.vue')
+      }
+    ],
+    beforeEnter: async (to, from, next) => {
+      if (authenticated()) { // user has auth-token
+        // authorize user on a server
+        next({ path: '/waiting/auth', replace: true })
+      } else {
+        next()
+      }
+    }
+  },
+  {
+    path: '/waiting/:action',
+    component: () => import('pages/Waiting.vue'),
+    props: true
+  },
+  {
+    path: '/app',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
@@ -21,42 +57,7 @@ const routes = [
         component: () => import('pages/AddUsers.vue'),
         meta: { pageHeader: 'pageHeaderAddUsers' }
       }
-    ],
-    beforeEnter: async (to, from, next) => {
-      if (!await authenticated()) {
-        next('/enter')
-      } else {
-        next()
-      }
-    }
-  },
-  {
-    path: '/enter',
-    component: () => import('pages/Entrance.vue'),
-    beforeEnter: async (to, from, next) => {
-      // This guard prevents user from accessing signup page after signup
-      if (await authenticated()) {
-        next('/')
-      } else {
-        next()
-      }
-    }
-  },
-  {
-    path: '/signup',
-    component: () => import('pages/Signup.vue')
-  },
-  {
-    path: '/login',
-    component: () => import('pages/Login.vue')
-  },
-  {
-    path: '/recover',
-    component: () => import('pages/Recover.vue')
-  },
-  {
-    path: '/recover-info',
-    component: () => import('pages/RecoverInfo.vue')
+    ]
   }
 ]
 

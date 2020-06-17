@@ -13,12 +13,12 @@
         <q-btn
           flat round
           icon="arrow_back"
-          @click="$router.go(-1)"
+          @click="$router.replace('/app')"
         />
         ]
         <span class="q-ml-sm">&nbsp;{{ pageHeaderTitle }}</span>
         <q-space />
-        <div v-if="$router.currentRoute.path.match('/about')">
+        <div v-if="$router.currentRoute.path.match('about')">
           v{{ version }}
         </div>
       </q-bar>
