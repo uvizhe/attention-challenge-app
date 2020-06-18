@@ -40,6 +40,23 @@
         />
       </template>
     </q-input>
+    <q-input
+      outlined
+      class="q-my-sm login-input"
+      maxlength="500"
+      v-model="password2"
+      :type="isPwd2 ? 'password' : 'text'"
+      :label="$t('signupPassword2')"
+      :disable="wait"
+    >
+      <template v-slot:append>
+        <q-icon
+          :name="isPwd2 ? 'visibility_off' : 'visibility'"
+          class="cursor-pointer"
+          @click="isPwd2 = !isPwd2"
+        />
+      </template>
+    </q-input>
     <q-btn
       class="q-ma-md entrance-button"
       :label="$t('signupButton')"
@@ -63,8 +80,10 @@ export default {
     return {
       username: '',
       password: '',
+      password2: '',
       email: '',
       isPwd: true,
+      isPwd2: true,
       error: false,
       errMsg: '',
       wait: false
@@ -92,7 +111,7 @@ export default {
       }, 3000)
     },
     async submit () {
-      if (!(this.username && this.password && this.email)) {
+      if (!(this.username && this.password && this.password2 && this.email)) {
         this.showError(this.$t('signupError0'))
       } else if (this.username.length < 2) {
         this.showError(this.$t('signupError1'))
@@ -100,6 +119,10 @@ export default {
         this.showError(this.$t('signupError2'))
       } else if (!/^.+@[^.]+\..+$/.test(this.email)) {
         this.showError(this.$t('signupError3'))
+      } else if (this.password !== this.password2) {
+        this.showError(this.$t('signupError4'))
+      } else if (this.password.length < 6) {
+        this.showError(this.$t('signupError5'))
       } else {
         try {
           this.wait = true
