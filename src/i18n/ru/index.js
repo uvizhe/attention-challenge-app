@@ -48,6 +48,8 @@ export default {
   addUsersTableScore: 'Балл',
   addUsersButton: 'Добавить на график',
   addUsersSearch: 'Поиск пользователей',
+  totalsChartPlaceholder: 'Пока нет данных. Коснись и добавь друзей на график',
+  avgsChartPlaceholder: 'Пока нет данных',
   indexBellsDeferralWarning: 'Настройка отложенных звоночков изменена для этой сессии',
   rbMin: 'мин'
 }

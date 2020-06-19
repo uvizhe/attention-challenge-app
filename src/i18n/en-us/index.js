@@ -48,6 +48,9 @@ export default {
   addUsersTableScore: 'Score',
   addUsersButton: 'Add to chart',
   addUsersSearch: 'Search user',
+  totalsChartPlaceholder: 'No data yet. Touch to add friends to the chart',
+  avgsChartPlaceholder: 'No data yet',
+
   indexBellsDeferralWarning: 'Bells deferral has been adjusted for this session',
   rbMin: 'min'
 }

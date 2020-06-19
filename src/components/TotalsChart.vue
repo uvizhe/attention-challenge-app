@@ -52,6 +52,11 @@ export default {
           events: {
             click: () => { this.showAddUsersButton() }
           }
+        },
+        noData: {
+          text: this.$t('totalsChartPlaceholder'),
+          offsetY: -10,
+          style: { color: '#ab47bc' }
         }
       }
     }

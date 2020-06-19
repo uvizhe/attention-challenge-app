@@ -33,6 +33,11 @@ export default {
         chart: {
           sparkline: { enabled: true },
           toolbar: { show: false }
+        },
+        noData: {
+          text: this.$t('avgsChartPlaceholder'),
+          offsetY: -10,
+          style: { color: '#ab47bc' }
         }
       }
     }
