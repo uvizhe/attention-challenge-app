@@ -130,21 +130,21 @@ export default {
     }
   },
   computed: {
-    errorBannerClass: function () {
+    errorBannerClass () {
       let cls = 'absolute-top z-top bg-red text-white text-center'
       if (!this.error) {
         cls += ' hidden'
       }
       return cls
     },
-    buttonTitle: function () {
+    buttonTitle () {
       if (this.sessionOn) {
         return this.timeRemaining
       } else {
         return this.$t('rbText')
       }
     },
-    sessionDurationMin: function () {
+    sessionDurationMin () {
       return this.sessionDuration / 60
     },
     lowerSessionLimit () {
@@ -153,7 +153,7 @@ export default {
     upperSessionLimit () {
       return this.sessionDuration / 60 === MAX_SESSION
     },
-    timeRemaining: function () {
+    timeRemaining () {
       const min = String(Math.floor(this.seconds / 60))
       const sec = String(this.seconds % 60)
       return min.padStart(2, '0') + ':' + sec.padStart(2, '0')

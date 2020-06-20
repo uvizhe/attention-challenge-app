@@ -43,14 +43,14 @@ export default {
     }
   },
   computed: {
-    pageHeaderClass: function () {
+    pageHeaderClass () {
       if (this.$store.state.app.pageHeader) {
         return 'q-py-md'
       } else {
         return 'hidden'
       }
     },
-    pageHeaderTitle: function () {
+    pageHeaderTitle () {
       const titleString = this.$store.state.app.pageHeaderTitle
       if (titleString) {
         return this.$t(titleString)

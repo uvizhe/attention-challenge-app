@@ -43,7 +43,7 @@ export default {
     }
   },
   computed: {
-    series: function () {
+    series () {
       return [{
         data: this.$store.state.app.avgs
       }]

@@ -68,14 +68,14 @@ export default {
     }
   },
   computed: {
-    errorBannerClass: function () {
+    errorBannerClass () {
       let cls = 'fixed-top bg-red text-white text-center'
       if (!this.error) {
         cls += ' hidden'
       }
       return cls
     },
-    progressClass: function () {
+    progressClass () {
       const cls = 'fixed-top'
       return this.wait ? cls : cls.concat(' invisible')
     }

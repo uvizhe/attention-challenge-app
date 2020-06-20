@@ -62,14 +62,14 @@ export default {
     }
   },
   computed: {
-    btnClass: function () {
+    btnClass () {
       if (this.btnVisible) {
         return 'absolute-center'
       } else {
         return 'hidden'
       }
     },
-    series: function () {
+    series () {
       const series = [
         {
           name: 'me',

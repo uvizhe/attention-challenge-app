@@ -73,19 +73,19 @@ export default {
     }
   },
   watch: {
-    search: function () {
+    search () {
       this.filterUsers()
     }
   },
   computed: {
-    noticeBannerClass: function () {
+    noticeBannerClass () {
       let cls = 'absolute-top z-top bg-warning text-white text-center'
       if (!this.limitNotification) {
         cls += ' hidden'
       }
       return cls
     },
-    progressClass: function () {
+    progressClass () {
       return this.wait ? '' : 'invisible'
     }
   },
