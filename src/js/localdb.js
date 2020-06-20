@@ -1,14 +1,14 @@
 import { LocalStorage } from 'quasar'
 
-export const authenticated = () => {
+export function authenticated () {
   return LocalStorage.has('auth-token')
 }
 
-export const saveAvgs = (avgs) => {
+export function saveAvgs (avgs) {
   LocalStorage.set('avgs', avgs)
 }
 
-export const getAvgs = () => {
+export function getAvgs () {
   let avgs = []
   if (LocalStorage.has('avgs')) {
     avgs = LocalStorage.getItem('avgs')
@@ -16,11 +16,11 @@ export const getAvgs = () => {
   return avgs
 }
 
-export const saveTotals = (totals) => {
+export function saveTotals (totals) {
   LocalStorage.set('totals', totals)
 }
 
-export const getTotals = () => {
+export function getTotals () {
   let totals = {}
   if (LocalStorage.has('totals')) {
     totals = LocalStorage.getItem('totals')
@@ -28,12 +28,12 @@ export const getTotals = () => {
   return totals
 }
 
-export const saveConfig = (parameter, value) => {
+export function saveConfig (parameter, value) {
   const key = '_config:' + parameter
   LocalStorage.set(key, value)
 }
 
-export const getConfig = (parameter = undefined) => {
+export function getConfig (parameter = undefined) {
   if (parameter) {
     const key = '_config:' + parameter
     return LocalStorage.getItem(key)
@@ -48,11 +48,11 @@ export const getConfig = (parameter = undefined) => {
   return config
 }
 
-export const saveFriends = (usersArray) => {
+export function saveFriends (usersArray) {
   LocalStorage.set('friends', usersArray)
 }
 
-export const getFriends = () => {
+export function getFriends () {
   let users = []
   if (LocalStorage.has('friends')) {
     users = LocalStorage.getItem('friends')

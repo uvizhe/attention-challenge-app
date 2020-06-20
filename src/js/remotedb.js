@@ -13,7 +13,7 @@ function DatabaseConnectionError (message) {
   this.message = message || 'Unknown error'
 }
 
-export const authorize = async () => {
+export async function authorize () {
   try {
     await axios.get('/ping')
   } catch (e) {
@@ -25,7 +25,7 @@ export const authorize = async () => {
   }
 }
 
-export const authenticate = async (user, pass) => {
+export async function authenticate (user, pass) {
   const passHash = new SHA256().update(pass).digest('hex')
   const data = {
     username: user,
@@ -49,7 +49,7 @@ export const authenticate = async (user, pass) => {
   }
 }
 
-export const signup = async (user, pass, email) => {
+export async function signup (user, pass, email) {
   const passHash = new SHA256().update(pass).digest('hex')
   const data = {
     username: user,
@@ -74,7 +74,7 @@ export const signup = async (user, pass, email) => {
   }
 }
 
-export const recover = async (email, locale) => {
+export async function recover (email, locale) {
   const data = {
     email: email,
     locale: locale
@@ -90,7 +90,7 @@ export const recover = async (email, locale) => {
   }
 }
 
-export const postSession = async (score, duration) => {
+export async function postSession (score, duration) {
   const date = new Date()
   const data = {
     score: score,
@@ -111,7 +111,7 @@ export const postSession = async (score, duration) => {
   return res.data
 }
 
-export const getStats = async () => {
+export async function getStats () {
   let res
   try {
     res = await axios.get('/score')
@@ -125,7 +125,7 @@ export const getStats = async () => {
   return res.data
 }
 
-export const getUsers = async () => {
+export async function getUsers () {
   let res
   try {
     res = await axios.get('/users')
@@ -139,7 +139,7 @@ export const getUsers = async () => {
   return res.data.users
 }
 
-export const getFriendTotals = async (user, since = undefined) => {
+export async function getFriendTotals (user, since = undefined) {
   const userTotals = getTotals()
   if (!since && Object.keys(userTotals).length >= 7) {
     since = Object.keys(userTotals).sort().shift()

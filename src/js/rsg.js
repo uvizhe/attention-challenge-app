@@ -3,7 +3,7 @@ const STANDARD_SESSION = 15 * 60
 const SHORT_SESSION = 10 * 60
 const STANDARD_MIN_T = 1 * 60
 
-export const randomSignals = (session, offset = 0) => {
+export function randomSignals (session, offset = 0) {
   /*
     We suppose that mean interval value (minT+maxT)/2 == session/signal_count
     from what follows that for session=15*60, signal_count=5 and minT=1*60
