@@ -13,6 +13,7 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
+    "clovelced-plugin-audiomanagement": "^1.0.2",
     "cordova-android": "^8.1.0",
     "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-device": "^2.0.3",
@@ -28,7 +29,8 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-background-mode": {},
       "cordova-plugin-media": {},
-      "cordova-plugin-insomnia": {}
+      "cordova-plugin-insomnia": {},
+      "clovelced-plugin-audiomanagement": {}
     },
     "platforms": [
       "android"

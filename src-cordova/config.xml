@@ -56,5 +56,7 @@
     <allow-navigation href="about:*" />
     <config-file parent="/manifest" target="AndroidManifest.xml">
         <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+        <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+        <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="25" />
     </config-file>
 </widget>
