@@ -6,6 +6,7 @@ export default function () {
     sessionDuration: 15 * 60,
     bellsDeferral: 0,
     wakeLock: false,
+    dndMode: true,
     username: '',
     locale: '',
     /* Config variables END */

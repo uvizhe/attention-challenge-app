@@ -32,6 +32,8 @@ export default {
   settingsDeferBellsHint: 'To help you tune in. Maximum value depends on session duration',
   settingsWakeLockText: 'Keep screen on during session',
   settingsWakeLockHint: 'In case the timer stops when screen is off',
+  settingsDNDModeText: 'Switch to DND mode during session',
+  settingsDNDModeHint: 'To silence notifications from other apps',
   settingsButton: 'Save Settings',
   aboutGreeting: 'Hello',
   aboutP1: 'This app was created to help your meditation practice. The aim is to boost your motivation by giving you the way to estimate your practice progress more objectively while at the same time adding game and competition elements to it.',

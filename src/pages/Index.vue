@@ -199,10 +199,12 @@ export default {
         cordova.plugins.backgroundMode.disableWebViewOptimizations()
       })
       cordova.plugins.backgroundMode.enable()
-      window.AudioManagement.getAudioMode((result) => {
-        this.ringerMode = result.audioMode
-        window.AudioManagement.setAudioMode(0, null, null)
-      }, null)
+      if (this.$store.state.app.dndMode) {
+        window.AudioManagement.getAudioMode((result) => {
+          this.ringerMode = result.audioMode
+          window.AudioManagement.setAudioMode(0, null, null)
+        }, null)
+      }
       this.runTimer()
     },
     runTimer () {
@@ -217,7 +219,9 @@ export default {
         window.plugins.insomnia.allowSleepAgain()
       }
       cordova.plugins.backgroundMode.disable()
-      window.AudioManagement.setAudioMode(this.ringerMode, null, null)
+      if (this.$store.state.app.dndMode) {
+        window.AudioManagement.setAudioMode(this.ringerMode, null, null)
+      }
       this.sessionOn = false
     },
     checkTime () {

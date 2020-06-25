@@ -83,6 +83,21 @@
         />
       </q-item-section>
     </q-item>
+    <q-item class="q-my-md">
+      <q-item-section @click="dndMode=!dndMode">
+        <q-item-label>{{ $t('settingsDNDModeText') }}</q-item-label>
+        <q-item-label caption>{{ $t('settingsDNDModeHint') }}</q-item-label>
+      </q-item-section>
+      <q-item-section side>
+        <q-toggle
+          v-model="dndMode"
+          color="purple-5"
+          checked-icon="check"
+          unchecked-icon="clear"
+          size="lg"
+        />
+      </q-item-section>
+    </q-item>
     <q-btn
       :label="$t('settingsButton')"
       class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
@@ -101,6 +116,7 @@ export default {
     return {
       locale: '',
       wakeLock: false,
+      dndMode: true,
       duration: 15,
       deferral: 0
     }
@@ -114,6 +130,7 @@ export default {
     this.duration = this.$store.state.app.sessionDuration / 60
     this.deferral = this.$store.state.app.bellsDeferral / 60
     this.wakeLock = this.$store.state.app.wakeLock
+    this.dndMode = this.$store.state.app.dndMode
   },
   computed: {
     langOptions () {
@@ -158,6 +175,7 @@ export default {
       this.$store.dispatch('app/setSessionDuration', this.duration * 60)
       this.$store.dispatch('app/setBellsDeferral', this.deferral * 60)
       this.$store.dispatch('app/setWakeLock', this.wakeLock)
+      this.$store.dispatch('app/setDNDMode', this.dndMode)
       this.$router.replace('/app')
     }
   }

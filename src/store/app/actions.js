@@ -49,6 +49,12 @@ export function setWakeLock (context, value) {
   saveConfig('wakeLock', value)
 }
 
+export function setDNDMode (context, value) {
+  if (context.state.dndMode === value) return
+  context.commit('setConfig', { parameter: 'dndMode', value: value })
+  saveConfig('dndMode', value)
+}
+
 export function initData (context) {
   context.dispatch('maintenance')
   context.dispatch('restoreConfig')
