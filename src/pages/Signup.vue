@@ -134,7 +134,7 @@ export default {
         }
         this.wait = false
         this.$store.dispatch('app/setUsername', this.username)
-        this.$router.replace('/app')
+        this.$router.replace('/app?newuser=1')
       }
     }
   }

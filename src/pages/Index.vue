@@ -1,6 +1,7 @@
 <template>
   <q-page padding class="flex">
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
+    <greeting-dialog :show="greetingDialog" />
     <rating-dialog :show="ratingDialog" :wait="ratingDialogWait" @rated="reportScore" />
     <div class="column justify-between full-width">
       <div class="col-5 relative-position">
@@ -62,6 +63,7 @@
 </template>
 
 <script>
+import GreetingDialog from 'components/GreetingDialog'
 import RatingDialog from 'components/RatingDialog'
 import TotalsChart from 'components/TotalsChart'
 import AvgsChart from 'components/AvgsChart'
@@ -70,6 +72,7 @@ import { MIN_SESSION, MAX_SESSION } from '../js/constants'
 export default {
   name: 'PageIndex',
   components: {
+    GreetingDialog,
     RatingDialog,
     TotalsChart,
     AvgsChart
@@ -98,6 +101,9 @@ export default {
       // eslint-disable-next-line no-undef
       this.bowlSound = new Media('statics/sounds/Bowl.mp3')
     }
+    if (this.$router.currentRoute.query.newuser) {
+      this.greetingDialog = true
+    }
   },
   beforeRouteLeave (to, from, next) {
     if (!to.path.startsWith('/app')) {
@@ -120,6 +126,7 @@ export default {
       deferralWarning: false,
       error: false,
       errMsg: '',
+      greetingDialog: false,
       ratingDialog: false,
       ratingDialogWait: false,
       ringerMode: undefined,

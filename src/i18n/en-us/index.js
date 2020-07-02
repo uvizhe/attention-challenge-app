@@ -50,9 +50,12 @@ export default {
   addUsersTableScore: 'Score',
   addUsersButton: 'Add to chart',
   addUsersSearch: 'Search user',
+  greetingHeader: 'Welcome,',
+  greetingText1: 'First time here?',
+  greetingText2: 'Click',
+  greetingText3: 'icon on the top bar for introduction.',
   totalsChartPlaceholder: 'No data yet. Touch to add friends to the chart',
   avgsChartPlaceholder: 'No data yet',
-
   indexBellsDeferralWarning: 'Bells deferral has been adjusted for this session',
   rbMin: 'min'
 }
