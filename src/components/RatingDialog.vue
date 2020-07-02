@@ -3,7 +3,7 @@
   <q-dialog v-model="show" persistent transition-hide="scale">
     <q-card>
       <q-card-section align="center">
-        <div class="text-h6">Rate your session</div>
+        <div class="text-h6">{{ $t('ratingHeader') }}</div>
       </q-card-section>
       <q-card-section>
         <q-rating
@@ -15,7 +15,7 @@
         />
       </q-card-section>
       <q-card-actions align="around">
-        <q-btn flat label="Reset" color="primary" @click="score=0" :disable="wait" />
+        <q-btn flat :label="$t('ratingReset')" color="primary" @click="score=0" :disable="wait" />
         <q-btn flat label="OK" color="primary" @click="reportScore" :disable="wait" />
       </q-card-actions>
       <q-linear-progress indeterminate :class="progressClass" />

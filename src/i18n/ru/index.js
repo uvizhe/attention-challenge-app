@@ -54,6 +54,8 @@ export default {
   greetingText1: 'Впервые тут?',
   greetingText2: 'Жми на иконку',
   greetingText3: 'вверху для ознакомления.',
+  ratingHeader: 'Оценка сессии',
+  ratingReset: 'Сбросить',
   totalsChartPlaceholder: 'Пока нет данных. Коснись и добавь друзей на график',
   avgsChartPlaceholder: 'Пока нет данных',
   indexBellsDeferralWarning: 'Настройка отложенных звоночков изменена для этой сессии',

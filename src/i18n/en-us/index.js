@@ -54,6 +54,8 @@ export default {
   greetingText1: 'First time here?',
   greetingText2: 'Click',
   greetingText3: 'icon on the top bar for introduction.',
+  ratingHeader: 'Rate your session',
+  ratingReset: 'Reset',
   totalsChartPlaceholder: 'No data yet. Touch to add friends to the chart',
   avgsChartPlaceholder: 'No data yet',
   indexBellsDeferralWarning: 'Bells deferral has been adjusted for this session',
