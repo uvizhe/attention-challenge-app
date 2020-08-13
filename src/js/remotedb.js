@@ -114,7 +114,7 @@ export async function postSession (score, duration) {
 export async function getStats () {
   let res
   try {
-    res = await axios.get('/score')
+    res = await axios.get('/stats')
   } catch (e) {
     if (e.response) {
       throw new DatabaseConnectionError(e.response.data.msg)
