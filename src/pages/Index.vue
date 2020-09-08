@@ -3,14 +3,14 @@
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
     <greeting-dialog :show="greetingDialog" />
     <rating-dialog :show="ratingDialog" :wait="ratingDialogWait" @rated="reportScore" />
-    <div class="column justify-between full-width">
-      <div class="col-5 relative-position">
-        <totals-chart />
+    <div class="column justify-end full-width fixed-bottom q-px-xs">
+      <div class="col-auto">
+        <event-log />
       </div>
-      <div class="col-shrink relative-position">
+      <div class="col-auto relative-position q-mt-md">
         <avgs-chart />
       </div>
-      <div class="row col-grow relative-position justify-between items-center">
+      <div class="col-auto big-red-btn-div row relative-position justify-between items-center">
         <q-btn v-if="!sessionOn"
           icon="remove"
           round
@@ -65,7 +65,7 @@
 <script>
 import GreetingDialog from 'components/GreetingDialog'
 import RatingDialog from 'components/RatingDialog'
-import TotalsChart from 'components/TotalsChart'
+import EventLog from 'components/EventLog'
 import AvgsChart from 'components/AvgsChart'
 import { randomSignals } from '../js/rsg'
 import { MIN_SESSION, MAX_SESSION } from '../js/constants'
@@ -74,7 +74,7 @@ export default {
   components: {
     GreetingDialog,
     RatingDialog,
-    TotalsChart,
+    EventLog,
     AvgsChart
   },
   created () {
