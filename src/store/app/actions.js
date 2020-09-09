@@ -1,8 +1,6 @@
 import { Quasar } from 'quasar'
 import {
-  getLastSessionDate, saveLastSessionDate,
-  getAvgs, saveAvgs, getFriends, saveFriends,
-  getConfig, saveConfig
+  getConfig, saveConfig, getData, saveData
 } from '../../js/localdb'
 import {
   getStats, postSession
@@ -15,14 +13,17 @@ export function maintenance (context) {
 
 export function setLocale (context, value) {
   if (context.state.locale === value) return
-  context.commit('setConfig', { parameter: 'locale', value: value })
   saveConfig('locale', value)
+  context.commit('setStateValue', {
+    key: 'locale',
+    value: value
+  })
 }
 
 export function setLocaleIfNotSet (context) {
   if (!context.state.locale) {
-    context.commit('setConfig', {
-      parameter: 'locale',
+    context.commit('setStateValue', {
+      key: 'locale',
       value: Quasar.lang.getLocale()
     })
   }
@@ -30,48 +31,74 @@ export function setLocaleIfNotSet (context) {
 
 export function setSessionDuration (context, value) {
   if (context.state.sessionDuration === value) return
-  context.commit('setConfig', { parameter: 'sessionDuration', value: value })
   saveConfig('sessionDuration', value)
+  context.commit('setStateValue', {
+    key: 'sessionDuration',
+    value: value
+  })
 }
 
 export function setBellsDeferral (context, value) {
   if (context.state.bellsDeferral === value) return
-  context.commit('setConfig', { parameter: 'bellsDeferral', value: value })
   saveConfig('bellsDeferral', value)
+  context.commit('setStateValue', {
+    key: 'bellsDeferral',
+    value: value
+  })
 }
 
 export function setWakeLock (context, value) {
   if (context.state.wakeLock === value) return
-  context.commit('setConfig', { parameter: 'wakeLock', value: value })
   saveConfig('wakeLock', value)
+  context.commit('setStateValue', {
+    key: 'wakeLock',
+    value: value
+  })
 }
 
 export function setDNDMode (context, value) {
   if (context.state.dndMode === value) return
-  context.commit('setConfig', { parameter: 'dndMode', value: value })
   saveConfig('dndMode', value)
+  context.commit('setStateValue', {
+    key: 'dndMode',
+    value: value
+  })
 }
 
 export function initData (context) {
   context.dispatch('maintenance')
   context.dispatch('restoreConfig')
+  context.dispatch('restoreData')
   context.dispatch('setLocaleIfNotSet')
-  context.commit('setLastSessionDate', getLastSessionDate())
-  context.commit('setAvgs', getAvgs())
-  context.commit('setFriends', getFriends())
   context.commit('setInitialized')
 }
 
 export async function restoreConfig (context) {
   const config = getConfig()
   for (const [key, value] of Object.entries(config)) {
-    context.commit('setConfig', { parameter: key, value: value })
+    context.commit('setStateValue', {
+      key: key,
+      value: value
+    })
+  }
+}
+
+export async function restoreData (context) {
+  const data = getData()
+  for (const [key, value] of Object.entries(data)) {
+    context.commit('setStateValue', {
+      key: key,
+      value: value
+    })
   }
 }
 
 export function setUsername (context, username) {
-  context.commit('setConfig', { parameter: 'username', value: username })
   saveConfig('username', username)
+  context.commit('setStateValue', {
+    key: 'username',
+    value: username
+  })
 }
 
 export async function reportSession (context, payload) {
@@ -90,17 +117,26 @@ export async function reportSession (context, payload) {
       avgs = avgs.slice(-90)
     }
   }
-  context.commit('setLastSessionDate', stats.date)
-  saveLastSessionDate(context.state.lastSessionDate)
-  context.commit('setAvgs', avgs)
-  saveAvgs(context.state.avgs)
+  saveData('lastSessionDate', context.state.lastSessionDate)
+  context.commit('setStateValue', {
+    key: 'lastSessionDate',
+    value: stats.date
+  })
+  saveData('avgs', context.state.avgs)
+  context.commit('setStateValue', {
+    key: 'avgs',
+    value: avgs
+  })
 }
 
 export async function fetchStats (context) {
   const stats = await getStats()
   if (stats.averages.length) {
-    context.commit('setAvgs', stats.averages)
-    saveAvgs(context.state.avgs)
+    saveData('avgs', context.state.avgs)
+    context.commit('setStateValue', {
+      key: 'avgs',
+      value: stats.averages
+    })
   }
 }
 
@@ -112,8 +148,11 @@ export async function addFriends (context, friends) {
     // if all the friends are the same
     return
   }
-  context.commit('setFriends', newFriends)
-  saveFriends(newFriends)
+  saveData('friends', newFriends)
+  context.commit('setStateValue', {
+    key: 'friends',
+    value: newFriends
+  })
   // check for removed friends
   for (let i = 0; i < prevFriends.length; i++) {
     if (!newFriends.includes(prevFriends[i])) {

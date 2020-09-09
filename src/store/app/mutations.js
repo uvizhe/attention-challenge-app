@@ -8,22 +8,10 @@ export function setPageHeaderInvisible (state) {
   state.pageHeader = false
 }
 
-export function setConfig (state, { parameter, value }) {
-  state[parameter] = value
+export function setStateValue (state, { key, value }) {
+  state[key] = value
 }
 
 export function setInitialized (state) {
   state.initialized = true
-}
-
-export function setLastSessionDate (state, date) {
-  state.lastSessionDate = date
-}
-
-export function setAvgs (state, avgs) {
-  state.avgs = avgs
-}
-
-export function setFriends (state, friends) {
-  state.friends = friends
 }
