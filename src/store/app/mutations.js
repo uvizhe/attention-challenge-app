@@ -16,12 +16,12 @@ export function setInitialized (state) {
   state.initialized = true
 }
 
-export function setAvgs (state, avgs) {
-  state.avgs = avgs
+export function setLastSessionDate (state, date) {
+  state.lastSessionDate = date
 }
 
-export function setTotals (state, totals) {
-  state.totals = totals
+export function setAvgs (state, avgs) {
+  state.avgs = avgs
 }
 
 export function setFriends (state, friends) {

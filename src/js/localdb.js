@@ -4,6 +4,16 @@ export function authenticated () {
   return LocalStorage.has('auth-token')
 }
 
+export function saveLastSessionDate (date) {
+  LocalStorage.set('lastSessionDate', date)
+}
+
+export function getLastSessionDate () {
+  if (LocalStorage.has('lastSessionDate')) {
+    return LocalStorage.getItem('lastSessionDate')
+  }
+}
+
 export function saveAvgs (avgs) {
   LocalStorage.set('avgs', avgs)
 }
@@ -14,18 +24,6 @@ export function getAvgs () {
     avgs = LocalStorage.getItem('avgs')
   }
   return avgs
-}
-
-export function saveTotals (totals) {
-  LocalStorage.set('totals', totals)
-}
-
-export function getTotals () {
-  let totals = {}
-  if (LocalStorage.has('totals')) {
-    totals = LocalStorage.getItem('totals')
-  }
-  return totals
 }
 
 export function saveConfig (parameter, value) {

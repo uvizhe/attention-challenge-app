@@ -1,15 +1,12 @@
 import { Quasar } from 'quasar'
 import {
-  getAvgs, getTotals, getFriends,
-  saveAvgs, saveTotals, saveFriends,
-  saveConfig, getConfig
+  getLastSessionDate, saveLastSessionDate,
+  getAvgs, saveAvgs, getFriends, saveFriends,
+  getConfig, saveConfig
 } from '../../js/localdb'
 import {
-  getStats, getFriendTotals, postSession
+  getStats, postSession
 } from '../../js/remotedb'
-import {
-  appendValues, addSeries, removeSeries
-} from '../../js/series'
 import { updateChartsData } from '../../js/maintenance'
 
 export function maintenance (context) {
@@ -59,10 +56,9 @@ export function initData (context) {
   context.dispatch('maintenance')
   context.dispatch('restoreConfig')
   context.dispatch('setLocaleIfNotSet')
+  context.commit('setLastSessionDate', getLastSessionDate())
   context.commit('setAvgs', getAvgs())
-  context.commit('setTotals', getTotals())
   context.commit('setFriends', getFriends())
-  context.dispatch('syncWithFriends')
   context.commit('setInitialized')
 }
 
@@ -78,30 +74,14 @@ export function setUsername (context, username) {
   saveConfig('username', username)
 }
 
-export async function syncWithFriends (context) {
-  let totals = context.state.totals
-  const friends = context.state.friends
-  const lastDate = Object.keys(totals).sort().pop()
-  for (let i = 0; i < friends.length; i++) {
-    totals = appendValues(
-      totals,
-      await getFriendTotals(friends[i], lastDate),
-      i + 1
-    )
-  }
-  context.commit('setTotals', totals)
-  saveTotals(context.state.totals)
-}
-
 export async function reportSession (context, payload) {
   const stats = await postSession(payload.score, payload.duration)
   let avgs = context.getters.avgsCopy
-  let totals = context.state.totals
   if (!avgs.length) {
     // first ever session
     avgs = [stats.average]
   } else {
-    if (stats.date in totals) {
+    if (stats.date === context.state.lastSessionDate) {
       // new session this day
       avgs.pop()
     }
@@ -110,26 +90,17 @@ export async function reportSession (context, payload) {
       avgs = avgs.slice(-90)
     }
   }
-  totals = appendValues(totals, stats.total)
+  context.commit('setLastSessionDate', stats.date)
+  saveLastSessionDate(context.state.lastSessionDate)
   context.commit('setAvgs', avgs)
-  context.commit('setTotals', totals)
   saveAvgs(context.state.avgs)
-  saveTotals(context.state.totals)
 }
 
 export async function fetchStats (context) {
   const stats = await getStats()
-  let totals = {}
   if (stats.averages.length) {
     context.commit('setAvgs', stats.averages)
-    totals = addSeries(
-      context.state.totals,
-      stats.totals,
-      0
-    )
-    context.commit('setTotals', totals)
     saveAvgs(context.state.avgs)
-    saveTotals(context.state.totals)
   }
 }
 
@@ -143,23 +114,17 @@ export async function addFriends (context, friends) {
   }
   context.commit('setFriends', newFriends)
   saveFriends(newFriends)
-  let totals = context.state.totals
   // check for removed friends
   for (let i = 0; i < prevFriends.length; i++) {
     if (!newFriends.includes(prevFriends[i])) {
-      totals = removeSeries(totals, i + 1)
+      // pass
     }
   }
   for (let i = 0; i < newFriends.length; i++) {
     if (prevFriends.includes(newFriends[i])) {
-      continue // skip this friend as we already have it in totals
+      continue // skip this friend as we already have it
     }
-    totals = addSeries(
-      totals,
-      await getFriendTotals(newFriends[i]),
-      i + 1
-    )
+    // pass
   }
-  context.commit('setTotals', totals)
-  saveTotals(context.state.totals)
+  // pass
 }

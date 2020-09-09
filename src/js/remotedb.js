@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { sha256 as SHA256 } from 'sha.js'
 import { LocalStorage } from 'quasar'
-import { getTotals } from './localdb'
 
 axios.defaults.baseURL = process.env.BACKEND
 if (LocalStorage.has('auth-token')) {
@@ -137,29 +136,4 @@ export async function getUsers () {
     }
   }
   return res.data.users
-}
-
-export async function getFriendTotals (user, since = undefined) {
-  const userTotals = getTotals()
-  if (!since && Object.keys(userTotals).length >= 7) {
-    since = Object.keys(userTotals).sort().shift()
-  }
-  const last = since
-    ? undefined
-    : 7
-  const params = {
-    since: since,
-    last: last
-  }
-  let res
-  try {
-    res = await axios.get('/totals/' + user, { params: params })
-  } catch (e) {
-    if (e.response) {
-      throw new DatabaseConnectionError(e.response.data.msg)
-    } else {
-      throw new DatabaseConnectionError(e.message)
-    }
-  }
-  return res.data.totals
 }
