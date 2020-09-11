@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="text-subtitle1 text-bold text-center text-primary">Daily Average</div>
     <apexchart class="chart" type="line" height="100" :options="options" :series="series" />
   </div>
 </template>
@@ -19,6 +20,7 @@ export default {
           floating: true,
           labels: { show: false },
           min: 1,
+          max: 90,
           axisBorder: { show: false }
         },
         yaxis: {
@@ -28,7 +30,7 @@ export default {
           max: 5,
           tickAmount: 5
         },
-        stroke: { lineCap: 'round' },
+        stroke: { lineCap: 'round', width: 2 },
         tooltip: { enabled: false },
         chart: {
           sparkline: { enabled: true },
