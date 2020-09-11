@@ -111,9 +111,12 @@ export async function postSession (score, duration) {
 }
 
 export async function getStats () {
-  let res
+  let ress
   try {
-    res = await axios.get('/stats')
+    ress = await Promise.all([
+      axios.get('/sessions'),
+      axios.get('/averages')
+    ])
   } catch (e) {
     if (e.response) {
       throw new DatabaseConnectionError(e.response.data.msg)
@@ -121,7 +124,7 @@ export async function getStats () {
       throw new DatabaseConnectionError(e.message)
     }
   }
-  return res.data
+  return { ...ress[0].data, ...ress[1].data }
 }
 
 export async function getUsers () {

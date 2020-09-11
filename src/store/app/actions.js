@@ -132,7 +132,12 @@ export async function reportSession (context, payload) {
 export async function fetchStats (context) {
   const stats = await getStats()
   if (stats.averages.length) {
+    saveData('sessions', context.state.sessions)
     saveData('avgs', context.state.avgs)
+    context.commit('setStateValue', {
+      key: 'sessions',
+      value: stats.sessions
+    })
     context.commit('setStateValue', {
       key: 'avgs',
       value: stats.averages
