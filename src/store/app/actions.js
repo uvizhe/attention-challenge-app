@@ -117,12 +117,12 @@ export async function reportSession (context, payload) {
       avgs = avgs.slice(-90)
     }
   }
-  saveData('lastSessionDate', context.state.lastSessionDate)
+  saveData('lastSessionDate', stats.date)
   context.commit('setStateValue', {
     key: 'lastSessionDate',
     value: stats.date
   })
-  saveData('avgs', context.state.avgs)
+  saveData('avgs', avgs)
   context.commit('setStateValue', {
     key: 'avgs',
     value: avgs
@@ -132,8 +132,14 @@ export async function reportSession (context, payload) {
 export async function fetchStats (context) {
   const stats = await getStats()
   if (stats.averages.length) {
-    saveData('sessions', context.state.sessions)
-    saveData('avgs', context.state.avgs)
+    const lastSessionDate = stats.sessions.slice(-1).pop().date
+    saveData('lastSessionDate', lastSessionDate)
+    saveData('sessions', stats.sessions)
+    saveData('avgs', stats.averages)
+    context.commit('setStateValue', {
+      key: 'lastSessionDate',
+      value: lastSessionDate
+    })
     context.commit('setStateValue', {
       key: 'sessions',
       value: stats.sessions
