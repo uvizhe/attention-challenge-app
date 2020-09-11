@@ -103,11 +103,23 @@ export function setUsername (context, username) {
 
 export async function reportSession (context, payload) {
   const stats = await postSession(payload.score, payload.duration)
+  const ts = Math.floor(new Date().getTime() / 1000)
+  let sessions = context.state.sessions
   let avgs = context.getters.avgsCopy
-  if (!avgs.length) {
+  if (!sessions.length) {
     // first ever session
+    sessions = [{
+      date: stats.date,
+      ts: ts,
+      duration: payload.duration
+    }]
     avgs = [stats.average]
   } else {
+    sessions.push({
+      date: stats.date,
+      ts: ts,
+      duration: payload.duration
+    })
     if (stats.date === context.state.lastSessionDate) {
       // new session this day
       avgs.pop()
@@ -121,6 +133,11 @@ export async function reportSession (context, payload) {
   context.commit('setStateValue', {
     key: 'lastSessionDate',
     value: stats.date
+  })
+  saveData('sessions', sessions)
+  context.commit('setStateValue', {
+    key: 'sessions',
+    value: sessions
   })
   saveData('avgs', avgs)
   context.commit('setStateValue', {
