@@ -103,7 +103,7 @@ export function setUsername (context, username) {
 
 export async function reportSession (context, payload) {
   const stats = await postSession(payload.score, payload.duration)
-  const ts = Math.floor(new Date().getTime() / 1000)
+  const ts = Math.floor(Date.now() / 1000)
   let sessions = context.state.sessions
   let avgs = context.getters.avgsCopy
   if (!sessions.length) {
