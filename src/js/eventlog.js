@@ -1,7 +1,7 @@
 import moment from 'moment'
 
-const TD = 'Todate'
-const YD = 'Yesterdate'
+const TD = 'Today'
+const YD = 'Yesterday'
 const EL = 'Earlier↑↑↑'
 
 export function makeEL (sessions) {
