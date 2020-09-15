@@ -93,7 +93,7 @@ export async function postSession (score, duration) {
   const date = new Date()
   const data = {
     score: score,
-    duration: Math.floor(duration / 60), // in minutes
+    duration: duration,
     timestamp: date.getTime(),
     tzoffset: date.getTimezoneOffset()
   }

@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="flex">
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
-    <greeting-dialog :show="greetingDialog" />
+    <greeting-dialog :show="greetingDialog" @close="closeGreetingDialog" />
     <rating-dialog :show="ratingDialog" :wait="ratingDialogWait" @rated="reportScore" />
     <div class="column justify-end full-width fixed-bottom q-px-xs">
       <div class="col-auto">
@@ -175,6 +175,9 @@ export default {
         this.error = false
       }, 3000)
     },
+    closeGreetingDialog () {
+      this.greetingDialog = false
+    },
     adjustSession (min) {
       this.sessionDuration += Number(min) * 60
       if (this.sessionDuration < MIN_SESSION * 60) {
@@ -258,7 +261,7 @@ export default {
         this.ratingDialogWait = true
         await this.$store.dispatch('app/reportSession', {
           score: score,
-          duration: this.sessionDuration
+          duration: this.sessionDurationMin
         })
       } catch (e) {
         this.ratingDialogWait = false

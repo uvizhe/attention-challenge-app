@@ -11,7 +11,7 @@
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn flat label="OK" color="primary" v-close-popup />
+      <q-btn flat label="OK" color="primary" @click="close" />
     </q-card-actions>
   </q-card>
 </q-dialog>
@@ -20,11 +20,16 @@
 <script>
 export default {
   // name: 'ComponentName',
-  props: [
-    'show'
-  ],
+  props: {
+    show: Boolean
+  },
   data () {
     return {}
+  },
+  methods: {
+    close () {
+      this.$emit('close')
+    }
   }
 }
 </script>
