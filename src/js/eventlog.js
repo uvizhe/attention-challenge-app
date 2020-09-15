@@ -60,7 +60,7 @@ function weekTotalString (weekTotalMinutes) {
   let weekTotalString
   if (weekTotalMinutes >= 60) {
     const hrs = weekTotalMinutes / 60
-    weekTotalString = hrs.toString()
+    weekTotalString = Math.floor(hrs).toString()
     if (hrs > Math.floor(hrs)) {
       weekTotalString += '+'
     }
