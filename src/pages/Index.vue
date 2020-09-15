@@ -11,11 +11,11 @@
         <avgs-chart />
       </div>
       <div class="col-auto big-red-btn-div row relative-position justify-between items-center">
-        <q-btn v-if="!sessionOn"
+        <q-btn
           icon="remove"
           round
           color="purple-5"
-          class="q-mx-md"
+          :class="adjustButtonsClass"
           @click="adjustSession(-1)"
           :disable="lowerSessionLimit"
         />
@@ -49,11 +49,11 @@
             {{ $t('indexBellsDeferralWarning') }}
           </q-tooltip>
         </q-btn>
-        <q-btn v-if="!sessionOn"
+        <q-btn
           icon="add"
           round
           color="purple-5"
-          class="q-mx-md"
+          :class="adjustButtonsClass"
           @click="adjustSession(1)"
           :disable="upperSessionLimit"
         />
@@ -139,6 +139,13 @@ export default {
       let cls = 'absolute-top z-top bg-red text-white text-center'
       if (!this.error) {
         cls += ' hidden'
+      }
+      return cls
+    },
+    adjustButtonsClass () {
+      let cls = 'q-mx-md'
+      if (this.sessionOn) {
+        cls += ' invisible'
       }
       return cls
     },
