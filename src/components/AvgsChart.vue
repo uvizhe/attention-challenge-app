@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-subtitle1 text-bold text-center text-primary">Daily Average</div>
-    <apexchart class="chart" type="line" height="100" :options="options" :series="series" />
+    <apexchart class="chart" type="line" height="100" :options="options()" :series="series()" />
   </div>
 </template>
 
@@ -10,7 +10,25 @@ export default {
   name: 'AvgsChart',
   data () {
     return {
-      options: {
+      dataLength: 0
+    }
+  },
+  methods: {
+    series () {
+      const avgs = this.$store.state.app.avgs
+      this.dataLength = avgs.length
+      return [{
+        data: avgs
+      }]
+    },
+    options () {
+      const axisLength = 90
+      const xaxisMin = this.dataLength - axisLength - 1
+      let strokeWidth = 2
+      if (this.dataLength <= 3) {
+        strokeWidth = 6 - this.dataLength
+      }
+      return {
         grid: {
           row: {
             colors: ['#f868f8', '#f888f8', '#f8a8f8', '#f8c8f8', '#f8e8f8']
@@ -19,8 +37,8 @@ export default {
         xaxis: {
           floating: true,
           labels: { show: false },
-          min: 1,
-          max: 90,
+          min: xaxisMin,
+          max: this.dataLength,
           axisBorder: { show: false }
         },
         yaxis: {
@@ -30,7 +48,7 @@ export default {
           max: 5,
           tickAmount: 5
         },
-        stroke: { lineCap: 'round', width: 2 },
+        stroke: { lineCap: 'round', width: strokeWidth },
         tooltip: { enabled: false },
         chart: {
           sparkline: { enabled: true },
@@ -42,13 +60,6 @@ export default {
           style: { color: '#ab47bc' }
         }
       }
-    }
-  },
-  computed: {
-    series () {
-      return [{
-        data: this.$store.state.app.avgs
-      }]
     }
   }
 }
