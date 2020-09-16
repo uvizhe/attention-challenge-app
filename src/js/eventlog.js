@@ -9,13 +9,14 @@ export function makeEL (sessions) {
       [{
         date: YYYY-MM-DD,
         ts: unixtime,
-        duration: minutes
+        duration: minutes,
+        score: number
       }, ...]
      to eventlog:
       [{
         date: 'Todate|Yesterdate|Earlier|_',
-        user: 'you',
         min: minutes,
+        score: number,
         week: thisWeekTotal|_
       }, ...]
   */
@@ -31,8 +32,8 @@ export function makeEL (sessions) {
     }
     eventlog.push({
       date: date,
-      user: 'you',
       min: s.duration,
+      score: s.score,
       week: ''
     })
   }

@@ -111,14 +111,16 @@ export async function reportSession (context, payload) {
     sessions = [{
       date: stats.date,
       ts: ts,
-      duration: payload.duration
+      duration: payload.duration,
+      score: payload.score
     }]
     avgs = [stats.average]
   } else {
     sessions.push({
       date: stats.date,
       ts: ts,
-      duration: payload.duration
+      duration: payload.duration,
+      score: payload.score
     })
     if (stats.date === context.state.lastSessionDate) {
       // new session this day
