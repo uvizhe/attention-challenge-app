@@ -21,6 +21,9 @@ export function makeEL (sessions) {
       }, ...]
   */
   const eventlog = []
+  if (!sessions.length) {
+    return eventlog
+  }
   const today = moment().subtract(4, 'hours').format('YYYY-MM-DD')
   const twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD')
   const weekAgo = moment().subtract(1, 'week').format('YYYY-MM-DD')
