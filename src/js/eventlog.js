@@ -38,9 +38,7 @@ export function makeEL (sessions) {
   }
   const lastId = eventlog.length - 1
   eventlog[lastId].week = weekTotalString(weekTotal)
-  console.log(JSON.stringify(eventlog))
   removeDateDuplicates(eventlog)
-  console.log(JSON.stringify(eventlog))
   if (eventlog[lastId].date === EL) {
     eventlog[lastId].date = sessions[lastId].date
     eventlog[lastId - 1].date = EL
