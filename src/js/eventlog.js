@@ -20,12 +20,12 @@ export function makeEL (sessions) {
       }, ...]
   */
   const eventlog = []
-  const todate = moment().subtract(4, 'hours').format('YYYY-MM-DD')
-  const twoDatesAgo = moment().subtract(2, 'dates').format('YYYY-MM-DD')
+  const today = moment().subtract(4, 'hours').format('YYYY-MM-DD')
+  const twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD')
   const weekAgo = moment().subtract(1, 'week').format('YYYY-MM-DD')
   let weekTotal = 0
   for (const s of sessions) {
-    const date = calcDate(s.date, todate, twoDatesAgo)
+    const date = calcDate(s.date, today, twoDaysAgo)
     if (s.date > weekAgo) {
       weekTotal += s.duration
     }
@@ -38,7 +38,9 @@ export function makeEL (sessions) {
   }
   const lastId = eventlog.length - 1
   eventlog[lastId].week = weekTotalString(weekTotal)
+  console.log(JSON.stringify(eventlog))
   removeDateDuplicates(eventlog)
+  console.log(JSON.stringify(eventlog))
   if (eventlog[lastId].date === EL) {
     eventlog[lastId].date = sessions[lastId].date
     eventlog[lastId - 1].date = EL
@@ -46,11 +48,11 @@ export function makeEL (sessions) {
   return eventlog
 }
 
-function calcDate (sessionDate, todate, twoDatesAgo) {
+function calcDate (sessionDate, today, twoDaysAgo) {
   let date = YD
-  if (sessionDate === todate) {
+  if (sessionDate === today) {
     date = TD
-  } else if (sessionDate <= twoDatesAgo) {
+  } else if (sessionDate <= twoDaysAgo) {
     date = EL
   }
   return date
