@@ -2,7 +2,6 @@ import moment from 'moment'
 
 const TD = 'Today'
 const YD = 'Yesterday'
-const EL = 'Earlier↑↑↑'
 
 export function makeEL (sessions) {
   /* Convert sessions:
@@ -26,7 +25,9 @@ export function makeEL (sessions) {
   }
   const today = moment().subtract(4, 'hours').format('YYYY-MM-DD')
   const twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD')
-  const weekAgo = moment().subtract(1, 'week').format('YYYY-MM-DD')
+  // TODO: let users choose the first day of week (Mon, Sun or Sat)
+  // or, even better, guess from user locale.
+  const weekAgo = moment().startOf('isoWeek').format('YYYY-MM-DD')
   let weekTotal = 0
   for (const s of sessions) {
     const date = calcDate(s.date, today, twoDaysAgo)
@@ -43,19 +44,15 @@ export function makeEL (sessions) {
   const lastId = eventlog.length - 1
   eventlog[lastId].week = weekTotalString(weekTotal)
   removeDateDuplicates(eventlog)
-  if (eventlog[lastId].date === EL) {
-    eventlog[lastId].date = sessions[lastId].date
-    eventlog[lastId - 1].date = EL
-  }
   return eventlog
 }
 
 function calcDate (sessionDate, today, twoDaysAgo) {
-  let date = YD
+  let date = sessionDate
   if (sessionDate === today) {
     date = TD
-  } else if (sessionDate <= twoDaysAgo) {
-    date = EL
+  } else if (sessionDate < today && sessionDate > twoDaysAgo) {
+    date = YD
   }
   return date
 }
@@ -75,29 +72,38 @@ function weekTotalString (weekTotalMinutes) {
   return weekTotalString
 }
 
+/* XXX: Save for possible future use
+export function displayDate (date, prevDate) {
+  if (date === prevDate) {
+    return ''
+  } else {
+    return date
+  }
+}
+*/
+
 function removeDateDuplicates (eventlog) {
   let isTDFound = false
   let isYDFound = false
+  let date
   for (let i = 0; i < eventlog.length; i++) {
-    const date = eventlog[i].date
-    if (date === TD) {
+    let dup = false
+    if (eventlog[i].date === TD) {
       if (!isTDFound) {
         isTDFound = true
       } else {
-        eventlog[i].date = ''
+        dup = true
       }
-    } else if (date === YD) {
+    } else if (eventlog[i].date === YD) {
       if (!isYDFound) {
         isYDFound = true
       } else {
-        eventlog[i].date = ''
+        dup = true
       }
-    } else if (date === EL) {
-      if (i < eventlog.length - 1) {
-        if (eventlog[i + 1].date === EL) {
-          eventlog[i].date = ''
-        }
-      }
+    } else if (eventlog[i].date === date) {
+      dup = true
     }
+    date = eventlog[i].date
+    if (dup) eventlog[i].date = ''
   }
 }
