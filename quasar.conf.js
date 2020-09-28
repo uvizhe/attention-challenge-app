@@ -50,14 +50,11 @@ module.exports = function (ctx) {
       iconSet: 'material-icons', // Quasar icon set
       lang: 'en-us', // Quasar language pack
 
-      // Possible values for "all":
+      // Possible values for "importStrategy":
       // * 'auto' - Auto-import needed Quasar components & directives
       //            (slightly higher compile time; next to minimum bundle size; most convenient)
-      // * false  - Manually specify what to import
-      //            (fastest compile time; minimum bundle size; most tedious)
-      // * true   - Import everything from Quasar
-      //            (not treeshaking Quasar; biggest bundle size; convenient)
-      all: 'auto',
+      // * 'all'  - ...
+      importStrategy: 'auto',
 
       components: [],
       directives: [],
@@ -74,9 +71,6 @@ module.exports = function (ctx) {
         }
       }
     },
-
-    // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
-    supportIE: false,
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
@@ -105,13 +99,13 @@ module.exports = function (ctx) {
       },
       env: ctx.dev || process.env.DEV  // the latter is for specifying dev build with DEV=true
         ? {
-          BACKEND: JSON.stringify('http://192.168.0.222:5000'),
-          VERSION: JSON.stringify(version),
+          BACKEND: 'http://192.168.0.222:5000',
+          VERSION: version,
           ...conditionalDevVariables()
         }
         : {
-          BACKEND: JSON.stringify('https://atchallenge.supersapiens.org'),
-          VERSION: JSON.stringify(version)
+          BACKEND: 'https://atchallenge.supersapiens.org',
+          VERSION: version
         }
     },
 
@@ -145,27 +139,27 @@ module.exports = function (ctx) {
         theme_color: '#027be3',
         icons: [
           {
-            src: 'statics/icons/icon-128x128.png',
+            src: '/icons/icon-128x128.png',
             sizes: '128x128',
             type: 'image/png'
           },
           {
-            src: 'statics/icons/icon-192x192.png',
+            src: '/icons/icon-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'statics/icons/icon-256x256.png',
+            src: '/icons/icon-256x256.png',
             sizes: '256x256',
             type: 'image/png'
           },
           {
-            src: 'statics/icons/icon-384x384.png',
+            src: '/icons/icon-384x384.png',
             sizes: '384x384',
             type: 'image/png'
           },
           {
-            src: 'statics/icons/icon-512x512.png',
+            src: '/icons/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           }

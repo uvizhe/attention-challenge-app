@@ -3,8 +3,6 @@
   "version": "0.0.1",
   "description": "Attention Challenge social meditation app",
   "productName": "Attention Challenge",
-  "cordovaId": "org.supersapiens.atchallenge",
-  "capacitorId": "",
   "author": "Alexander Uvizhev <uvizhe@yandex.ru>",
   "private": true,
   "scripts": {
@@ -12,17 +10,18 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.9.6",
     "apexcharts": "^3.20.0",
     "axios": "^0.18.1",
+    "core-js": "^3.6.5",
     "moment": "^2.27.0",
-    "quasar": "^1.0.0",
+    "quasar": "^1.14.0",
     "sha.js": "^2.4.11",
     "vue-apexcharts": "^1.5.3",
     "vue-i18n": "^8.18.1"
   },
   "devDependencies": {
-    "@quasar/app": "^1.0.0",
+    "@quasar/app": "^2.1.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
@@ -39,9 +38,6 @@
     "yarn": ">= 1.21.1"
   },
   "browserslist": [
-    "last 1 version, not dead, ie >= 11"
-  ],
-  "resolutions": {
-    "@babel/parser": "7.7.5"
-  }
+    "defaults"
+  ]
 }
