@@ -16,7 +16,7 @@ export default function () {
     sessions: [],
     avgs: [],
     friends: [],
-    friendsSessions: [],
+    friendsSessions: {},
     /* Data variables END */
     languages: [
       {

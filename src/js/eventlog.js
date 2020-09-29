@@ -3,22 +3,28 @@ import moment from 'moment'
 const TD = 'Today'
 const YD = 'Yesterday'
 
-export function makeEL (sessions) {
+export function makeEL (sessionsDict) {
   /* Convert sessions:
-      [{
-        date: YYYY-MM-DD,
-        ts: unixtime,
-        duration: minutes,
-        score: number
-      }, ...]
+      { username0: [
+        {
+          date: YYYY-MM-DD,
+          ts: unixtime,
+          duration: minutes,
+          score: number
+        }, ...],
+        username1: [...],
+        ...
+      }
      to eventlog:
       [{
-        date: 'Todate|Yesterdate|Earlier|_',
+        date: 'Today|Yesterday|date|_',
+        user: username,
         min: minutes,
-        score: number,
+        score: number|_,
         week: thisWeekTotal|_
       }, ...]
   */
+  const sessions = combineSessions(sessionsDict)
   const eventlog = []
   if (!sessions.length) {
     return eventlog
@@ -34,10 +40,12 @@ export function makeEL (sessions) {
     if (s.date > weekAgo) {
       weekTotal += s.duration
     }
+    const score = s.score !== undefined ? s.score : null
     eventlog.push({
       date: date,
+      user: s.username,
       min: s.duration,
-      score: s.score,
+      score: score,
       week: ''
     })
   }
@@ -45,6 +53,29 @@ export function makeEL (sessions) {
   eventlog[lastId].week = weekTotalString(weekTotal)
   removeDateDuplicates(eventlog)
   return eventlog
+}
+
+function combineSessions (sessionsDict) {
+  const sessions = []
+  function compareSessions (a, b) {
+    if (a.unixtime < b.unixtime) {
+      return -1
+    } else if (a.unixtime > b.unixtime) {
+      return 1
+    } else if (a.unixtime === b.unixtime && a.score !== undefined) {
+      // user is always placed last in case of tied unixtime
+      return 1
+    }
+    return 0
+  }
+  for (const username in sessionsDict) {
+    for (const session of sessionsDict[username]) {
+      session.username = username
+      sessions.push(session)
+    }
+  }
+  sessions.sort(compareSessions)
+  return sessions
 }
 
 function calcDate (sessionDate, today, twoDaysAgo) {

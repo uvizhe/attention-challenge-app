@@ -38,9 +38,6 @@
           <q-item-section>
             {{ user.user }}
           </q-item-section>
-          <q-item-section side>
-            {{ user.score }}
-          </q-item-section>
         </q-item>
       </div>
     </q-list>
@@ -114,11 +111,10 @@ export default {
     },
     prepareUserList (users) {
       const friends = this.$store.state.app.friends
-      return users.map(i => {
-        const friend = friends.includes(i[0])
+      return users.map(user => {
+        const friend = friends.includes(user)
         return {
-          user: i[0],
-          score: i[1],
+          user: user,
           checked: friend,
           friend: friend,
           show: true,

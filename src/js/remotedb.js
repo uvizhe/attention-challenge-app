@@ -127,6 +127,20 @@ export async function getStats () {
   return { ...ress[0].data, ...ress[1].data }
 }
 
+export async function getSessions (user) {
+  let res
+  try {
+    res = await axios.get('/sessions/' + user)
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+  return res.data.sessions
+}
+
 export async function getUsers () {
   let res
   try {

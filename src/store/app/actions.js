@@ -3,7 +3,7 @@ import {
   getConfig, saveConfig, getData, saveData
 } from '../../js/localdb'
 import {
-  getStats, postSession
+  getStats, getSessions, postSession
 } from '../../js/remotedb'
 import { updateChartsData } from '../../js/maintenance'
 
@@ -178,22 +178,27 @@ export async function addFriends (context, friends) {
     // if all the friends are the same
     return
   }
+  const friendsSessions = context.getters.friendsSessionsCopy
   saveData('friends', newFriends)
   context.commit('setStateValue', {
     key: 'friends',
     value: newFriends
   })
   // check for removed friends
-  for (let i = 0; i < prevFriends.length; i++) {
-    if (!newFriends.includes(prevFriends[i])) {
-      // pass
+  for (const username of prevFriends) {
+    if (!newFriends.includes(username)) {
+      delete friendsSessions[username]
     }
   }
-  for (let i = 0; i < newFriends.length; i++) {
-    if (prevFriends.includes(newFriends[i])) {
+  for (const username of newFriends) {
+    if (prevFriends.includes(username)) {
       continue // skip this friend as we already have it
     }
-    // pass
+    friendsSessions[username] = getSessions(username)
   }
-  // pass
+  saveData('friendsSessions', friendsSessions)
+  context.commit('setStateValue', {
+    key: 'friendsSessions',
+    value: friendsSessions
+  })
 }

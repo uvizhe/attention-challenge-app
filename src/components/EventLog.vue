@@ -1,6 +1,33 @@
 <template>
   <div class="">
     <div class="fixed-top text-subtitle1 text-bold text-center text-primary eventlog-title">Meditation Log</div>
+    <div>
+      <q-fab
+        direction="down"
+        icon="people"
+        color="primary"
+        padding="xs"
+        class="fixed-top-right q-ma-md eventlog-title"
+      >
+        <q-fab-action
+          icon="group_add"
+          label="Add friends"
+          label-position="left"
+          external-label
+          color="purple-5"
+          padding="xs"
+          @click="$router.push('/app/addusers')"
+        />
+        <q-fab-action
+          icon="visibility_off"
+          label="Hide friends"
+          label-position="left"
+          external-label
+          color="purple-5"
+          padding="xs"
+        />
+      </q-fab>
+    </div>
     <div class="fixed-top gradient"></div>
     <div class="fixed-top gradient-2"></div>
     <div class="eventlog overflow-hidden-y">
@@ -48,7 +75,19 @@ export default {
   },
   computed: {
     eventlog () {
-      return makeEL(this.$store.state.app.sessions)
+      let sessionsDict = {
+        '': this.$store.state.app.sessions
+      }
+      if (this.$store.state.app.friends.length) {
+        sessionsDict = {
+          ...sessionsDict,
+          ...this.$store.state.app.friendsSessions
+        }
+      }
+      console.log(JSON.stringify(sessionsDict))
+      const eventlog = makeEL(sessionsDict)
+      console.log(JSON.stringify(eventlog))
+      return eventlog
     }
   }
 }
