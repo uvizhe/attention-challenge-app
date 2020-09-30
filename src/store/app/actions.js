@@ -194,7 +194,7 @@ export async function addFriends (context, friends) {
     if (prevFriends.includes(username)) {
       continue // skip this friend as we already have it
     }
-    friendsSessions[username] = getSessions(username)
+    friendsSessions[username] = await getSessions(username)
   }
   saveData('friendsSessions', friendsSessions)
   context.commit('setStateValue', {

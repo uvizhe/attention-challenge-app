@@ -58,17 +58,18 @@ export function makeEL (sessionsDict) {
 function combineSessions (sessionsDict) {
   const sessions = []
   function compareSessions (a, b) {
-    if (a.unixtime < b.unixtime) {
+    if (a.ts < b.ts) {
       return -1
-    } else if (a.unixtime > b.unixtime) {
+    } else if (a.ts > b.ts) {
       return 1
-    } else if (a.unixtime === b.unixtime && a.score !== undefined) {
-      // user is always placed last in case of tied unixtime
+    } else if (a.ts === b.ts && a.score !== undefined) {
+      // user is always placed last in case of tied ts
       return 1
     }
     return 0
   }
   for (const username in sessionsDict) {
+    if (!sessionsDict[username].length) continue
     for (const session of sessionsDict[username]) {
       session.username = username
       sessions.push(session)

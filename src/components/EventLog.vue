@@ -44,9 +44,12 @@
           </q-item-section>
           <q-item-section>
             <div class="eventlog-data">
+              <span v-if="event.user" class="eventlog-name ellipsis vertical-top">{{ event.user }}</span>
+              <span v-else-if="showFriends" class="eventlog-name ellipsis vertical-top">you</span>
+              <span v-if="showFriends">, </span>
               <span class="">{{ event.min }}</span>
               <span> min</span>
-              <span>, </span>
+              <span v-if="!event.user">, </span>
               <span v-if="event.score === 0" class="text-primary">&star;&star;&star;&star;&star;</span>
               <span v-else-if="event.score === 1" class="text-primary">&starf;&star;&star;&star;&star;</span>
               <span v-else-if="event.score === 2" class="text-primary">&starf;&starf;&star;&star;&star;</span>
@@ -74,19 +77,23 @@ export default {
     }
   },
   computed: {
+    showFriends () {
+      if (this.$store.state.app.friends.length) {
+        return true
+      }
+      return false
+    },
     eventlog () {
       let sessionsDict = {
         '': this.$store.state.app.sessions
       }
-      if (this.$store.state.app.friends.length) {
+      if (this.showFriends) {
         sessionsDict = {
           ...sessionsDict,
           ...this.$store.state.app.friendsSessions
         }
       }
-      console.log(JSON.stringify(sessionsDict))
       const eventlog = makeEL(sessionsDict)
-      console.log(JSON.stringify(eventlog))
       return eventlog
     }
   }
