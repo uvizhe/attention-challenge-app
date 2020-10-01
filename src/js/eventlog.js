@@ -28,7 +28,7 @@ export function makeEL (sessionsDict) {
   if (!Object.keys(sessionsDict).length) {
     return eventlog
   }
-  populateWeekStats(sessionsDict)
+  const leaders = populateWeekStats(sessionsDict)
   const sessions = combineSessions(sessionsDict)
   const today = moment().subtract(4, 'hours').format('YYYY-MM-DD')
   const twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD')
@@ -40,7 +40,8 @@ export function makeEL (sessionsDict) {
       user: session.username,
       min: session.duration,
       score: score,
-      week: session.week || ''
+      week: session.week || '',
+      leader: session.week && leaders.includes(session.username)
     })
   }
   removeDateDuplicates(eventlog)
@@ -48,6 +49,7 @@ export function makeEL (sessionsDict) {
 }
 
 function populateWeekStats (sessionsDict) {
+  const weekStats = {}
   // TODO: let users choose the first day of week (Mon, Sun or Sat)
   // or, even better, guess from user locale.
   const weekAgo = moment().startOf('isoWeek').format('YYYY-MM-DD')
@@ -60,7 +62,24 @@ function populateWeekStats (sessionsDict) {
     }
     const lastSessionId = sessionsDict[username].length - 1
     sessionsDict[username][lastSessionId].week = weekTotalString(weekTotal)
+    weekStats[username] = weekTotal
   }
+  const leaders = nominateLeaders(weekStats)
+  return leaders
+}
+
+function nominateLeaders (weekStats) {
+  let leaders = []
+  let topScore = 0
+  for (const username in weekStats) {
+    if (weekStats[username] > topScore) {
+      topScore = weekStats[username]
+      leaders = [username]
+    } else if (weekStats[username] === topScore) {
+      leaders.push(username)
+    }
+  }
+  return leaders
 }
 
 function combineSessions (sessionsDict) {

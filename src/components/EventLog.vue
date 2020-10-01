@@ -59,7 +59,7 @@
               <span class="eventlog-week float-right">
                 <span v-if="event.week" class="float-left">This week: {{ event.week }}</span>
               </span>
-              <span v-if="eventlog.king" class="q-mr-xs float-right">&#128081;</span>
+              <span v-if="event.leader" class="q-mr-xs float-right">&#128081;</span>
             </div>
           </q-item-section>
         </q-item>
