@@ -127,10 +127,16 @@ export async function getStats () {
   return { ...ress[0].data, ...ress[1].data }
 }
 
-export async function getSessions (user) {
+export async function getSessions (user, since = '', sinceTs = '') {
   let res
+  let handle = '/sessions/' + user
+  if (since && sinceTs) {
+    handle += '&since_ts=' + sinceTs
+  } else if (since) {
+    handle += '?since=' + since
+  }
   try {
-    res = await axios.get('/sessions/' + user)
+    res = await axios.get(handle)
   } catch (e) {
     if (e.response) {
       throw new DatabaseConnectionError(e.response.data.msg)

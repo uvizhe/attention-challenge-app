@@ -24,8 +24,9 @@ export function makeEL (sessionsDict) {
         week: thisWeekTotal|_
       }, ...]
   */
+  sessionsDict = JSON.parse(JSON.stringify(sessionsDict))
   const eventlog = []
-  if (!Object.keys(sessionsDict).length) {
+  if (isEmpty(sessionsDict)) {
     return eventlog
   }
   const leaders = populateWeekStats(sessionsDict)
@@ -46,6 +47,19 @@ export function makeEL (sessionsDict) {
   }
   removeDateDuplicates(eventlog)
   return eventlog
+}
+
+function isEmpty (sessionsDict) {
+  if (!Object.keys(sessionsDict).length) {
+    return true
+  } else {
+    for (const sessions of Object.values(sessionsDict)) {
+      if (sessions.length) {
+        return false
+      }
+    }
+  }
+  return true
 }
 
 function populateWeekStats (sessionsDict) {

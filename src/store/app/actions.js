@@ -202,3 +202,19 @@ export async function addFriends (context, friends) {
     value: friendsSessions
   })
 }
+
+export async function syncWithFriends (context) {
+  const friendsSessions = context.getters.friendsSessionsCopy
+  for (const username in friendsSessions) {
+    const lastSession = friendsSessions[username].slice(-1).pop()
+    const sessions = await getSessions(
+      username, lastSession.date, lastSession.ts
+    )
+    friendsSessions[username].push(...sessions)
+  }
+  saveData('friendsSessions', friendsSessions)
+  context.commit('setStateValue', {
+    key: 'friendsSessions',
+    value: friendsSessions
+  })
+}

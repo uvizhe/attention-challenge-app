@@ -7,5 +7,5 @@ export function avgsCopy (state) {
 }
 
 export function friendsSessionsCopy (state) {
-  return { ...Object.assign(state.friendsSessions) }
+  return JSON.parse(JSON.stringify(state.friendsSessions))
 }
