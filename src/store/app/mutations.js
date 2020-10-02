@@ -15,3 +15,7 @@ export function setStateValue (state, { key, value }) {
 export function setInitialized (state) {
   state.initialized = true
 }
+
+export function toggleFriends (state) {
+  state.showFriends = !state.showFriends
+}

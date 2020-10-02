@@ -3,6 +3,7 @@ export default function () {
     pageHeader: false,
     pageHeaderTitle: '',
     initialized: false,
+    showFriends: true,
     /* Config variables BEGIN */
     sessionDuration: 15 * 60,
     bellsDeferral: 0,

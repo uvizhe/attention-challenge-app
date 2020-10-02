@@ -19,12 +19,13 @@
           @click="$router.push('/app/addusers')"
         />
         <q-fab-action
-          icon="visibility_off"
-          label="Hide friends"
+          :icon="friendsVisibilityIcon"
+          :label="friendsVisibilityLabel"
           label-position="left"
           external-label
           color="purple-5"
           padding="xs"
+          @click="toggleFriends"
         />
       </q-fab>
     </div>
@@ -59,7 +60,7 @@
               <span class="eventlog-week float-right">
                 <span v-if="event.week" class="float-left">This week: {{ event.week }}</span>
               </span>
-              <span v-if="event.leader" class="q-mr-xs float-right">&#128081;</span>
+              <span v-if="showFriends && event.leader" class="q-mr-xs float-right">&#128081;</span>
             </div>
           </q-item-section>
         </q-item>
@@ -77,11 +78,23 @@ export default {
     }
   },
   computed: {
-    showFriends () {
+    haveFriends () {
       if (this.$store.state.app.friends.length) {
         return true
       }
       return false
+    },
+    showFriends () {
+      if (this.haveFriends && this.$store.state.app.showFriends) {
+        return true
+      }
+      return false
+    },
+    friendsVisibilityIcon () {
+      return this.showFriends ? 'visibility_off' : 'visibility'
+    },
+    friendsVisibilityLabel () {
+      return this.showFriends ? 'Hide friends' : 'Show friends'
     },
     eventlog () {
       let sessionsDict = {
@@ -95,6 +108,11 @@ export default {
       }
       const eventlog = makeEL(sessionsDict)
       return eventlog
+    }
+  },
+  methods: {
+    toggleFriends () {
+      this.$store.commit('app/toggleFriends')
     }
   }
 }
