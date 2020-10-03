@@ -131,7 +131,7 @@ export async function getSessions (user, since = '', sinceTs = '') {
   let res
   let handle = '/sessions/' + user
   if (since && sinceTs) {
-    handle += '&since_ts=' + sinceTs
+    handle += '?since=' + since + '&since_ts=' + sinceTs
   } else if (since) {
     handle += '?since=' + since
   }

@@ -70,10 +70,11 @@ export function initData (context) {
   context.dispatch('restoreConfig')
   context.dispatch('restoreData')
   context.dispatch('setLocaleIfNotSet')
+  context.dispatch('syncWithFriends')
   context.commit('setInitialized')
 }
 
-export async function restoreConfig (context) {
+export function restoreConfig (context) {
   const config = getConfig()
   for (const [key, value] of Object.entries(config)) {
     context.commit('setStateValue', {
@@ -83,7 +84,7 @@ export async function restoreConfig (context) {
   }
 }
 
-export async function restoreData (context) {
+export function restoreData (context) {
   const data = getData()
   for (const [key, value] of Object.entries(data)) {
     context.commit('setStateValue', {
@@ -205,16 +206,27 @@ export async function addFriends (context, friends) {
 
 export async function syncWithFriends (context) {
   const friendsSessions = context.getters.friendsSessionsCopy
-  for (const username in friendsSessions) {
-    const lastSession = friendsSessions[username].slice(-1).pop()
-    const sessions = await getSessions(
-      username, lastSession.date, lastSession.ts
-    )
-    friendsSessions[username].push(...sessions)
+  if (Object.keys(friendsSessions).length) {
+    for (const username in friendsSessions) {
+      const lastSession = friendsSessions[username].slice(-1).pop()
+      const sessions = await getSessions(
+        username, lastSession.date, lastSession.ts
+      )
+      friendsSessions[username].push(...sessions)
+    }
+    saveData('friendsSessions', friendsSessions)
+    context.commit('setStateValue', {
+      key: 'friendsSessions',
+      value: friendsSessions
+    })
   }
-  saveData('friendsSessions', friendsSessions)
+  const ts = Math.floor(Date.now() / 1000)
+  if (!context.state.initialSyncTime) {
+    context.commit('setInitialSyncTime', ts)
+  }
+  saveData('lastSyncTime', ts)
   context.commit('setStateValue', {
-    key: 'friendsSessions',
-    value: friendsSessions
+    key: 'lastSyncTime',
+    value: ts
   })
 }

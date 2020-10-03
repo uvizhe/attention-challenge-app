@@ -40,7 +40,7 @@
           <q-item-section side class="eventlog-date">
             <div class="fit">
               <span>{{ event.date }}</span>
-              <span v-if="eventlog.new" class="float-right text-red">*</span>
+              <span v-if="event.ts >= referenceSyncTime" class="float-right text-red">*</span>
             </div>
           </q-item-section>
           <q-item-section>
@@ -78,6 +78,9 @@ export default {
     }
   },
   computed: {
+    referenceSyncTime () {
+      return this.$store.getters['app/referenceSyncTime']
+    },
     haveFriends () {
       if (this.$store.state.app.friends.length) {
         return true

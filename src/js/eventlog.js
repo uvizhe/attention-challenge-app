@@ -18,6 +18,7 @@ export function makeEL (sessionsDict) {
      to eventlog:
       [{
         date: 'Today|Yesterday|date|_',
+        ts: unixtime,
         user: username,
         min: minutes,
         score: number|_,
@@ -38,6 +39,7 @@ export function makeEL (sessionsDict) {
     const score = session.score !== undefined ? session.score : null
     eventlog.push({
       date: date,
+      ts: session.ts,
       user: session.username,
       min: session.duration,
       score: score,
