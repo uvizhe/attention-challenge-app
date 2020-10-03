@@ -35,7 +35,7 @@
       <q-list class="">
         <q-item v-for="event in eventlog"
           :key="event.id"
-          class="event"
+          :class="eventClass(event.user)"
         >
           <q-item-section side class="eventlog-date">
             <div class="fit">
@@ -71,6 +71,7 @@
 
 <script>
 import { makeEL } from '../js/eventlog'
+const colors = ['pinky', 'yellow-3', 'blue-1', 'orange-2']
 export default {
   name: 'EventLog',
   data () {
@@ -114,6 +115,10 @@ export default {
     }
   },
   methods: {
+    eventClass (username) {
+      const idx = this.$store.state.app.friends.indexOf(username)
+      return 'event bg-' + colors[idx]
+    },
     toggleFriends () {
       this.$store.commit('app/toggleFriends')
     }
