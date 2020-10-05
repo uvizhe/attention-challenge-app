@@ -3,7 +3,7 @@ import {
   getConfig, saveConfig, getData, saveData
 } from '../../js/localdb'
 import {
-  getStats, getSessions, postSession
+  getServerData, setProfilePublic, getStats, getSessions, postSession
 } from '../../js/remotedb'
 import { updateChartsData } from '../../js/maintenance'
 
@@ -70,6 +70,7 @@ export function initData (context) {
   context.dispatch('restoreConfig')
   context.dispatch('restoreData')
   context.dispatch('setLocaleIfNotSet')
+  context.dispatch('syncServerData')
   context.dispatch('syncWithFriends')
   context.commit('setInitialized')
 }
@@ -100,6 +101,28 @@ export function setUsername (context, username) {
     key: 'username',
     value: username
   })
+}
+
+export async function setPublicProfile (context, isPublic) {
+  await setProfilePublic(isPublic)
+  saveConfig('publicProfile', isPublic)
+  context.commit('setStateValue', {
+    key: 'publicProfile',
+    value: isPublic
+  })
+}
+
+export async function syncServerData (context) {
+  const data = await getServerData()
+  for (let key of Object.keys(data)) {
+    const value = data[key]
+    if (key === 'public') key = 'publicProfile'
+    saveConfig(key, value)
+    context.commit('setStateValue', {
+      key: key,
+      value: value
+    })
+  }
 }
 
 export async function reportSession (context, payload) {

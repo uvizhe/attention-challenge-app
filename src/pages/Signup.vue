@@ -57,13 +57,46 @@
         />
       </template>
     </q-input>
+    <q-item>
+      <q-item-section avatar top>
+        <q-checkbox
+          v-model="userGeneralAgreement"
+        />
+      </q-item-section>
+      <q-item-section>
+        <q-item-label>
+          {{ $t('signupGeneralAgreementLabel') }}
+        </q-item-label>
+        <q-item-label caption>
+          {{ $t('signupGeneralAgreementText') }}
+        </q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-item>
+      <q-item-section avatar top>
+        <q-checkbox
+          v-model="publicProfile"
+        />
+      </q-item-section>
+      <q-item-section>
+        <q-item-label>
+          {{ $t('signupPublicProfileLabel') }}
+        </q-item-label>
+        <q-item-label caption>
+          {{ $t('signupPublicProfileText') }}
+        </q-item-label>
+        <q-item-label caption class="text-italic">
+          {{ $t('signupPublicProfileHint') }}
+        </q-item-label>
+      </q-item-section>
+    </q-item>
     <q-btn
       class="q-ma-md entrance-button"
       :label="$t('signupButton')"
       color="purple-5"
       size="xl"
       @click="submit"
-      :disable="wait"
+      :disable="!userGeneralAgreement || wait"
     />
   </div>
 </q-page>
@@ -84,6 +117,8 @@ export default {
       email: '',
       isPwd: true,
       isPwd2: true,
+      userGeneralAgreement: true,
+      publicProfile: false,
       error: false,
       errMsg: '',
       wait: false
@@ -126,7 +161,10 @@ export default {
       } else {
         try {
           this.wait = true
-          await signup(this.username, this.password, this.email)
+          await signup(
+            this.username, this.password, this.email,
+            this.publicProfile
+          )
         } catch (e) {
           this.wait = false
           this.showError(e.message)
@@ -134,6 +172,7 @@ export default {
         }
         this.wait = false
         this.$store.dispatch('app/setUsername', this.username)
+        this.$store.dispatch('app/setPublicProfile', this.publicProfile)
         this.$router.replace('/app?newuser=1')
       }
     }

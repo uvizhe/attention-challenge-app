@@ -48,12 +48,13 @@ export async function authenticate (user, pass) {
   }
 }
 
-export async function signup (user, pass, email) {
+export async function signup (user, pass, email, publicProfile) {
   const passHash = new SHA256().update(pass).digest('hex')
   const data = {
     username: user,
     password: passHash,
-    email: email
+    email: email,
+    public: publicProfile
   }
   let res
   try {
@@ -80,6 +81,35 @@ export async function recover (email, locale) {
   }
   try {
     await axios.post('/recover', data)
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+}
+
+export async function getServerData () {
+  let res
+  try {
+    res = await axios.get('/userdata')
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+  return res.data.userdata
+}
+
+export async function setProfilePublic (isPublic) {
+  const data = {
+    public: isPublic
+  }
+  try {
+    await axios.post('/gopublic', data)
   } catch (e) {
     if (e.response) {
       throw new DatabaseConnectionError(e.response.data.msg)

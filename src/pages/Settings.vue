@@ -98,6 +98,21 @@
         />
       </q-item-section>
     </q-item>
+    <q-item class="q-my-md">
+      <q-item-section @click="publicProfile=!publicProfile">
+        <q-item-label>{{ $t('settingsDataSharingText') }}</q-item-label>
+        <q-item-label caption>{{ $t('settingsDataSharingHint') }}</q-item-label>
+      </q-item-section>
+      <q-item-section side>
+        <q-toggle
+          v-model="publicProfile"
+          color="purple-5"
+          checked-icon="check"
+          unchecked-icon="clear"
+          size="lg"
+        />
+      </q-item-section>
+    </q-item>
     <q-btn
       :label="$t('settingsButton')"
       class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
@@ -117,6 +132,7 @@ export default {
       locale: '',
       wakeLock: false,
       dndMode: true,
+      publicProfile: false,
       duration: 15,
       deferral: 0
     }
@@ -131,6 +147,7 @@ export default {
     this.deferral = this.$store.state.app.bellsDeferral / 60
     this.wakeLock = this.$store.state.app.wakeLock
     this.dndMode = this.$store.state.app.dndMode
+    this.publicProfile = this.$store.state.app.publicProfile
   },
   computed: {
     langOptions () {
@@ -176,6 +193,7 @@ export default {
       this.$store.dispatch('app/setBellsDeferral', this.deferral * 60)
       this.$store.dispatch('app/setWakeLock', this.wakeLock)
       this.$store.dispatch('app/setDNDMode', this.dndMode)
+      this.$store.dispatch('app/setPublicProfile', this.publicProfile)
       this.$router.replace('/app')
     }
   }

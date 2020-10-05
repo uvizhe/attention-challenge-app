@@ -10,6 +10,7 @@ export default function () {
     bellsDeferral: 0,
     wakeLock: false,
     dndMode: true,
+    publicProfile: false,
     username: '',
     locale: '',
     /* Config variables END */
