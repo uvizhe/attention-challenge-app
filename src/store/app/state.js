@@ -19,7 +19,6 @@ export default function () {
     lastSessionDate: '',
     sessions: [],
     avgs: [],
-    friends: [],
     friendsSessions: {},
     /* Data variables END */
     languages: [

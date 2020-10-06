@@ -110,7 +110,7 @@ export default {
       }
     },
     prepareUserList (users) {
-      const friends = this.$store.state.app.friends
+      const friends = this.$store.getters['app/friends']
       return users.map(user => {
         const friend = friends.includes(user)
         return {

@@ -190,3 +190,21 @@ export async function getUsers () {
   }
   return res.data.users
 }
+
+export async function getPublicStatus (usernames) {
+  let res
+  let handle = '/ispublic?'
+  usernames.forEach(i => {
+    handle += '&usernames=' + i
+  })
+  try {
+    res = await axios.get(handle)
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+  return res.data.public
+}

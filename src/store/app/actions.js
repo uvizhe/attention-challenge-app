@@ -3,7 +3,8 @@ import {
   getConfig, saveConfig, getData, saveData
 } from '../../js/localdb'
 import {
-  getServerData, setProfilePublic, getStats, getSessions, postSession
+  getServerData, setProfilePublic, getStats,
+  getSessions, postSession, getPublicStatus
 } from '../../js/remotedb'
 import { updateChartsData } from '../../js/maintenance'
 
@@ -195,7 +196,7 @@ export async function fetchStats (context) {
 }
 
 export async function addFriends (context, friends) {
-  const prevFriends = context.state.friends
+  const prevFriends = context.getters.friends
   const newFriends = friends.sort()
   if (prevFriends.length === newFriends.length &&
     prevFriends.every((val, idx) => val === newFriends[idx])) {
@@ -203,11 +204,6 @@ export async function addFriends (context, friends) {
     return
   }
   const friendsSessions = context.getters.friendsSessionsCopy
-  saveData('friends', newFriends)
-  context.commit('setStateValue', {
-    key: 'friends',
-    value: newFriends
-  })
   // check for removed friends
   for (const username of prevFriends) {
     if (!newFriends.includes(username)) {
@@ -229,7 +225,15 @@ export async function addFriends (context, friends) {
 
 export async function syncWithFriends (context) {
   const friendsSessions = context.getters.friendsSessionsCopy
+  const friends = context.getters.friends
+  // TODO: Check if friends are still public
   if (Object.keys(friendsSessions).length) {
+    const publicArray = await getPublicStatus(friends)
+    for (const idx in publicArray) {
+      if (!publicArray[idx]) { // friend is not public anymore
+        delete friendsSessions[friends[idx]]
+      }
+    }
     for (const username in friendsSessions) {
       const lastSession = friendsSessions[username].slice(-1).pop()
       const sessions = await getSessions(

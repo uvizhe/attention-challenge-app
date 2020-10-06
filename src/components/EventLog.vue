@@ -83,7 +83,7 @@ export default {
       return this.$store.getters['app/referenceSyncTime']
     },
     haveFriends () {
-      if (this.$store.state.app.friends.length) {
+      if (this.$store.getters['app/friends'].length) {
         return true
       }
       return false
@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     eventClass (username) {
-      const idx = this.$store.state.app.friends.indexOf(username)
+      const idx = this.$store.getters['app/friends'].indexOf(username)
       return 'event bg-' + colors[idx]
     },
     toggleFriends () {
