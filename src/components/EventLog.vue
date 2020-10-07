@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="fixed-top text-subtitle1 text-bold text-center text-primary eventlog-title">Meditation Log</div>
+    <div class="fixed-top text-subtitle1 text-bold text-center text-primary eventlog-title">{{ $t('eventlogTitle') }}</div>
     <div>
       <q-fab
         direction="down"
@@ -39,7 +39,7 @@
         >
           <q-item-section side class="eventlog-date">
             <div class="fit">
-              <span>{{ event.date }}</span>
+              <span>{{ DateI18n(event.date) }}</span>
               <span v-if="event.ts >= referenceSyncTime" class="float-right text-red">*</span>
             </div>
           </q-item-section>
@@ -54,9 +54,9 @@
               <span v-else-if="event.score === 5" class="text-primary">&starf;&starf;&starf;&starf;&starf;</span>
               <span>, </span>
               <span class="">{{ event.min }}</span>
-              <span> min</span>
+              <span> {{ $t('eventlogUnitMin') }}</span>
               <span class="eventlog-week float-right">
-                <span v-if="event.week" class="float-left">This week: {{ event.week }}</span>
+                <span v-if="event.week !== undefined" class="float-left">{{ $t('eventlogThisWeek') }}: {{ event.week }} {{ weekUnitI18n(event.weekUnit) }}</span>
               </span>
               <span v-if="showFriends && event.leader" class="q-mr-xs float-right">&#128081;</span>
             </div>
@@ -94,15 +94,17 @@ export default {
     },
     manageFriendsLabel () {
       if (this.haveFriends) {
-        return 'Manage friends'
+        return this.$t('eventlogEditFriends')
       }
-      return 'Add friends'
+      return this.$t('eventlogAddFriends')
     },
     friendsVisibilityIcon () {
       return this.showFriends ? 'visibility_off' : 'visibility'
     },
     friendsVisibilityLabel () {
-      return this.showFriends ? 'Hide friends' : 'Show friends'
+      return this.showFriends
+        ? this.$t('eventlogHideFriends')
+        : this.$t('eventlogShowFriends')
     },
     eventlog () {
       let sessionsDict = {
@@ -125,6 +127,20 @@ export default {
     },
     toggleFriends () {
       this.$store.commit('app/toggleFriends')
+    },
+    DateI18n (date) {
+      if (date === 'Today') {
+        return this.$t('eventlogToday')
+      } else if (date === 'Yesterday') {
+        return this.$t('eventlogYesterday')
+      }
+      return date
+    },
+    weekUnitI18n (unit) {
+      if (unit === 'hr') {
+        return this.$t('eventlogUnitHr')
+      }
+      return this.$t('eventlogUnitMin')
     }
   }
 }

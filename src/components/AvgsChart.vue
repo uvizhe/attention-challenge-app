@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-subtitle1 text-bold text-center text-primary">Daily Average</div>
+    <div class="text-subtitle1 text-bold text-center text-primary">{{ $t('avgsChartTitle') }}</div>
     <apexchart class="chart" type="line" height="100" :options="options()" :series="series()" />
   </div>
 </template>

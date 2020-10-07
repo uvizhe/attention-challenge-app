@@ -22,7 +22,9 @@ export function makeEL (sessionsDict) {
         user: username,
         min: minutes,
         score: number|_,
-        week: thisWeekTotal|_
+        week: thisWeekTotal|_,
+        weekUnit: 'min|hr',
+        leader: bool
       }, ...]
   */
   sessionsDict = JSON.parse(JSON.stringify(sessionsDict))
@@ -43,7 +45,8 @@ export function makeEL (sessionsDict) {
       user: session.username,
       min: session.duration,
       score: score,
-      week: session.week || '',
+      week: session.week,
+      weekUnit: session.weekUnit,
       leader: session.week && leaders.includes(session.username)
     })
   }
@@ -77,7 +80,9 @@ function populateWeekStats (sessionsDict) {
       }
     }
     const lastSessionId = sessionsDict[username].length - 1
-    sessionsDict[username][lastSessionId].week = weekTotalString(weekTotal)
+    const weekData = weekTotalData(weekTotal)
+    sessionsDict[username][lastSessionId].week = weekData[0]
+    sessionsDict[username][lastSessionId].weekUnit = weekData[1]
     weekStats[username] = weekTotal
   }
   const leaders = nominateLeaders(weekStats)
@@ -132,19 +137,21 @@ function calcDate (sessionDate, today, twoDaysAgo) {
   return date
 }
 
-function weekTotalString (weekTotalMinutes) {
-  let weekTotalString
+function weekTotalData (weekTotalMinutes) {
+  let weekTotal
+  let weekTotalUnit
   if (weekTotalMinutes >= 60) {
     const hrs = weekTotalMinutes / 60
-    weekTotalString = Math.floor(hrs).toString()
+    weekTotal = Math.floor(hrs).toString()
     if (hrs > Math.floor(hrs)) {
-      weekTotalString += '+'
+      weekTotal += '+'
     }
-    weekTotalString += ' hr'
+    weekTotalUnit = 'hr'
   } else {
-    weekTotalString = weekTotalMinutes + ' min'
+    weekTotal = weekTotalMinutes
+    weekTotalUnit = 'min'
   }
-  return weekTotalString
+  return [weekTotal, weekTotalUnit]
 }
 
 /* XXX: Save for possible future use
