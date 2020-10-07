@@ -91,7 +91,7 @@ function nominateLeaders (weekStats) {
     if (weekStats[username] > topScore) {
       topScore = weekStats[username]
       leaders = [username]
-    } else if (weekStats[username] === topScore) {
+    } else if (weekStats[username] === topScore && topScore !== 0) {
       leaders.push(username)
     }
   }
