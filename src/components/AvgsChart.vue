@@ -24,8 +24,8 @@ export default {
     options () {
       const axisLength = 90
       const xaxisMin = this.dataLength - axisLength - 1
-      let strokeWidth = 2
-      if (this.dataLength <= 3) {
+      let strokeWidth = 3
+      if (this.dataLength <= 2) {
         strokeWidth = 6 - this.dataLength
       }
       return {
