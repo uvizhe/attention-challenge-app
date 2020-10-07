@@ -50,21 +50,36 @@
 
 .eventlog
   top: 0px
+  font-family: monospace
+  font-size: 0.8em
 
 .event
   min-height: 0px
   padding: 1px 2px
 
-.eventlog-date
-  width: 6em
-  padding-right: 2px
+@media (max-width:480px)
+  .eventlog-date
+    width: 7em
+    padding-right: 2px
 
-.eventlog-name
-  display: inline-block
-  max-width: 6.5em
+  .eventlog-name
+    display: inline-block
+    max-width: 6.5em
 
-.eventlog-week
-  width: 8.5em
+  .eventlog-week
+    width: 10.5em
+
+@media (min-width:481px)
+  .eventlog-date
+    width: 12em
+    padding-right: 2px
+
+  .eventlog-name
+    display: inline-block
+    max-width: 15em
+
+  .eventlog-week
+    width: 12em
 
 .debug
   border: 1px solid red

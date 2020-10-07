@@ -44,19 +44,17 @@
             </div>
           </q-item-section>
           <q-item-section>
-            <div class="eventlog-data">
+            <div>
               <span v-if="event.user" class="eventlog-name ellipsis vertical-top">{{ event.user }}</span>
-              <span v-else-if="showFriends" class="eventlog-name ellipsis vertical-top">you</span>
-              <span v-if="showFriends">, </span>
-              <span class="">{{ event.min }}</span>
-              <span> min</span>
-              <span v-if="!event.user">, </span>
               <span v-if="event.score === 0" class="text-primary">&star;&star;&star;&star;&star;</span>
               <span v-else-if="event.score === 1" class="text-primary">&starf;&star;&star;&star;&star;</span>
               <span v-else-if="event.score === 2" class="text-primary">&starf;&starf;&star;&star;&star;</span>
               <span v-else-if="event.score === 3" class="text-primary">&starf;&starf;&starf;&star;&star;</span>
               <span v-else-if="event.score === 4" class="text-primary">&starf;&starf;&starf;&starf;&star;</span>
               <span v-else-if="event.score === 5" class="text-primary">&starf;&starf;&starf;&starf;&starf;</span>
+              <span>, </span>
+              <span class="">{{ event.min }}</span>
+              <span> min</span>
               <span class="eventlog-week float-right">
                 <span v-if="event.week" class="float-left">This week: {{ event.week }}</span>
               </span>
