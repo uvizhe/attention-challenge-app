@@ -10,7 +10,7 @@ export default {
   signupPassword: 'Пароль',
   signupPassword2: 'Пароль еще раз',
   signupGeneralAgreementLabel: 'Согласие на обработку данных',
-  signupGeneralAgreementText: 'Я даю разрешение приложению собирать и хранить мои данные (логин, почтовый адрес, информацию о медитациях).',
+  signupGeneralAgreementText: 'Я даю разрешение приложению собирать и хранить мои данные (почтовый адрес, информацию о медитациях).',
   signupPublicProfileLabel: 'Сделать профиль публичным',
   signupPublicProfileText: 'Дать другим пользователям доступ к некоторой информации о ваших медитациях (время и длительность).',
   signupPublicProfileHint: '(это можно менять в настройках приложения)',

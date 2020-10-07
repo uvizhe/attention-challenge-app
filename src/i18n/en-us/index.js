@@ -10,7 +10,7 @@ export default {
   signupPassword: 'Password',
   signupPassword2: 'Repeat password',
   signupGeneralAgreementLabel: 'Agreement to terms of service',
-  signupGeneralAgreementText: 'I agree to allow the app to collect my data (username, email address, meditation data).',
+  signupGeneralAgreementText: 'I agree to allow the app to collect my data (email address, meditation data).',
   signupPublicProfileLabel: 'Make my profile public',
   signupPublicProfileText: 'Allow other users to access some of your meditation data (sessions\' time and duration).',
   signupPublicProfileHint: '(this can be changed later in app settings)',
