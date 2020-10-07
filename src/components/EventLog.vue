@@ -11,14 +11,14 @@
       >
         <q-fab-action
           icon="group_add"
-          label="Add friends"
+          :label="manageFriendsLabel"
           label-position="left"
           external-label
           color="purple-5"
           padding="xs"
           @click="$router.push('/app/addusers')"
         />
-        <q-fab-action
+        <q-fab-action v-if="haveFriends"
           :icon="friendsVisibilityIcon"
           :label="friendsVisibilityLabel"
           label-position="left"
@@ -93,6 +93,12 @@ export default {
         return true
       }
       return false
+    },
+    manageFriendsLabel () {
+      if (this.haveFriends) {
+        return 'Manage friends'
+      }
+      return 'Add friends'
     },
     friendsVisibilityIcon () {
       return this.showFriends ? 'visibility_off' : 'visibility'
