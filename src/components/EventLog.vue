@@ -31,7 +31,7 @@
     </div>
     <div class="fixed-top gradient"></div>
     <div class="fixed-top gradient-2"></div>
-    <div class="eventlog overflow-hidden-y">
+    <div class="eventlog">
       <q-list class="">
         <q-item v-for="event in eventlog"
           :key="event.id"
@@ -52,9 +52,9 @@
               <span v-else-if="event.score === 3" class="text-primary">&starf;&starf;&starf;&star;&star;</span>
               <span v-else-if="event.score === 4" class="text-primary">&starf;&starf;&starf;&starf;&star;</span>
               <span v-else-if="event.score === 5" class="text-primary">&starf;&starf;&starf;&starf;&starf;</span>
-              <span>, </span>
-              <span class="">{{ event.min }}</span>
-              <span> {{ $t('eventlogUnitMin') }}</span>
+              <span v-if="event.min">, </span>
+              <span v-if="event.min">{{ event.min }}</span>
+              <span v-if="event.min"> {{ $t('eventlogUnitMin') }}</span>
               <span class="eventlog-week float-right">
                 <span v-if="event.week !== undefined" class="float-left">{{ $t('eventlogThisWeek') }}: {{ event.week }} {{ weekUnitI18n(event.weekUnit) }}</span>
               </span>
