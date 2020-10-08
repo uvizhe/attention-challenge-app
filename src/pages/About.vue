@@ -10,17 +10,16 @@
       </p>
       <p>
         {{ $t('aboutP3') }}
-        <ul>
-          <li class="about-li">{{ $t('aboutP3_1') }}</li>
-          <li class="about-li">{{ $t('aboutP3_2') }}</li>
-        </ul>
       </p>
       <p>
         {{ $t('aboutP4') }}
+      </p>
+      <p>
+        {{ $t('aboutP5') }}
         <ul>
-          <li class="about-li">{{ $t('aboutP4_1') }}</li>
-          <li class="about-li">{{ $t('aboutP4_2') }}</li>
-          <li class="about-li">{{ $t('aboutP4_3') }}</li>
+          <li class="about-li">{{ $t('aboutP5_1') }}</li>
+          <li class="about-li">{{ $t('aboutP5_2') }}</li>
+          <li class="about-li">{{ $t('aboutP5_3') }}</li>
         </ul>
       </p>
     </div>
