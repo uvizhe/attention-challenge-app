@@ -91,15 +91,15 @@ export default {
     if (this.$q.platform.is.android) {
       // eslint-disable-next-line no-undef
       this.dingSound = new Media(
-        '/android_asset/www/statics/sounds/Ding.mp3')
+        '/android_asset/www/sounds/Ding.mp3')
       // eslint-disable-next-line no-undef
       this.bowlSound = new Media(
-        '/android_asset/www/statics/sounds/Bowl.mp3')
+        '/android_asset/www/sounds/Bowl.mp3')
     } else if (this.$q.platform.is.ios) {
       // eslint-disable-next-line no-undef
-      this.dingSound = new Media('statics/sounds/Ding.mp3')
+      this.dingSound = new Media('sounds/Ding.mp3')
       // eslint-disable-next-line no-undef
-      this.bowlSound = new Media('statics/sounds/Bowl.mp3')
+      this.bowlSound = new Media('sounds/Bowl.mp3')
     }
     if (this.$router.currentRoute.query.newuser) {
       this.greetingDialog = true
