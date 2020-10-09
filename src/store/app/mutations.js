@@ -16,8 +16,8 @@ export function setInitialized (state) {
   state.initialized = true
 }
 
-export function setInitialSyncTime (state, ts) {
-  state.initialSyncTime = ts
+export function setLastSyncTime (state, ts) {
+  state.lastSyncTime = ts
 }
 
 export function toggleFriends (state) {

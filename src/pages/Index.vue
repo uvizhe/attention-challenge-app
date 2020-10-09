@@ -96,6 +96,8 @@ export default {
       this.$store.dispatch('app/initData')
       this.$i18n.locale = this.$store.state.app.locale
       document.addEventListener('resume', this.onResume, false)
+    } else {
+      this.$store.dispatch('app/syncWithFriends')
     }
     this.sessionDuration = process.env.SESSION_DURATION ||
       this.$store.state.app.sessionDuration
@@ -181,7 +183,9 @@ export default {
   },
   methods: {
     onResume () {
-      this.$store.dispatch('app/syncWithFriends')
+      if (this.$route.path === '/app') {
+        this.$store.dispatch('app/syncWithFriends')
+      }
     },
     showError (error) {
       this.errMsg = error
@@ -295,6 +299,7 @@ export default {
       }
       this.ratingDialogWait = false
       this.ratingDialog = false
+      this.$store.dispatch('app/syncWithFriends')
     }
   }
 }

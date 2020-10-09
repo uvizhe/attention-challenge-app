@@ -76,9 +76,6 @@ export default {
     }
   },
   computed: {
-    referenceSyncTime () {
-      return this.$store.getters['app/referenceSyncTime']
-    },
     haveFriends () {
       if (this.$store.getters['app/friends'].length) {
         return true
@@ -133,7 +130,7 @@ export default {
       this.$store.commit('app/toggleFriends')
     },
     unseenEvent (event) {
-      if (event.ts >= this.referenceSyncTime) {
+      if (event.ts >= this.$store.state.app.prevSyncTime) {
         if (event.user) {
           return true
         } else if (!event.user && event.week !== undefined) {

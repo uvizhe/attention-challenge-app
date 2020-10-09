@@ -248,12 +248,10 @@ export async function syncWithFriends (context) {
     })
   }
   const ts = Math.floor(Date.now() / 1000)
-  if (!context.state.initialSyncTime) {
-    context.commit('setInitialSyncTime', ts)
-  }
-  saveData('lastSyncTime', ts)
+  saveData('prevSyncTime', context.state.lastSyncTime)
   context.commit('setStateValue', {
-    key: 'lastSyncTime',
-    value: ts
+    key: 'prevSyncTime',
+    value: context.state.lastSyncTime
   })
+  context.commit('setLastSyncTime', ts)
 }
