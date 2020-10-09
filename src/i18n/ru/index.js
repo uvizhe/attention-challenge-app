@@ -25,7 +25,7 @@ export default {
   loginUsername: 'Логин',
   loginPassword: 'Пароль',
   loginButton: 'Войти',
-  loginRecovery: 'Я забыл свой логин/пароль',
+  loginRecovery: 'Я не помню свой логин/пароль',
   recoverButton: 'Восстановить',
   recoverInfo: 'Восстановление доступа с помощью зарегистрированной почты',
   recoverInfo2: 'Логин и инструкции по замене пароля высланы на указанную почту.',
