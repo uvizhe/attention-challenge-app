@@ -11,11 +11,18 @@
         <avgs-chart />
       </div>
       <div class="col-auto big-red-btn-div row relative-position justify-between items-center">
-        <q-btn
+        <q-btn v-if="sessionOn"
+          icon="pause"
+          round
+          color="purple-5"
+          class="q-mx-md"
+          @click="pauseTimer(!sessionPause)"
+        />
+        <q-btn v-else
           icon="remove"
           round
           color="purple-5"
-          :class="adjustButtonsClass"
+          class="q-mx-md"
           @click="adjustSession(-1)"
           :disable="lowerSessionLimit"
         />
@@ -49,11 +56,18 @@
             {{ $t('indexBellsDeferralWarning') }}
           </q-tooltip>
         </q-btn>
-        <q-btn
+        <q-btn v-if="sessionOn"
+          icon="stop"
+          round
+          color="purple-5"
+          class="q-mx-md"
+          @click="stopTimer"
+        />
+        <q-btn v-else
           icon="add"
           round
           color="purple-5"
-          :class="adjustButtonsClass"
+          class="q-mx-md"
           @click="adjustSession(1)"
           :disable="upperSessionLimit"
         />
@@ -121,6 +135,7 @@ export default {
       bellsDeferral: 0,
       seconds: 0,
       sessionOn: false,
+      sessionPause: false,
       timer: null,
       signals: [],
       deferralWarning: false,
@@ -139,13 +154,6 @@ export default {
       let cls = 'absolute-top z-top bg-red text-white text-center'
       if (!this.error) {
         cls += ' hidden'
-      }
-      return cls
-    },
-    adjustButtonsClass () {
-      let cls = 'q-mx-md'
-      if (this.sessionOn) {
-        cls += ' invisible'
       }
       return cls
     },
@@ -240,6 +248,7 @@ export default {
         window.AudioManagement.setAudioMode(this.ringerMode, null, null)
       }
       this.sessionOn = false
+      this.sessionPause = false
     },
     checkTime () {
       if (!this.seconds) {
@@ -261,6 +270,15 @@ export default {
         if (this.signals.includes(ts)) {
           this.dingSound.play()
         }
+      }
+    },
+    pauseTimer (on) {
+      if (on) {
+        this.sessionPause = true
+        clearInterval(this.timer)
+      } else {
+        this.sessionPause = false
+        this.runTimer()
       }
     },
     async reportScore (score) {
