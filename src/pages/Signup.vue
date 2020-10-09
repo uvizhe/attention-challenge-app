@@ -146,13 +146,15 @@ export default {
       }, 3000)
     },
     async submit () {
-      if (!(this.username && this.password && this.password2 && this.email)) {
+      const username = this.username.trim()
+      const email = this.email.trim()
+      if (!(username && this.password && this.password2 && email)) {
         this.showError(this.$t('signupError0'))
-      } else if (this.username.length < 2) {
+      } else if (username.length < 2) {
         this.showError(this.$t('signupError1'))
-      } else if (!/^[\w\d\-_]+$/.test(this.username)) {
+      } else if (!/^[\w\d\-_]+$/.test(username)) {
         this.showError(this.$t('signupError2'))
-      } else if (!/^.+@[^.]+\..+$/.test(this.email)) {
+      } else if (!/^.+@[^.]+\..+$/.test(email)) {
         this.showError(this.$t('signupError3'))
       } else if (this.password !== this.password2) {
         this.showError(this.$t('signupError4'))
@@ -162,8 +164,7 @@ export default {
         try {
           this.wait = true
           await signup(
-            this.username, this.password, this.email,
-            this.publicProfile
+            username, this.password, email, this.publicProfile
           )
         } catch (e) {
           this.wait = false
@@ -171,7 +172,7 @@ export default {
           return
         }
         this.wait = false
-        this.$store.dispatch('app/setUsername', this.username)
+        this.$store.dispatch('app/setUsername', username)
         this.$store.dispatch('app/setPublicProfile', this.publicProfile)
         this.$router.replace('/app?newuser=1')
       }

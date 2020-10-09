@@ -89,12 +89,13 @@ export default {
       }, 3000)
     },
     async submit () {
-      if (!(this.username && this.password)) {
+      const username = this.username.trim()
+      if (!(username && this.password)) {
         this.showError(this.$t('signupError0'))
       } else {
         try {
           this.wait = true
-          await authenticate(this.username, this.password)
+          await authenticate(username, this.password)
           this.$store.dispatch('app/fetchStats')
         } catch (e) {
           this.wait = false
@@ -102,7 +103,7 @@ export default {
           return
         }
         this.wait = false
-        this.$store.dispatch('app/setUsername', this.username)
+        this.$store.dispatch('app/setUsername', username)
         this.$router.replace('/app')
       }
     }
