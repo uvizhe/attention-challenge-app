@@ -40,10 +40,9 @@
           <q-item-section side class="eventlog-date">
             <div class="fit">
               <span>{{ DateI18n(event.date) }}</span>
-              <span v-if="event.ts >= referenceSyncTime" class="float-right text-red">*</span>
             </div>
           </q-item-section>
-          <q-item-section>
+          <q-item-section :class="eventPartialClass(event)">
             <div>
               <span v-if="event.user" class="eventlog-name ellipsis vertical-top">{{ event.user }}</span>
               <span v-if="event.score === 0" class="text-primary">&star;&star;&star;&star;&star;</span>
@@ -125,8 +124,23 @@ export default {
       const idx = this.$store.getters['app/friends'].indexOf(username)
       return 'event bg-' + colors[idx]
     },
+    eventPartialClass (event) {
+      if (this.unseenEvent(event)) {
+        return 'event-new'
+      }
+    },
     toggleFriends () {
       this.$store.commit('app/toggleFriends')
+    },
+    unseenEvent (event) {
+      if (event.ts >= this.referenceSyncTime) {
+        if (event.user) {
+          return true
+        } else if (!event.user && event.week !== undefined) {
+          return true
+        }
+      }
+      return false
     },
     DateI18n (date) {
       if (date === 'Today') {
