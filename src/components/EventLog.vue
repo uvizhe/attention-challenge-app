@@ -12,6 +12,7 @@
         <q-fab-action
           icon="group_add"
           :label="manageFriendsLabel"
+          :disable="$store.state.app.offline"
           label-position="left"
           external-label
           color="purple-5"

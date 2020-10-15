@@ -2,6 +2,7 @@ export default function () {
   return {
     pageHeader: false,
     pageHeaderTitle: '',
+    offline: false,
     initialized: false,
     showFriends: true,
     /* Config variables BEGIN */

@@ -114,6 +114,7 @@ export async function setPublicProfile (context, isPublic) {
 }
 
 export async function syncServerData (context) {
+  if (context.state.offline) return
   const data = await getServerData()
   for (let key of Object.keys(data)) {
     const value = data[key]
@@ -127,7 +128,11 @@ export async function syncServerData (context) {
 }
 
 export async function reportSession (context, payload) {
+  if (context.state.offline) {
+    // save session locally
+  }
   const stats = await postSession(payload.score, payload.duration)
+  console.log(JSON.stringify(stats))
   const ts = Math.floor(Date.now() / 1000)
   let sessions = context.getters.sessionsCopy
   let avgs = context.getters.avgsCopy
@@ -174,6 +179,7 @@ export async function reportSession (context, payload) {
 }
 
 export async function fetchStats (context) {
+  if (context.state.offline) return
   const stats = await getStats()
   if (stats.averages.length) {
     const lastSessionDate = stats.sessions.slice(-1).pop().date
@@ -224,6 +230,7 @@ export async function addFriends (context, friends) {
 }
 
 export async function syncWithFriends (context) {
+  if (context.state.offline) return
   const friendsSessions = context.getters.friendsSessionsCopy
   const friends = context.getters.friends
   // TODO: Check if friends are still public

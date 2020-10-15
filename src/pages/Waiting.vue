@@ -2,10 +2,8 @@
   <q-layout>
     <q-page-container>
       <q-page>
+        <offline-dialog :show="offlineDialog" @close="closeOfflineDialog" />
         <q-spinner-tail size="lg" color="purple-5" class="fixed-center" />
-        <div :class="feedbackClass">
-          {{ feedbackMsg }}
-        </div>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -13,23 +11,21 @@
 
 <script>
 import { authorize } from '../js/remotedb'
+import OfflineDialog from 'components/OfflineDialog'
 export default {
   // name: 'PageName',
+  components: {
+    OfflineDialog
+  },
   props: ['action'],
   data () {
     return {
-      feedbackMsg: ''
+      offlineDialog: false
     }
   },
   created () {
     if (this.action === 'auth') {
       this.authorize()
-    }
-  },
-  computed: {
-    feedbackClass () {
-      const cls = 'absolute-center q-mt-xl text-center full-width'
-      return this.feedbackMsg ? cls : 'hidden'
     }
   },
   methods: {
@@ -38,7 +34,7 @@ export default {
         await authorize()
       } catch (e) {
         setTimeout(() => {
-          this.feedback()
+          this.offlineDialog = true
         }, 5000)
         setTimeout(() => {
           this.authorize()
@@ -47,8 +43,10 @@ export default {
       }
       this.$router.replace('/app')
     },
-    feedback () {
-      this.feedbackMsg = this.$t('waitingHint')
+    closeOfflineDialog () {
+      this.$store.commit('app/setOffline')
+      this.offlineDialog = false
+      this.$router.replace('/app')
     }
   }
 }

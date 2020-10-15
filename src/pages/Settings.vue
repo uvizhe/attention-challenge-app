@@ -106,6 +106,7 @@
       <q-item-section side>
         <q-toggle
           v-model="publicProfile"
+          :disable="$store.state.app.offline"
           color="purple-5"
           checked-icon="check"
           unchecked-icon="clear"
