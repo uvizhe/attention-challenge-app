@@ -253,5 +253,9 @@ export async function syncWithFriends (context) {
     key: 'prevSyncTime',
     value: context.state.lastSyncTime
   })
-  context.commit('setLastSyncTime', ts)
+  saveData('lastSyncTime', ts)
+  context.commit('setStateValue', {
+    key: 'lastSyncTime',
+    value: ts
+  })
 }

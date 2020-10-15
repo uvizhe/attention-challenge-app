@@ -3,7 +3,6 @@ export default function () {
     pageHeader: false,
     pageHeaderTitle: '',
     initialized: false,
-    lastSyncTime: 0,
     showFriends: true,
     /* Config variables BEGIN */
     sessionDuration: 15 * 60,
@@ -16,6 +15,7 @@ export default function () {
     /* Config variables END */
     /* Data variables BEGIN */
     prevSyncTime: 0,
+    lastSyncTime: 0,
     lastSessionDate: '',
     sessions: [],
     avgs: [],
