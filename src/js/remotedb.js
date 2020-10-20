@@ -140,6 +140,30 @@ export async function postSession (score, duration) {
   return res.data
 }
 
+export async function postSessions (sessions) {
+  const data = { sessions: [] }
+  const date = new Date()
+  for (const session of sessions) {
+    data.sessions.push({
+      score: session.score,
+      duration: session.duration,
+      timestamp: session.ts * 1000,
+      tzoffset: date.getTimezoneOffset()
+    })
+  }
+  let res
+  try {
+    res = await axios.post('/sessions', data)
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+  return res.data
+}
+
 export async function getStats () {
   let ress
   try {

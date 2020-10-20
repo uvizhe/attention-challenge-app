@@ -4,8 +4,10 @@ import {
 } from '../../js/localdb'
 import {
   getServerData, setProfilePublic, getStats,
-  getSessions, postSession, getPublicStatus
+  getSessions, postSession, getPublicStatus,
+  postSessions
 } from '../../js/remotedb'
+import { userDate } from '../../js/eventlog'
 import { updateChartsData } from '../../js/maintenance'
 
 export function maintenance (context) {
@@ -66,11 +68,15 @@ export function setDNDMode (context, value) {
   })
 }
 
-export function initData (context) {
+export async function initData (context) {
   context.dispatch('maintenance')
   context.dispatch('restoreConfig')
   context.dispatch('restoreData')
   context.dispatch('setLocaleIfNotSet')
+  if (context.state.offlineSessions && !context.state.offline) {
+    await context.dispatch('reportOfflineSessions')
+    context.dispatch('fetchStats')
+  }
   context.dispatch('syncServerData')
   context.dispatch('syncWithFriends')
   context.commit('setInitialized')
@@ -105,7 +111,12 @@ export function setUsername (context, username) {
 }
 
 export async function setPublicProfile (context, isPublic) {
-  await setProfilePublic(isPublic)
+  try {
+    await setProfilePublic(isPublic)
+  } catch (e) {
+    context.commit('setOffline')
+    return
+  }
   saveConfig('publicProfile', isPublic)
   context.commit('setStateValue', {
     key: 'publicProfile',
@@ -114,8 +125,16 @@ export async function setPublicProfile (context, isPublic) {
 }
 
 export async function syncServerData (context) {
-  if (context.state.offline) return
-  const data = await getServerData()
+  let data = {}
+  try {
+    data = await getServerData()
+    if (context.state.offline) {
+      context.commit('setOffline', false)
+    }
+  } catch (e) {
+    context.commit('setOffline')
+    return
+  }
   for (let key of Object.keys(data)) {
     const value = data[key]
     if (key === 'public') key = 'publicProfile'
@@ -128,43 +147,58 @@ export async function syncServerData (context) {
 }
 
 export async function reportSession (context, payload) {
-  if (context.state.offline) {
-    // save session locally
+  try {
+    await postSession(payload.score, payload.duration)
+    if (context.state.offline) {
+      context.commit('setOffline', false)
+    }
+  } catch (e) {
+    context.commit('setOffline')
   }
-  const stats = await postSession(payload.score, payload.duration)
-  console.log(JSON.stringify(stats))
+  const date = userDate()
   const ts = Math.floor(Date.now() / 1000)
+  let sessionsToday = context.state.sessionsToday
   let sessions = context.getters.sessionsCopy
   let avgs = context.getters.avgsCopy
+  const session = {
+    date: date,
+    ts: ts,
+    duration: payload.duration,
+    score: payload.score
+  }
   if (!sessions.length) {
     // first ever session
-    sessions = [{
-      date: stats.date,
-      ts: ts,
-      duration: payload.duration,
-      score: payload.score
-    }]
-    avgs = [stats.average]
+    sessions = [session]
+    avgs = [payload.score]
   } else {
-    sessions.push({
-      date: stats.date,
-      ts: ts,
-      duration: payload.duration,
-      score: payload.score
-    })
-    if (stats.date === context.state.lastSessionDate) {
+    let average
+    if (date === context.state.lastSessionDate) {
       // new session this day
-      avgs.pop()
+      average = avgs.pop()
+      average =
+        (average * sessionsToday + payload.score) /
+          (sessionsToday + 1)
+      sessionsToday += 1
+    } else {
+      // first session this day
+      average = payload.score
+      sessionsToday = 1
     }
-    avgs.push(stats.average)
+    sessions.push(session)
+    avgs.push(average)
     if (avgs.length > 90) {
       avgs = avgs.slice(-90)
     }
   }
-  saveData('lastSessionDate', stats.date)
+  saveData('lastSessionDate', date)
   context.commit('setStateValue', {
     key: 'lastSessionDate',
-    value: stats.date
+    value: date
+  })
+  saveData('sessionsToday', sessionsToday)
+  context.commit('setStateValue', {
+    key: 'sessionsToday',
+    value: sessionsToday
   })
   saveData('sessions', sessions)
   context.commit('setStateValue', {
@@ -176,11 +210,45 @@ export async function reportSession (context, payload) {
     key: 'avgs',
     value: avgs
   })
+  if (context.state.offline) {
+    const offlineSessions = context.getters.offlineSessionsCopy
+    offlineSessions.push(session)
+    saveData('offlineSessions', offlineSessions)
+    context.commit('setStateValue', {
+      key: 'offlineSessions',
+      value: offlineSessions
+    })
+  }
+}
+
+export async function reportOfflineSessions (context) {
+  let result = {}
+  try {
+    result = await postSessions(context.state.offlineSessions)
+  } catch (e) {
+    context.commit('setOffline')
+    return
+  }
+  if (result.status === 'ok') {
+    saveData('offlineSessions', [])
+    context.commit('setStateValue', {
+      key: 'offlineSessions',
+      value: []
+    })
+  }
 }
 
 export async function fetchStats (context) {
-  if (context.state.offline) return
-  const stats = await getStats()
+  let stats = {}
+  try {
+    stats = await getStats()
+    if (context.state.offline) {
+      context.commit('setOffline', false)
+    }
+  } catch (e) {
+    context.commit('setOffline')
+    return
+  }
   if (stats.averages.length) {
     const lastSessionDate = stats.sessions.slice(-1).pop().date
     saveData('lastSessionDate', lastSessionDate)
@@ -220,7 +288,17 @@ export async function addFriends (context, friends) {
     if (prevFriends.includes(username)) {
       continue // skip this friend as we already have it
     }
-    friendsSessions[username] = await getSessions(username)
+    try {
+      friendsSessions[username] = await getSessions(username)
+    } catch (e) {
+      context.commit('setOffline')
+      break
+    }
+  }
+  if (context.state.offline) {
+    for (const username of newFriends) {
+      friendsSessions[username] = []
+    }
   }
   saveData('friendsSessions', friendsSessions)
   context.commit('setStateValue', {
@@ -230,12 +308,19 @@ export async function addFriends (context, friends) {
 }
 
 export async function syncWithFriends (context) {
-  if (context.state.offline) return
   const friendsSessions = context.getters.friendsSessionsCopy
   const friends = context.getters.friends
-  // TODO: Check if friends are still public
   if (Object.keys(friendsSessions).length) {
-    const publicArray = await getPublicStatus(friends)
+    let publicArray = []
+    try {
+      publicArray = await getPublicStatus(friends)
+      if (context.state.offline) {
+        context.commit('setOffline', false)
+      }
+    } catch (e) {
+      context.commit('setOffline')
+      return
+    }
     for (const idx in publicArray) {
       if (!publicArray[idx]) { // friend is not public anymore
         delete friendsSessions[friends[idx]]
@@ -243,9 +328,18 @@ export async function syncWithFriends (context) {
     }
     for (const username in friendsSessions) {
       const lastSession = friendsSessions[username].slice(-1).pop()
-      const sessions = await getSessions(
-        username, lastSession.date, lastSession.ts
-      )
+      let sessions = []
+      try {
+        if (lastSession) {
+          sessions = await getSessions(
+            username, lastSession.date, lastSession.ts
+          )
+        } else {
+          sessions = await getSessions(username)
+        }
+      } catch (e) {
+        context.commit('setOffline')
+      }
       friendsSessions[username].push(...sessions)
     }
     saveData('friendsSessions', friendsSessions)
@@ -254,6 +348,7 @@ export async function syncWithFriends (context) {
       value: friendsSessions
     })
   }
+  if (context.state.offline) return
   const ts = Math.floor(Date.now() / 1000)
   saveData('prevSyncTime', context.state.lastSyncTime)
   context.commit('setStateValue', {

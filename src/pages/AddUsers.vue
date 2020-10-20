@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <q-banner :class="noticeBannerClass">{{ $t('addUsersBanner') }}</q-banner>
+    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" />
     <q-linear-progress indeterminate :class="progressClass" />
     <q-input v-model="search" type="search"
       square outlined dense
@@ -53,20 +53,32 @@
 
 <script>
 import { getUsers } from '../js/remotedb'
+import SimpleBanner from 'components/SimpleBanner'
 export default {
   // name: 'PageName',
+  components: {
+    SimpleBanner
+  },
   async created () {
     this.wait = true
-    const users = await getUsers()
+    let users = []
+    try {
+      users = await getUsers()
+    } catch (e) {
+      this.showBanner(this.$t('networkError'), 3)
+      this.$store.commit('app/setOffline')
+    }
     this.users = this.prepareUserList(users)
     this.wait = false
   },
   data () {
     return {
       users: [],
-      limitNotification: false,
       search: '',
-      wait: false
+      wait: false,
+      banner: false,
+      bannerMessage: '',
+      bannerSeverity: 0
     }
   },
   watch: {
@@ -75,23 +87,15 @@ export default {
     }
   },
   computed: {
-    noticeBannerClass () {
-      let cls = 'absolute-top z-top bg-warning text-white text-center'
-      if (!this.limitNotification) {
-        cls += ' hidden'
-      }
-      return cls
-    },
     progressClass () {
       return this.wait ? '' : 'invisible'
     }
   },
   methods: {
-    showNotification () {
-      this.limitNotification = true
-      setTimeout(() => {
-        this.limitNotification = false
-      }, 3000)
+    showBanner (message, severity) {
+      this.bannerMessage = message
+      this.bannerSeverity = severity
+      this.banner = true
     },
     poppingRule (idx) {
       if (this.users[idx].friend) {
@@ -104,7 +108,7 @@ export default {
     checkSelected (idx) {
       if (this.users.filter(i => i.checked).length > 4) {
         this.users[idx].checked = !this.users[idx].checked
-        this.showNotification()
+        this.showBanner(this.$t('addUsersBanner'), 2)
       } else if (!this.users[idx].checked) {
         this.users[idx].friend = false
       }

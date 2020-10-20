@@ -18,9 +18,11 @@ export default function () {
     prevSyncTime: 0,
     lastSyncTime: 0,
     lastSessionDate: '',
+    sessionsToday: 0,
     sessions: [],
     avgs: [],
     friendsSessions: {},
+    offlineSessions: [],
     /* Data variables END */
     languages: [
       {

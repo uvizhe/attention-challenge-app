@@ -3,6 +3,10 @@ import moment from 'moment'
 const TD = 'Today'
 const YD = 'Yesterday'
 
+export function userDate () {
+  return moment().subtract(4, 'hours').format('YYYY-MM-DD')
+}
+
 export function makeEL (sessionsDict) {
   /* Convert sessions:
       { username0: [
@@ -34,7 +38,7 @@ export function makeEL (sessionsDict) {
   }
   const leaders = populateWeekStats(sessionsDict)
   const sessions = combineSessions(sessionsDict)
-  const today = moment().subtract(4, 'hours').format('YYYY-MM-DD')
+  const today = userDate()
   const twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD')
   for (const session of sessions) {
     const date = calcDate(session.date, today, twoDaysAgo)

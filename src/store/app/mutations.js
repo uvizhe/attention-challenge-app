@@ -12,8 +12,8 @@ export function setStateValue (state, { key, value }) {
   state[key] = value
 }
 
-export function setOffline (state) {
-  state.offline = true
+export function setOffline (state, offline = true) {
+  state.offline = offline
 }
 
 export function setInitialized (state) {

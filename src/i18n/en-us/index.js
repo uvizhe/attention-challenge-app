@@ -29,6 +29,7 @@ export default {
   recoverButton: 'Recover',
   recoverInfo: 'Recover access with email you registered',
   recoverInfo2: 'Your username and instructions on how to reset your password was sent to the specified email.',
+  offlineMode: 'Offline mode',
   offlineDialogHeader: 'Connectivity problem',
   offlineDialogText: 'The app will work in offline mode with limited functionality.',
   settingsLanguageText: 'App language',
@@ -76,5 +77,6 @@ export default {
   avgsChartTitle: 'Daily Average Score',
   avgsChartPlaceholder: 'No data yet',
   indexBellsDeferralWarning: 'Bells deferral has been adjusted for this session',
-  rbMin: 'min'
+  rbMin: 'min',
+  networkError: 'Network error. App is switched to offline mode.'
 }

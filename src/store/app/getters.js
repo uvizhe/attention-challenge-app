@@ -13,3 +13,7 @@ export function friends (state) {
 export function friendsSessionsCopy (state) {
   return JSON.parse(JSON.stringify(state.friendsSessions))
 }
+
+export function offlineSessionsCopy (state) {
+  return state.offlineSessions.slice()
+}

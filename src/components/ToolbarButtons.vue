@@ -1,5 +1,14 @@
 <template>
   <div>
+    <q-btn v-if="$store.state.app.offline"
+      flat round outline disable
+      icon="error"
+      color="red-6"
+    >
+      <q-tooltip :hide-delay="1000">
+        {{ $t('offlineMode') }}
+      </q-tooltip>
+    </q-btn>
     <q-btn
       flat
       round

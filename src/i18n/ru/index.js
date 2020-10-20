@@ -29,8 +29,9 @@ export default {
   recoverButton: 'Восстановить',
   recoverInfo: 'Восстановление доступа с помощью зарегистрированной почты',
   recoverInfo2: 'Логин и инструкции по замене пароля высланы на указанную почту.',
+  offlineMode: 'Офлайн-режим',
   offlineDialogHeader: 'Проблема со связью',
-  offlineDialogText: 'Приложение будет работать в офлайн-режиме с ограниченным функционалом.',
+  offlineDialogTex: 'Приложение будет работать в офлайн-режиме с ограниченным функционалом.',
   settingsLanguageText: 'Язык приложения',
   settingsDurationText: 'Длина сессии по умолчанию',
   settingsDurationHint: 'От 5 до 30 минут',
@@ -76,5 +77,6 @@ export default {
   avgsChartTitle: 'Средняя дневная оценка',
   avgsChartPlaceholder: 'Пока нет данных',
   indexBellsDeferralWarning: 'Настройка отложенных звоночков изменена для этой сессии',
-  rbMin: 'мин'
+  rbMin: 'мин',
+  networkError: 'Сетевая ошибка. Приложение переведено в офлайн-режим.'
 }
