@@ -1,5 +1,5 @@
 <template>
-<q-dialog v-model="show">
+<q-dialog v-model="show" persistent>
   <q-card>
     <q-card-section>
       <div class="text-h6">{{ $t('offlineDialogHeader') }}</div>
