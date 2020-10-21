@@ -131,12 +131,14 @@ export default {
       this.$store.commit('app/toggleFriends')
     },
     unseenEvent (event) {
-      if (event.ts >= this.$store.state.app.prevSyncTime) {
-        if (event.user) {
-          return true
-        } else if (!event.user && event.week !== undefined) {
-          return true
-        }
+      const prevSyncTime = this.$store.state.app.prevSyncTime
+      if (event.ts >= prevSyncTime && event.user) {
+        return true
+      } else if (prevSyncTime && event.ts > prevSyncTime &&
+                 !event.user && event.week !== undefined) {
+        // prevSyncTime must be defined to be sure it's not a first run
+        // event.week must be defined to be sure it's the last event
+        return true
       }
       return false
     },
