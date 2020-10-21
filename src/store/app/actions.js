@@ -78,6 +78,7 @@ export async function initData (context) {
     context.dispatch('fetchStats')
   }
   context.dispatch('syncServerData')
+  context.dispatch('updateLastActionTime')
   context.dispatch('syncWithFriends')
   context.commit('setInitialized')
 }
@@ -304,6 +305,15 @@ export async function addFriends (context, friends) {
   context.commit('setStateValue', {
     key: 'friendsSessions',
     value: friendsSessions
+  })
+}
+
+export function updateLastActionTime (context) {
+  const ts = Math.floor(Date.now() / 1000)
+  saveData('lastActionTime', ts)
+  context.commit('setStateValue', {
+    key: 'lastActionTime',
+    value: ts
   })
 }
 

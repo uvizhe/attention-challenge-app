@@ -15,6 +15,7 @@ export default function () {
     locale: '',
     /* Config variables END */
     /* Data variables BEGIN */
+    lastActionTime: 0,
     prevSyncTime: 0,
     lastSyncTime: 0,
     lastSessionDate: '',

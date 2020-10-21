@@ -132,12 +132,12 @@ export default {
     },
     unseenEvent (event) {
       const prevSyncTime = this.$store.state.app.prevSyncTime
+      const lastActionTime = this.$store.state.app.lastActionTime
       if (event.ts >= prevSyncTime && event.user) {
         return true
-      } else if (prevSyncTime && event.ts > prevSyncTime &&
-                 !event.user && event.week !== undefined) {
-        // prevSyncTime must be defined to be sure it's not a first run
-        // event.week must be defined to be sure it's the last event
+      } else if (Number(event.ts) + 1 >= lastActionTime && !event.user) {
+        // event.ts must be near lastActionTime to be sure
+        // it's the last user session
         return true
       }
       return false

@@ -97,6 +97,7 @@ export default {
       this.$i18n.locale = this.$store.state.app.locale
       document.addEventListener('resume', this.onResume, false)
     } else {
+      this.$store.dispatch('app/updateLastActionTime')
       this.$store.dispatch('app/syncWithFriends')
     }
     this.sessionDuration = process.env.SESSION_DURATION ||
@@ -184,6 +185,7 @@ export default {
   methods: {
     onResume () {
       if (this.$route.path === '/app') {
+        this.$store.dispatch('app/updateLastActionTime')
         this.$store.dispatch('app/syncWithFriends')
       }
     },
@@ -299,6 +301,7 @@ export default {
       }
       this.ratingDialogWait = false
       this.ratingDialog = false
+      this.$store.dispatch('app/updateLastActionTime')
       this.$store.dispatch('app/syncWithFriends')
     }
   }
