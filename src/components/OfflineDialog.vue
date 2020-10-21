@@ -6,7 +6,14 @@
     </q-card-section>
 
     <q-card-section class="q-pt-none">
-      {{ $t('offlineDialogText') }}<br>
+      <div class="row justify-evenly">
+        <div class="col-shrink self-center on-left">
+          <q-icon name="error" color="red-6" size="md" />
+        </div>
+        <div class="col">
+          {{ $t('offlineDialogText') }}
+        </div>
+      </div>
     </q-card-section>
 
     <q-card-actions align="right">

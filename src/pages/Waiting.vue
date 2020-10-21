@@ -20,7 +20,9 @@ export default {
   props: ['action'],
   data () {
     return {
-      offlineDialog: false
+      offlineDialog: false,
+      offlineTimer: null,
+      retryTimer: null
     }
   },
   created () {
@@ -33,12 +35,16 @@ export default {
       try {
         await authorize()
       } catch (e) {
-        setTimeout(() => {
-          this.offlineDialog = true
-        }, 5000)
-        setTimeout(() => {
+        this.retryTimer = setTimeout(() => {
+          // retry every second until considered offline
           this.authorize()
         }, 1000)
+        if (this.offlineTimer === null) {
+          this.offlineTimer = setTimeout(() => {
+            clearTimeout(this.retryTimer)
+            this.offlineDialog = true
+          }, 5000)
+        }
         return
       }
       this.$router.replace('/app')
