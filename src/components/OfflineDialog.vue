@@ -8,7 +8,7 @@
     <q-card-section class="q-pt-none">
       <div class="row justify-evenly">
         <div class="col-shrink self-center on-left">
-          <q-icon name="error" color="red-6" size="md" />
+          <q-icon name="error" color="deep-orange" size="md" />
         </div>
         <div class="col">
           {{ $t('offlineDialogText') }}

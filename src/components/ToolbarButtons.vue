@@ -3,7 +3,7 @@
     <q-btn v-if="$store.state.app.offline"
       flat round outline disable
       icon="error"
-      color="red-6"
+      color="deep-orange-5"
     >
       <q-tooltip :hide-delay="1000">
         {{ $t('offlineMode') }}

@@ -32,7 +32,7 @@
           :disable="sessionOn"
           round
           size="60px"
-          color="red"
+          color="deep-orange"
         >
           <div class="big-red-btn-title relative-position">
 
