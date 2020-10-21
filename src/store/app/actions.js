@@ -73,7 +73,7 @@ export async function initData (context) {
   context.dispatch('restoreConfig')
   context.dispatch('restoreData')
   context.dispatch('setLocaleIfNotSet')
-  if (context.state.offlineSessions && !context.state.offline) {
+  if (context.state.offlineSessions.length && !context.state.offline) {
     await context.dispatch('reportOfflineSessions')
     context.dispatch('fetchStats')
   }
