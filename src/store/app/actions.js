@@ -5,7 +5,7 @@ import {
 import {
   getServerData, setProfilePublic, getStats,
   getSessions, postSession, getPublicStatus,
-  postSessions
+  postSessions, authorize
 } from '../../js/remotedb'
 import { userDate } from '../../js/eventlog'
 import { updateChartsData } from '../../js/maintenance'
@@ -73,13 +73,8 @@ export async function initData (context) {
   context.dispatch('restoreConfig')
   context.dispatch('restoreData')
   context.dispatch('setLocaleIfNotSet')
-  if (context.state.offlineSessions.length && !context.state.offline) {
-    await context.dispatch('reportOfflineSessions')
-    context.dispatch('fetchStats')
-  }
   context.dispatch('syncServerData')
-  context.dispatch('updateLastActionTime')
-  context.dispatch('syncWithFriends')
+  context.dispatch('routineTasks')
   context.commit('setInitialized')
 }
 
@@ -145,6 +140,25 @@ export async function syncServerData (context) {
       value: value
     })
   }
+}
+
+export async function routineTasks (context) {
+  if (context.state.offlineSessions.length) {
+    try {
+      await authorize()
+      if (context.state.offline) {
+        context.commit('setOffline', false)
+      }
+    } catch (e) {
+      context.commit('setOffline')
+    }
+    if (!context.state.offline) {
+      await context.dispatch('reportOfflineSessions')
+      context.dispatch('fetchStats')
+    }
+  }
+  context.dispatch('updateLastActionTime')
+  context.dispatch('syncWithFriends')
 }
 
 export async function reportSession (context, payload) {
