@@ -61,16 +61,17 @@ export default {
       if (!/^.+@[^.]+\..+$/.test(this.email)) {
         this.showError(this.$t('signupError3'))
       } else {
+        let status
         try {
           this.wait = true
-          await recover(this.email, this.$q.lang.getLocale())
+          status = await recover(this.email, this.$q.lang.getLocale())
         } catch (e) {
           this.wait = false
           this.showError(e.message)
           return
         }
         this.wait = false
-        this.$router.replace('/recover-info')
+        this.$router.replace('/recover-info/' + status)
       }
     }
   }

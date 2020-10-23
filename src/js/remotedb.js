@@ -48,13 +48,14 @@ export async function authenticate (user, pass) {
   }
 }
 
-export async function signup (user, pass, email, publicProfile) {
+export async function signup (user, pass, email, publicProfile, locale) {
   const passHash = new SHA256().update(pass).digest('hex')
   const data = {
     username: user,
     password: passHash,
     email: email,
-    public: publicProfile
+    public: publicProfile,
+    locale: locale
   }
   let res
   try {
@@ -75,12 +76,13 @@ export async function signup (user, pass, email, publicProfile) {
 }
 
 export async function recover (email, locale) {
+  let res
   const data = {
     email: email,
     locale: locale
   }
   try {
-    await axios.post('/recover', data)
+    res = await axios.post('/recover', data)
   } catch (e) {
     if (e.response) {
       throw new DatabaseConnectionError(e.response.data.msg)
@@ -88,6 +90,7 @@ export async function recover (email, locale) {
       throw new DatabaseConnectionError(e.message)
     }
   }
+  return res.data.status
 }
 
 export async function getServerData () {

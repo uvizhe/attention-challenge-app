@@ -29,6 +29,8 @@ export default {
   recoverButton: 'Recover',
   recoverInfo: 'Recover access with email you registered',
   recoverInfo2: 'Your username and instructions on how to reset your password was sent to the specified email.',
+  recoverInfo2Error: 'Wrong email',
+  recoverInfo2Back: 'Go back',
   offlineMode: 'Offline mode',
   offlineDialogHeader: 'Connectivity problem',
   offlineDialogText: 'The app will work in offline mode with limited functionality.',

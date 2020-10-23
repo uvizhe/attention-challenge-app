@@ -19,8 +19,9 @@ const routes = [
         component: () => import('pages/Recover.vue')
       },
       {
-        path: '/recover-info',
-        component: () => import('pages/RecoverInfo.vue')
+        path: '/recover-info/:status',
+        component: () => import('pages/RecoverInfo.vue'),
+        props: true
       }
     ],
     beforeEnter: async (to, from, next) => {

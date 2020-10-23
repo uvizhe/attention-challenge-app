@@ -164,7 +164,11 @@ export default {
         try {
           this.wait = true
           await signup(
-            username, this.password, email, this.publicProfile
+            username,
+            this.password,
+            email,
+            this.publicProfile,
+            this.$q.lang.getLocale()
           )
         } catch (e) {
           this.wait = false
