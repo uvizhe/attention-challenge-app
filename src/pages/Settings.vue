@@ -15,60 +15,6 @@
       </q-item-section>
     </q-item>
     <q-item class="q-my-md">
-      <q-item-section>
-        <q-item-label>{{ $t('settingsDurationText') }}</q-item-label>
-        <q-item-label caption>{{ $t('settingsDurationHint') }}</q-item-label>
-      </q-item-section>
-      <q-item-section side>
-        <div class="row no-wrap items-center">
-        <q-btn
-          round
-          size="sm"
-          icon="remove"
-          color="purple-5"
-          @click="adjustSession(-1)"
-          :disable="lowerSessionLimit"
-        />
-        <div class="settings-duration text-center">{{ duration }}</div>
-        <q-btn
-          round
-          size="sm"
-          icon="add"
-          color="purple-5"
-          @click="adjustSession(1)"
-          :disable="upperSessionLimit"
-        />
-        </div>
-      </q-item-section>
-    </q-item>
-    <q-item class="q-my-md">
-      <q-item-section>
-        <q-item-label>{{ $t('settingsDeferBellsText') }}</q-item-label>
-        <q-item-label caption>{{ $t('settingsDeferBellsHint') }}</q-item-label>
-      </q-item-section>
-      <q-item-section side>
-        <div class="row no-wrap items-center">
-        <q-btn
-          round
-          size="sm"
-          icon="remove"
-          color="purple-5"
-          @click="adjustDeferral(-1)"
-          :disable="lowerDeferralLimit"
-        />
-        <div class="settings-duration text-center">{{ deferral }}</div>
-        <q-btn
-          round
-          size="sm"
-          icon="add"
-          color="purple-5"
-          @click="adjustDeferral(1)"
-          :disable="upperDeferralLimit"
-        />
-        </div>
-      </q-item-section>
-    </q-item>
-    <q-item class="q-my-md">
       <q-item-section @click="wakeLock=!wakeLock">
         <q-item-label>{{ $t('settingsWakeLockText') }}</q-item-label>
         <q-item-label caption>{{ $t('settingsWakeLockHint') }}</q-item-label>
