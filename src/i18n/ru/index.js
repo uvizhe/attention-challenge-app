@@ -78,7 +78,6 @@ export default {
   eventlogUnitHr: 'ч',
   avgsChartTitle: 'Средняя дневная оценка',
   avgsChartPlaceholder: 'Пока нет данных',
-  indexBellsDeferralWarning: 'Настройка отложенных звоночков изменена для этой сессии',
   rbMin: 'мин',
   networkError: 'Сетевая ошибка. Приложение переведено в офлайн-режим.'
 }

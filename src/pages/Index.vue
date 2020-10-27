@@ -10,7 +10,16 @@
       <div class="col-auto relative-position q-mt-md">
         <avgs-chart />
       </div>
+      <div class="col-auto">
+        <session-params @change="changeSessionParams"/>
+      </div>
       <div class="col-auto big-red-btn-div row relative-position justify-between items-center">
+        <big-button
+          :disabled="sessionOn"
+          :duration="sessionDurationMin"
+          :remaining="timeRemaining"
+          @click="startSession"
+        />
         <q-btn v-if="sessionOn"
           icon="pause"
           round
@@ -18,35 +27,12 @@
           class="q-mx-md"
           @click="pauseTimer(!sessionPause)"
         />
-        <q-btn v-else
-          icon="remove"
-          round
-          color="purple-5"
-          class="q-mx-md"
-          @click="adjustSession(-1)"
-          :disable="lowerSessionLimit"
-        />
-        <big-button
-          :disabled="sessionOn"
-          :duration="sessionDurationMin"
-          :remaining="timeRemaining"
-          :tooltip="deferralWarning"
-          @click="startSession"
-        />
         <q-btn v-if="sessionOn"
           icon="stop"
           round
           color="purple-5"
           class="q-mx-md"
           @click="stopTimer"
-        />
-        <q-btn v-else
-          icon="add"
-          round
-          color="purple-5"
-          class="q-mx-md"
-          @click="adjustSession(1)"
-          :disable="upperSessionLimit"
         />
       </div>
     </div>
@@ -58,9 +44,9 @@ import GreetingDialog from 'components/GreetingDialog'
 import RatingDialog from 'components/RatingDialog'
 import EventLog from 'components/EventLog'
 import AvgsChart from 'components/AvgsChart'
+import SessionParams from 'components/SessionParams'
 import BigButton from 'components/BigButton'
 import { randomSignals } from '../js/rsg'
-import { MIN_SESSION, MAX_SESSION } from '../js/constants'
 export default {
   name: 'PageIndex',
   components: {
@@ -68,6 +54,7 @@ export default {
     RatingDialog,
     EventLog,
     AvgsChart,
+    SessionParams,
     BigButton
   },
   created () {
@@ -119,7 +106,6 @@ export default {
       sessionPause: false,
       timer: null,
       signals: [],
-      deferralWarning: false,
       error: false,
       errMsg: '',
       greetingDialog: false,
@@ -140,12 +126,6 @@ export default {
     },
     sessionDurationMin () {
       return this.sessionDuration / 60
-    },
-    lowerSessionLimit () {
-      return this.sessionDuration / 60 === MIN_SESSION
-    },
-    upperSessionLimit () {
-      return this.sessionDuration / 60 === MAX_SESSION
     },
     timeRemaining () {
       const min = String(Math.floor(this.seconds / 60))
@@ -169,24 +149,11 @@ export default {
     closeGreetingDialog () {
       this.greetingDialog = false
     },
-    adjustSession (min) {
-      this.sessionDuration += Number(min) * 60
-      if (this.sessionDuration < MIN_SESSION * 60) {
-        this.sessionDuration = MIN_SESSION * 60
-      } else if (this.sessionDuration > MAX_SESSION * 60) {
-        this.sessionDuration = MAX_SESSION * 60
-      }
-      if (this.sessionDuration - this.bellsDeferral < MIN_SESSION * 60) {
-        this.bellsDeferral = this.sessionDuration - MIN_SESSION * 60
-        if (this.bellsDeferral < 0) {
-          this.bellsDeferral = 0
-        } else {
-          this.deferralWarning = true
-          setTimeout(() => {
-            this.deferralWarning = false
-          }, 3500)
-        }
-      }
+    changeSessionParams (values) {
+      const duration = values[1]
+      const deferral = values[0]
+      this.sessionDuration = duration * 60
+      this.bellsDeferral = deferral * 60
     },
     startSession () {
       this.seconds = this.sessionDuration

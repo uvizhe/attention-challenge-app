@@ -1,10 +1,10 @@
 <template>
   <q-btn
-    class="absolute-center shadow-up-5"
+    class="absolute-center shadow-up-5 big-red-btn"
     @click="onClick"
-    :disable="disabled"
-    round
     size="60px"
+    :disable="disabled"
+    rounded
     color="deep-orange"
   >
     <div class="big-red-btn-title relative-position">
@@ -20,14 +20,6 @@
         {{ remaining }}
       </div>
     </div>
-    <q-tooltip
-      v-model="tooltip"
-      :no-parent-event="true"
-      max-width="70%"
-      content-class="text-justify"
-    >
-      {{ $t('indexBellsDeferralWarning') }}
-    </q-tooltip>
   </q-btn>
 </template>
 

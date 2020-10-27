@@ -78,7 +78,6 @@ export default {
   eventlogUnitHr: 'hr',
   avgsChartTitle: 'Daily Average Score',
   avgsChartPlaceholder: 'No data yet',
-  indexBellsDeferralWarning: 'Bells deferral has been adjusted for this session',
   rbMin: 'min',
   networkError: 'Network error. App is switched to offline mode.'
 }
