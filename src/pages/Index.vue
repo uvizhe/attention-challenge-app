@@ -26,36 +26,13 @@
           @click="adjustSession(-1)"
           :disable="lowerSessionLimit"
         />
-        <q-btn
-          class="absolute-center shadow-up-5"
+        <big-button
+          :disabled="sessionOn"
+          :duration="sessionDurationMin"
+          :remaining="timeRemaining"
+          :tooltip="deferralWarning"
           @click="startSession"
-          :disable="sessionOn"
-          round
-          size="60px"
-          color="deep-orange"
-        >
-          <div class="big-red-btn-title relative-position">
-
-            <div v-if="!sessionOn">
-              <q-icon name="play_arrow" />
-              <div
-                class="big-red-btn-subtitle absolute-bottom text-red-2 text-lowercase">
-                {{ sessionDurationMin }}&nbsp;{{ $t('rbMin') }}
-              </div>
-            </div>
-            <div v-else>
-              {{ buttonTitle }}
-            </div>
-          </div>
-          <q-tooltip
-            v-model="deferralWarning"
-            :no-parent-event="true"
-            max-width="70%"
-            content-class="text-justify"
-          >
-            {{ $t('indexBellsDeferralWarning') }}
-          </q-tooltip>
-        </q-btn>
+        />
         <q-btn v-if="sessionOn"
           icon="stop"
           round
@@ -81,6 +58,7 @@ import GreetingDialog from 'components/GreetingDialog'
 import RatingDialog from 'components/RatingDialog'
 import EventLog from 'components/EventLog'
 import AvgsChart from 'components/AvgsChart'
+import BigButton from 'components/BigButton'
 import { randomSignals } from '../js/rsg'
 import { MIN_SESSION, MAX_SESSION } from '../js/constants'
 export default {
@@ -89,7 +67,8 @@ export default {
     GreetingDialog,
     RatingDialog,
     EventLog,
-    AvgsChart
+    AvgsChart,
+    BigButton
   },
   created () {
     if (!this.$store.state.app.initialized) {
@@ -158,13 +137,6 @@ export default {
         cls += ' hidden'
       }
       return cls
-    },
-    buttonTitle () {
-      if (this.sessionOn) {
-        return this.timeRemaining
-      } else {
-        return this.$t('rbText')
-      }
     },
     sessionDurationMin () {
       return this.sessionDuration / 60
