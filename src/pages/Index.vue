@@ -94,6 +94,8 @@ export default {
       if (this.sessionOn) {
         this.stopTimer()
       }
+      this.$store.dispatch('app/setSessionDuration', this.sessionDuration)
+      this.$store.dispatch('app/setBellsDeferral', this.bellsDeferral)
       next()
     }
   },
@@ -239,6 +241,8 @@ export default {
       this.ratingDialogWait = false
       this.ratingDialog = false
       this.$store.dispatch('app/routineTasks')
+      this.$store.dispatch('app/setSessionDuration', this.sessionDuration)
+      this.$store.dispatch('app/setBellsDeferral', this.bellsDeferral)
     }
   }
 }
