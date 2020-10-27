@@ -1,23 +1,23 @@
 <template>
   <div>
     <div class="text-center text-primary text-subtitle1 text-bold">
-    Параметры сессии
+    {{ $t('sessionParams') }}
     <q-icon name="help">
       <q-tooltip :hide-delay="2000">
-        Задержка:<br/>
-        Длительность: общая длина сессии
+        {{ $t('sessionParamsDeferralHint') }}<br/>
+        {{ $t('sessionParamsDurationHint') }}
       </q-tooltip>
     </q-icon>
     </div>
     <div class="relative-position q-mb-md">
-      <span class="absolute-left text-primary text-bold">
-        Задержка:
+      <span class="absolute-left text-primary text-bold q-ml-sm">
+        {{ $t('sessionParamsDeferral') }}:
         <span class="text-purple-6">
           {{ values.min }} {{ $t('rbMin') }}
         </span>
       </span>
-      <span class="absolute-right text-primary text-bold">
-        Длительность:
+      <span class="absolute-right text-primary text-bold q-mr-sm">
+        {{ $t('sessionParamsDuration') }}:
         <span class="text-purple-6">
           {{ values.max }} {{ $t('rbMin') }}
         </span>

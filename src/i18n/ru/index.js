@@ -74,6 +74,11 @@ export default {
   eventlogUnitHr: 'ч',
   avgsChartTitle: 'Средняя дневная оценка',
   avgsChartPlaceholder: 'Пока нет данных',
+  sessionParams: 'Параметры сессии',
+  sessionParamsDeferral: 'Задержка',
+  sessionParamsDuration: 'Длительность',
+  sessionParamsDeferralHint: 'Задержка: время перед началом активной сессии ',
+  sessionParamsDurationHint: 'Длительность: общая продолжительность сессии',
   rbMin: 'мин',
   networkError: 'Сетевая ошибка. Приложение переведено в офлайн-режим.'
 }

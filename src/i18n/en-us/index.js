@@ -74,6 +74,11 @@ export default {
   eventlogUnitHr: 'hr',
   avgsChartTitle: 'Daily Average Score',
   avgsChartPlaceholder: 'No data yet',
+  sessionParams: 'Session Parameters',
+  sessionParamsDeferral: 'Delay',
+  sessionParamsDuration: 'Duration',
+  sessionParamsDeferralHint: 'Delay: the time before an active session starts',
+  sessionParamsDurationHint: 'Duration: the whole duration of a session',
   rbMin: 'min',
   networkError: 'Network error. App is switched to offline mode.'
 }
