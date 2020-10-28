@@ -77,6 +77,7 @@ function populateWeekStats (sessionsDict) {
   // or, even better, guess from user locale.
   const weekAgo = moment().startOf('isoWeek').format('YYYY-MM-DD')
   for (const username in sessionsDict) {
+    if (!sessionsDict[username].length) continue
     let weekTotal = 0
     for (const session of sessionsDict[username]) {
       if (session.date > weekAgo) {
