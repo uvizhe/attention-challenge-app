@@ -5,8 +5,8 @@
       <q-fab
         direction="down"
         icon="people"
+        padding="sm"
         color="primary"
-        padding="xs"
         class="fixed-top-right q-ma-md eventlog-title"
       >
         <q-fab-action

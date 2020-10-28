@@ -2,12 +2,6 @@
   <q-layout view="hHh lpR fFf">
 
     <q-header class="bg-primary text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          Attention Challenge
-        </q-toolbar-title>
-        <toolbar-buttons />
-      </q-toolbar>
       <q-bar :class="pageHeaderClass">
         [
         <q-btn
@@ -32,11 +26,7 @@
 </template>
 
 <script>
-import ToolbarButtons from '../components/ToolbarButtons'
 export default {
-  components: {
-    ToolbarButtons
-  },
   data () {
     return {
       version: process.env.VERSION

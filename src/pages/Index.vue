@@ -7,7 +7,7 @@
       <div class="col-auto">
         <event-log />
       </div>
-      <div class="col-auto relative-position q-mt-md">
+      <div class="col-auto relative-position q-mt-md q-pb-md">
         <avgs-chart />
       </div>
       <div class="col-auto">
@@ -20,20 +20,38 @@
           :remaining="timeRemaining"
           @click="startSession"
         />
-        <q-btn v-if="sessionOn"
-          icon="pause"
-          round
-          color="purple-5"
-          class="q-mx-md"
-          @click="pauseTimer(!sessionPause)"
-        />
-        <q-btn v-if="sessionOn"
-          icon="stop"
-          round
-          color="purple-5"
-          class="q-mx-md"
-          @click="stopTimer"
-        />
+        <q-page-sticky position="bottom-left">
+          <q-btn v-if="sessionOn"
+            round
+            icon="pause"
+            color="primary"
+            class="q-ma-md"
+            @click="pauseTimer(!sessionPause)"
+          />
+          <q-btn v-else
+            round
+            icon="settings"
+            color="primary"
+            class="q-ma-md"
+            @click="$router.push('/app/settings')"
+          />
+        </q-page-sticky>
+        <q-page-sticky position="bottom-right">
+          <q-btn v-if="sessionOn"
+            round
+            icon="stop"
+            color="primary"
+            class="q-ma-md"
+            @click="stopTimer"
+          />
+          <q-btn v-else
+            round
+            icon="mdi-help"
+            color="primary"
+            class="q-ma-md"
+            @click="$router.push('/app/about')"
+          />
+        </q-page-sticky>
       </div>
     </div>
   </q-page>
