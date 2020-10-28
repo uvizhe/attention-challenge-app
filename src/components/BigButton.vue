@@ -5,7 +5,7 @@
     size="60px"
     :disable="disabled"
     rounded
-    color="deep-orange"
+    color="red"
   >
     <div class="big-red-btn-title relative-position">
 
