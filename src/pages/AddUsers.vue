@@ -20,9 +20,6 @@
         <q-item-section>
           {{ $t('addUsersTableUsername') }}
         </q-item-section>
-        <q-item-section side>
-          {{ $t('addUsersTableScore') }}
-        </q-item-section>
       </q-item>
       <div class="column">
         <q-item v-for="(user, idx) in users"
