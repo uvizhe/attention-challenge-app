@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-subtitle1 text-bold text-center text-primary">{{ $t('avgsChartTitle') }}</div>
+    <div class="text-subtitle1 text-bold text-center text-mysecondary-dark">{{ $t('avgsChartTitle') }}</div>
     <apexchart class="chart" type="line" height="100" :options="options()" :series="series()" />
   </div>
 </template>
@@ -49,6 +49,8 @@ export default {
           tickAmount: 5
         },
         stroke: { lineCap: 'round', width: strokeWidth },
+        colors: ['#d65fa9'],
+        // colors: ['#c357c5'],
         tooltip: { enabled: false },
         chart: {
           sparkline: { enabled: true },

@@ -1,18 +1,17 @@
 <template>
   <q-btn
-    class="absolute-center shadow-up-5 big-red-btn"
+    class="absolute-center shadow-up-5 big-red-btn text-white bg-myprimary"
     @click="onClick"
     size="60px"
     :disable="disabled"
     rounded
-    color="red"
   >
     <div class="big-red-btn-title relative-position">
 
       <div v-if="!disabled">
         <q-icon name="play_arrow" />
         <div
-          class="big-red-btn-subtitle absolute-bottom text-red-2 text-lowercase">
+          class="big-red-btn-subtitle absolute-bottom text-lowercase">
           {{ duration }}&nbsp;{{ $t('rbMin') }}
         </div>
       </div>

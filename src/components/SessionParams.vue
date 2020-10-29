@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="text-center text-primary text-subtitle1 text-bold">
+    <div class="text-center text-mysecondary-dark text-subtitle1 text-bold">
     {{ $t('sessionParams') }}
-    <q-icon name="help">
+    <q-icon name="help" class="text-myprimary">
       <q-tooltip :hide-delay="2000" offset="[0,0]">
         {{ $t('sessionParamsDeferralHint') }}<br/>
         {{ $t('sessionParamsDurationHint') }}
@@ -10,15 +10,15 @@
     </q-icon>
     </div>
     <div class="relative-position q-mb-md">
-      <span class="absolute-left text-primary text-bold q-ml-sm">
+      <span class="absolute-left text-dark text-bold q-ml-sm">
         {{ $t('sessionParamsDeferral') }}:
-        <span class="text-purple-6">
+        <span class="text-weight-regular text-dark">
           {{ values.min }} {{ $t('rbMin') }}
         </span>
       </span>
-      <span class="absolute-right text-primary text-bold q-mr-sm">
+      <span class="absolute-right text-dark text-bold q-mr-sm">
         {{ $t('sessionParamsDuration') }}:
-        <span class="text-purple-6">
+        <span class="text-weight-regular text-dark">
           {{ values.max }} {{ $t('rbMin') }}
         </span>
       </span>
@@ -27,8 +27,7 @@
       :min="0"
       :max="max"
       v-model="values"
-      color="purple-5"
-      class="session-params"
+      class="session-params text-myprimary"
       @input="value => check(value)"
     />
   </div>

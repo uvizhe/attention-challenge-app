@@ -24,15 +24,13 @@
           <q-btn v-if="sessionOn"
             round
             icon="pause"
-            color="primary"
-            class="q-ma-md"
+            class="q-ma-md text-white bg-myprimary"
             @click="pauseTimer(!sessionPause)"
           />
           <q-btn v-else
             round
             icon="settings"
-            color="primary"
-            class="q-ma-md"
+            class="q-ma-md text-white bg-myprimary"
             @click="$router.push('/app/settings')"
           />
         </q-page-sticky>
@@ -40,15 +38,13 @@
           <q-btn v-if="sessionOn"
             round
             icon="stop"
-            color="primary"
-            class="q-ma-md"
+            class="q-ma-md text-white bg-myprimary"
             @click="stopTimer"
           />
           <q-btn v-else
             round
             icon="mdi-help"
-            color="primary"
-            class="q-ma-md"
+            class="q-ma-md text-white bg-myprimary"
             @click="$router.push('/app/about')"
           />
         </q-page-sticky>

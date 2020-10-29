@@ -30,7 +30,11 @@
           dense
         >
           <q-item-section side>
-            <q-checkbox v-model="user.checked" @input="checkSelected(idx)" />
+            <q-checkbox
+              v-model="user.checked"
+              @input="checkSelected(idx)"
+              color="indigo-7"
+            />
           </q-item-section>
           <q-item-section>
             {{ user.user }}
@@ -40,9 +44,8 @@
     </q-list>
     <q-btn
       :label="$t('addUsersButton')"
-      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
+      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button text-white bg-myprimary"
       size="large"
-      color="purple-5"
       @click="addUsers"
     />
   </q-page>

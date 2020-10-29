@@ -1,13 +1,12 @@
 <template>
   <div class="">
-    <div class="fixed-top text-subtitle1 text-bold text-center text-primary eventlog-title">{{ $t('eventlogTitle') }}</div>
+    <div class="fixed-top text-subtitle1 text-bold text-center text-mysecondary-dark eventlog-title">{{ $t('eventlogTitle') }}</div>
     <div>
       <q-fab
         direction="down"
         icon="people"
         padding="sm"
-        color="primary"
-        class="fixed-top-right q-ma-md eventlog-title"
+        class="fixed-top-right q-ma-md eventlog-title text-white bg-myprimary"
       >
         <q-fab-action
           icon="group_add"
@@ -15,8 +14,8 @@
           :disable="$store.state.app.offline"
           label-position="left"
           external-label
-          color="purple-5"
           padding="xs"
+          class="text-white bg-myprimary"
           @click="$router.push('/app/addusers')"
         />
         <q-fab-action v-if="haveFriends"
@@ -24,8 +23,8 @@
           :label="friendsVisibilityLabel"
           label-position="left"
           external-label
-          color="purple-5"
           padding="xs"
+          class="text-white bg-myprimary"
           @click="toggleFriends"
         />
       </q-fab>
@@ -46,12 +45,12 @@
           <q-item-section :class="eventPartialClass(event)">
             <div>
               <span v-if="event.user" class="eventlog-name ellipsis vertical-top">{{ event.user }}</span>
-              <span v-if="event.score === 0" class="text-primary">&star;&star;&star;&star;&star;</span>
-              <span v-else-if="event.score === 1" class="text-primary">&starf;&star;&star;&star;&star;</span>
-              <span v-else-if="event.score === 2" class="text-primary">&starf;&starf;&star;&star;&star;</span>
-              <span v-else-if="event.score === 3" class="text-primary">&starf;&starf;&starf;&star;&star;</span>
-              <span v-else-if="event.score === 4" class="text-primary">&starf;&starf;&starf;&starf;&star;</span>
-              <span v-else-if="event.score === 5" class="text-primary">&starf;&starf;&starf;&starf;&starf;</span>
+              <span v-if="event.score === 0" class="text-mysecondary">&star;&star;&star;&star;&star;</span>
+              <span v-else-if="event.score === 1" class="text-mysecondary">&starf;&star;&star;&star;&star;</span>
+              <span v-else-if="event.score === 2" class="text-mysecondary">&starf;&starf;&star;&star;&star;</span>
+              <span v-else-if="event.score === 3" class="text-mysecondary">&starf;&starf;&starf;&star;&star;</span>
+              <span v-else-if="event.score === 4" class="text-mysecondary">&starf;&starf;&starf;&starf;&star;</span>
+              <span v-else-if="event.score === 5" class="text-mysecondary">&starf;&starf;&starf;&starf;&starf;</span>
               <span v-if="event.min">, </span>
               <span v-if="event.min">{{ event.min }}</span>
               <span v-if="event.min"> {{ $t('eventlogUnitMin') }}</span>

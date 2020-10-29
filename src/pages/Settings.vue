@@ -22,7 +22,7 @@
       <q-item-section side>
         <q-toggle
           v-model="wakeLock"
-          color="purple-5"
+          color="indigo-7"
           checked-icon="check"
           unchecked-icon="clear"
           size="lg"
@@ -37,7 +37,7 @@
       <q-item-section side>
         <q-toggle
           v-model="dndMode"
-          color="purple-5"
+          color="indigo-7"
           checked-icon="check"
           unchecked-icon="clear"
           size="lg"
@@ -53,7 +53,7 @@
         <q-toggle
           v-model="publicProfile"
           :disable="$store.state.app.offline"
-          color="purple-5"
+          color="indigo-7"
           checked-icon="check"
           unchecked-icon="clear"
           size="lg"
@@ -62,9 +62,8 @@
     </q-item>
     <q-btn
       :label="$t('settingsButton')"
-      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
+      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button text-white bg-myprimary"
       size="large"
-      color="purple-5"
       @click="saveSettings"
     />
   </q-page>
