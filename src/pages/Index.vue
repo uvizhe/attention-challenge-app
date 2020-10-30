@@ -3,6 +3,17 @@
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
     <greeting-dialog :show="greetingDialog" @close="closeGreetingDialog" />
     <rating-dialog :show="ratingDialog" :wait="ratingDialogWait" @rated="reportScore" />
+    <q-page-sticky position="top-left" class="hover">
+      <q-icon v-if="$store.state.app.offline"
+        name="error"
+        color="deep-orange-5"
+        class="text-h5 q-ma-sm"
+      >
+        <q-tooltip :hide-delay="1000">
+          {{ $t('offlineMode') }}
+        </q-tooltip>
+      </q-icon>
+    </q-page-sticky>
     <div class="column justify-end full-width fixed-bottom q-px-xs">
       <div class="col-auto">
         <event-log />

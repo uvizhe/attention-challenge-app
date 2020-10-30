@@ -1,12 +1,12 @@
 <template>
   <div class="">
-    <div class="fixed-top text-subtitle1 text-bold text-center text-mysecondary-dark eventlog-title">{{ $t('eventlogTitle') }}</div>
+    <div class="fixed-top text-subtitle1 text-bold text-center text-mysecondary-dark hover">{{ $t('eventlogTitle') }}</div>
     <div>
       <q-fab
         direction="down"
         icon="people"
         padding="sm"
-        class="fixed-top-right q-ma-md eventlog-title text-white bg-myprimary"
+        class="fixed-top-right q-ma-md hover text-white bg-myprimary"
       >
         <q-fab-action
           icon="group_add"
