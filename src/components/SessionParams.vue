@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="text-center text-mysecondary-dark text-subtitle1 text-bold">
-    {{ $t('sessionParams') }}
-    <q-icon name="help" class="text-myprimary">
-      <q-tooltip :hide-delay="2000" offset="[0,0]">
-        {{ $t('sessionParamsDeferralHint') }}<br/>
-        {{ $t('sessionParamsDurationHint') }}
-      </q-tooltip>
-    </q-icon>
+      {{ $t('sessionParams') }}
+      <q-icon name="help" class="text-myprimary">
+        <q-tooltip :hide-delay="2000" offset="[0,0]">
+          {{ $t('sessionParamsDeferralHint') }}<br/>
+          {{ $t('sessionParamsDurationHint') }}
+        </q-tooltip>
+      </q-icon>
     </div>
     <div class="relative-position q-mb-md">
       <span class="absolute-left text-dark text-bold q-ml-sm">

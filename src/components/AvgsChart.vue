@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div class="text-subtitle1 text-bold text-center text-mysecondary-dark">{{ $t('avgsChartTitle') }}</div>
+    <div class="text-subtitle1 text-bold text-center text-mysecondary-dark">
+      {{ $t('avgsChartTitle') }}
+      <q-icon name="help" class="text-myprimary">
+        <q-tooltip :hide-delay="2000" offset="[0,0]">
+          {{ $t('avgsChartHint') }}
+        </q-tooltip>
+      </q-icon>
+    </div>
     <apexchart class="chart" type="line" height="100" :options="options()" :series="series()" />
   </div>
 </template>

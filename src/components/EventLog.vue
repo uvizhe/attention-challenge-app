@@ -1,6 +1,13 @@
 <template>
   <div class="">
-    <div class="fixed-top text-subtitle1 text-bold text-center text-mysecondary-dark hover">{{ $t('eventlogTitle') }}</div>
+    <div class="fixed-top text-subtitle1 text-bold text-center text-mysecondary-dark hover">
+      {{ $t('eventlogTitle') }}
+      <q-icon name="help" class="text-myprimary">
+        <q-tooltip :hide-delay="3000" offset="[0,0]">
+          {{ $t('eventlogHint') }}
+        </q-tooltip>
+      </q-icon>
+    </div>
     <div>
       <q-fab
         direction="down"
