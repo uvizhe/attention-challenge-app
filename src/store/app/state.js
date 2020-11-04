@@ -8,6 +8,7 @@ export default function () {
     /* Config variables BEGIN */
     sessionDuration: 15 * 60,
     bellsDeferral: 0,
+    soundVolume: 2,
     wakeLock: false,
     dndMode: true,
     publicProfile: false,

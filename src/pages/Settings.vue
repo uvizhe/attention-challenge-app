@@ -2,6 +2,20 @@
   <q-page padding>
     <q-item class="q-my-md">
       <q-item-section>
+        <q-item-label>{{ $t('settingsVolumeText') }}</q-item-label>
+      </q-item-section>
+      <q-item-section>
+        <q-slider
+          label-always
+          v-model="volume"
+          :min="1"
+          :max="5"
+          color="indigo-7"
+        />
+      </q-item-section>
+    </q-item>
+    <q-item class="q-my-md">
+      <q-item-section>
         <q-item-label>{{ $t('settingsLanguageText') }}</q-item-label>
       </q-item-section>
       <q-item-section side>
@@ -75,6 +89,7 @@ export default {
   // name: 'PageName',
   data () {
     return {
+      volume: null,
       locale: '',
       wakeLock: false,
       dndMode: true,
@@ -88,6 +103,7 @@ export default {
     next()
   },
   mounted () {
+    this.volume = this.$store.state.app.soundVolume
     this.locale = this.$i18n.locale
     this.duration = this.$store.state.app.sessionDuration / 60
     this.deferral = this.$store.state.app.bellsDeferral / 60
@@ -134,6 +150,7 @@ export default {
       }
     },
     saveSettings () {
+      this.$store.dispatch('app/setSoundVolume', this.volume)
       this.$store.dispatch('app/setLocale', this.locale)
       this.$store.dispatch('app/setSessionDuration', this.duration * 60)
       this.$store.dispatch('app/setBellsDeferral', this.deferral * 60)

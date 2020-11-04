@@ -95,19 +95,10 @@ export default {
     this.bellsDeferral = this.$store.state.app.bellsDeferral
   },
   mounted () {
-    if (this.$q.platform.is.android) {
-      // eslint-disable-next-line no-undef
-      this.dingSound = new Media(
-        '/android_asset/www/sounds/Ding.mp3')
-      // eslint-disable-next-line no-undef
-      this.bowlSound = new Media(
-        '/android_asset/www/sounds/Bowl.mp3')
-    } else if (this.$q.platform.is.ios) {
-      // eslint-disable-next-line no-undef
-      this.dingSound = new Media('sounds/Ding.mp3')
-      // eslint-disable-next-line no-undef
-      this.bowlSound = new Media('sounds/Bowl.mp3')
-    }
+    // eslint-disable-next-line no-undef
+    this.dingSound = new Media('/android_asset/www/sounds/Ding.ogg')
+    // eslint-disable-next-line no-undef
+    this.bowlSound = new Media('/android_asset/www/sounds/Bowl.ogg')
     if (this.$router.currentRoute.query.newuser) {
       this.greetingDialog = true
     }
@@ -154,6 +145,23 @@ export default {
     sessionDurationMin () {
       return this.sessionDuration / 60
     },
+    soundVolume () {
+      const volume = this.$store.state.app.soundVolume
+      switch (volume) {
+        case 1:
+          return '0.1'
+        case 2:
+          return '0.3'
+        case 3:
+          return '0.5'
+        case 4:
+          return '0.7'
+        case 5:
+          return '1.0'
+        default:
+          return '0.5'
+      }
+    },
     timeRemaining () {
       const min = String(Math.floor(this.seconds / 60))
       const sec = String(this.seconds % 60)
@@ -190,6 +198,7 @@ export default {
       this.signals = randomSignals(this.sessionDuration - this.bellsDeferral, this.bellsDeferral)
       this.sessionOn = true
       this.dingSound.play()
+      this.dingSound.setVolume(this.soundVolume)
       cordova.plugins.backgroundMode.on('activate', function () {
         cordova.plugins.backgroundMode.disableWebViewOptimizations()
       })
@@ -224,6 +233,7 @@ export default {
       if (!this.seconds) {
         this.stopTimer()
         this.bowlSound.play()
+        this.bowlSound.setVolume(this.soundVolume)
         this.ratingDialog = true
       } else {
         /* XXX: this should work but it's not :( Investigate it
@@ -239,6 +249,7 @@ export default {
         const ts = this.signals[this.signals.length - 1] - this.seconds
         if (this.signals.includes(ts)) {
           this.dingSound.play()
+          this.dingSound.setVolume(this.soundVolume)
         }
       }
     },

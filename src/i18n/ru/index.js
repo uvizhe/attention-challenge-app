@@ -34,6 +34,7 @@ export default {
   offlineMode: 'Офлайн-режим',
   offlineDialogHeader: 'Проблема со связью',
   offlineDialogTex: 'Приложение будет работать в офлайн-режиме с ограниченным функционалом.',
+  settingsVolumeText: 'Громкость звука',
   settingsLanguageText: 'Язык приложения',
   settingsWakeLockText: 'Не гасить экран во время сессии',
   settingsWakeLockHint: 'На случай, если таймер останавливается при выключенном экране',

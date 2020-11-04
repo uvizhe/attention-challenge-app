@@ -14,6 +14,15 @@ export function maintenance (context) {
   updateChartsData()
 }
 
+export function setSoundVolume (context, value) {
+  if (context.state.soundVolume === value) return
+  saveConfig('soundVolume', value)
+  context.commit('setStateValue', {
+    key: 'soundVolume',
+    value: value
+  })
+}
+
 export function setLocale (context, value) {
   if (context.state.locale === value) return
   saveConfig('locale', value)

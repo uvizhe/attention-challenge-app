@@ -34,6 +34,7 @@ export default {
   offlineMode: 'Offline mode',
   offlineDialogHeader: 'Connectivity problem',
   offlineDialogText: 'The app will work in offline mode with limited functionality.',
+  settingsVolumeText: 'Sound volume',
   settingsLanguageText: 'App language',
   settingsWakeLockText: 'Keep screen on during session',
   settingsWakeLockHint: 'In case the timer stops when screen is off',
