@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" />
-    <q-linear-progress indeterminate :class="progressClass" />
+    <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
     <q-input v-model="search" type="search"
       square outlined dense
       :placeholder="$t('addUsersSearch')"
@@ -33,7 +33,7 @@
             <q-checkbox
               v-model="user.checked"
               @input="checkSelected(idx)"
-              color="indigo-7"
+              color="grey-8"
             />
           </q-item-section>
           <q-item-section>
@@ -44,7 +44,8 @@
     </q-list>
     <q-btn
       :label="$t('addUsersButton')"
-      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button text-white bg-myprimary"
+      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
+      color="grey-8"
       size="large"
       @click="addUsers"
     />

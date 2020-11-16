@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="text-center text-mysecondary-dark text-subtitle1 text-bold">
+    <div class="text-center text-subtitle1 text-bold">
       {{ $t('sessionParams') }}
-      <q-icon name="help" class="text-myprimary">
+      <q-icon name="help" class="text-grey-8">
         <q-tooltip :hide-delay="2000" offset="[0,0]">
           {{ $t('sessionParamsDeferralHint') }}<br/>
           {{ $t('sessionParamsDurationHint') }}
@@ -27,7 +27,7 @@
       :min="0"
       :max="max"
       v-model="values"
-      class="session-params text-myprimary"
+      class="session-params text-grey-8"
       @input="value => check(value)"
     />
   </div>

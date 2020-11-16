@@ -1,6 +1,6 @@
 <template>
 <q-page padding class="flex flex-center content-center">
-  <q-linear-progress indeterminate :class="progressClass" />
+  <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
   <div class="column items-center">
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
     <div class="q-my-sm text-center">{{ $t('recoverInfo') }}</div>
@@ -10,14 +10,15 @@
       maxlength="50"
       type="email"
       v-model="email"
+      color="grey-8"
       :label="$t('signupEmail')"
       :disable="wait"
     />
     <q-btn
       class="q-ma-md entrance-button"
       :label="$t('recoverButton')"
-      color="purple-5"
       size="xl"
+      color="grey-8"
       @click="submit"
       :disable="wait"
     />

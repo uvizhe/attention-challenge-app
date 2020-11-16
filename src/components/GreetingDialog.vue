@@ -11,7 +11,7 @@
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn flat label="OK" color="primary" @click="close" />
+      <q-btn flat label="OK" color="grey-8" @click="close" />
     </q-card-actions>
   </q-card>
 </q-dialog>

@@ -3,15 +3,15 @@
   <q-btn
     class="q-ma-md entrance-button"
     :label="$t('entranceNewUser')"
-    color="purple-5"
     size="xl"
+    color="grey-8"
     to="/signup"
   />
   <q-btn
     class="q-ma-md entrance-button"
     :label="$t('entranceExistingUser')"
-    color="purple-5"
     size="xl"
+    color="grey-8"
     to="/login"
   />
 </q-page>

@@ -1,6 +1,6 @@
 <template>
 <q-page padding class="flex flex-center content-center">
-  <q-linear-progress indeterminate :class="progressClass" />
+  <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
   <div class="column items-center">
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
     <div class="text-h5 q-my-sm text-uppercase">
@@ -11,6 +11,7 @@
       class="q-my-sm login-input"
       maxlength="50"
       v-model="username"
+      color="grey-8"
       :label="$t('loginUsername')"
       :disable="wait"
     />
@@ -19,6 +20,7 @@
       class="q-my-sm login-input"
       maxlength="500"
       v-model="password"
+      color="grey-8"
       :type="isPwd ? 'password' : 'text'"
       :label="$t('loginPassword')"
       :disable="wait"
@@ -34,8 +36,8 @@
     <q-btn
       class="q-ma-md entrance-button"
       :label="$t('loginButton')"
-      color="purple-5"
       size="xl"
+      color="grey-8"
       @click="submit"
       :disable="wait"
     />

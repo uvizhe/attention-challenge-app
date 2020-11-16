@@ -1,8 +1,8 @@
 <template>
   <div class="">
-    <div class="fixed-top text-subtitle1 text-bold text-center text-mysecondary-dark hover">
+    <div class="fixed-top text-subtitle1 text-bold text-center hover">
       {{ $t('eventlogTitle') }}
-      <q-icon name="help" class="text-myprimary">
+      <q-icon name="help" class="text-grey-8">
         <q-tooltip :hide-delay="3000" offset="[0,0]">
           {{ $t('eventlogHint') }}
         </q-tooltip>
@@ -13,7 +13,8 @@
         direction="down"
         icon="people"
         padding="sm"
-        class="fixed-top-right q-ma-md hover text-white bg-myprimary"
+        color="grey-8"
+        class="fixed-top-right q-ma-md hover"
       >
         <q-fab-action
           icon="group_add"
@@ -22,7 +23,7 @@
           label-position="left"
           external-label
           padding="xs"
-          class="text-white bg-myprimary"
+          color="grey-8"
           @click="$router.push('/app/addusers')"
         />
         <q-fab-action v-if="haveFriends"
@@ -31,7 +32,7 @@
           label-position="left"
           external-label
           padding="xs"
-          class="text-white bg-myprimary"
+          color="grey-8"
           @click="toggleFriends"
         />
       </q-fab>
@@ -75,7 +76,7 @@
 
 <script>
 import { makeEL } from '../js/eventlog'
-const colors = ['pinky', 'yellow-3', 'blue-1', 'orange-2']
+const colors = ['yellow-3', 'blue-1', 'orange-2', 'pinky']
 export default {
   name: 'EventLog',
   data () {

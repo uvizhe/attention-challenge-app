@@ -10,7 +10,7 @@
           v-model="volume"
           :min="1"
           :max="5"
-          color="indigo-7"
+          color="grey-8"
         />
       </q-item-section>
     </q-item>
@@ -24,6 +24,7 @@
           emit-value
           map-options
           v-model="locale"
+          color="grey-8"
           :options="langOptions"
         />
       </q-item-section>
@@ -36,7 +37,7 @@
       <q-item-section side>
         <q-toggle
           v-model="wakeLock"
-          color="indigo-7"
+          color="grey-8"
           checked-icon="check"
           unchecked-icon="clear"
           size="lg"
@@ -51,7 +52,7 @@
       <q-item-section side>
         <q-toggle
           v-model="dndMode"
-          color="indigo-7"
+          color="grey-8"
           checked-icon="check"
           unchecked-icon="clear"
           size="lg"
@@ -67,7 +68,7 @@
         <q-toggle
           v-model="publicProfile"
           :disable="$store.state.app.offline"
-          color="indigo-7"
+          color="grey-8"
           checked-icon="check"
           unchecked-icon="clear"
           size="lg"
@@ -76,8 +77,9 @@
     </q-item>
     <q-btn
       :label="$t('settingsButton')"
-      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button text-white bg-myprimary"
+      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
       size="large"
+      color="grey-8"
       @click="saveSettings"
     />
   </q-page>

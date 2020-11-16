@@ -1,8 +1,9 @@
 <template>
   <q-btn
-    class="absolute-center shadow-up-5 big-red-btn text-white bg-myprimary"
+    class="absolute-center shadow-up-5 big-red-btn"
     @click="onClick"
     size="60px"
+    color="grey-8"
     :disable="disabled"
     rounded
   >

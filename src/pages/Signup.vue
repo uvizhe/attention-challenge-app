@@ -1,6 +1,6 @@
 <template>
 <q-page padding class="flex flex-center content-center">
-  <q-linear-progress indeterminate :class="progressClass" />
+  <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
   <div class="column items-center">
     <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
     <div class="text-h5 q-my-sm text-uppercase">
@@ -11,6 +11,7 @@
       class="q-my-sm login-input"
       maxlength="50"
       v-model="username"
+      color="grey-8"
       :label="$t('signupUsername')"
       :disable="wait"
     />
@@ -20,6 +21,7 @@
       maxlength="50"
       type="email"
       v-model="email"
+      color="grey-8"
       :label="$t('signupEmail')"
       :disable="wait"
     />
@@ -28,6 +30,7 @@
       class="q-my-sm login-input"
       maxlength="500"
       v-model="password"
+      color="grey-8"
       :type="isPwd ? 'password' : 'text'"
       :label="$t('signupPassword')"
       :disable="wait"
@@ -45,6 +48,7 @@
       class="q-my-sm login-input"
       maxlength="500"
       v-model="password2"
+      color="grey-8"
       :type="isPwd2 ? 'password' : 'text'"
       :label="$t('signupPassword2')"
       :disable="wait"
@@ -61,6 +65,7 @@
       <q-item-section avatar top>
         <q-checkbox
           v-model="userGeneralAgreement"
+          color="grey-8"
         />
       </q-item-section>
       <q-item-section>
@@ -76,6 +81,7 @@
       <q-item-section avatar top>
         <q-checkbox
           v-model="publicProfile"
+          color="grey-8"
         />
       </q-item-section>
       <q-item-section>
@@ -93,8 +99,8 @@
     <q-btn
       class="q-ma-md entrance-button"
       :label="$t('signupButton')"
-      color="purple-5"
       size="xl"
+      color="grey-8"
       @click="submit"
       :disable="!userGeneralAgreement || wait"
     />

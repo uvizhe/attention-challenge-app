@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="text-subtitle1 text-bold text-center text-mysecondary-dark">
+    <div class="text-subtitle1 text-bold text-center">
       {{ $t('avgsChartTitle') }}
-      <q-icon name="help" class="text-myprimary">
+      <q-icon name="help" class="text-grey-8">
         <q-tooltip :hide-delay="2000" offset="[0,0]">
           {{ $t('avgsChartHint') }}
         </q-tooltip>
@@ -38,7 +38,8 @@ export default {
       return {
         grid: {
           row: {
-            colors: ['#f868f8', '#f888f8', '#f8a8f8', '#f8c8f8', '#f8e8f8']
+            colors: ['#eccb7f', '#efd495', '#f5e0ad', '#faebc6', '#fff6df'],
+            opacity: 1
           }
         },
         xaxis: {
@@ -56,8 +57,7 @@ export default {
           tickAmount: 5
         },
         stroke: { lineCap: 'round', width: strokeWidth },
-        colors: ['#d65fa9'],
-        // colors: ['#c357c5'],
+        colors: ['#616161'],
         tooltip: { enabled: false },
         chart: {
           sparkline: { enabled: true },
@@ -66,7 +66,7 @@ export default {
         noData: {
           text: this.$t('avgsChartPlaceholder'),
           offsetY: -10,
-          style: { color: '#ab47bc' }
+          style: { color: '#616161' }
         }
       }
     }

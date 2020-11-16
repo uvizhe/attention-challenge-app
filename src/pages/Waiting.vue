@@ -3,7 +3,7 @@
     <q-page-container>
       <q-page>
         <offline-dialog :show="offlineDialog" @close="closeOfflineDialog" />
-        <q-spinner-tail size="lg" color="purple-5" class="fixed-center" />
+        <q-spinner-tail size="lg" color="grey-8" class="fixed-center" />
       </q-page>
     </q-page-container>
   </q-layout>
