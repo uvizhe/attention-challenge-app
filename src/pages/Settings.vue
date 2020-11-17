@@ -30,6 +30,22 @@
       </q-item-section>
     </q-item>
     <q-item class="q-my-md">
+      <q-item-section>
+        <q-item-label>{{ $t('settingsStartOfWeekDayText') }}</q-item-label>
+        <q-item-label caption>{{ $t('settingsStartOfWeekDayHint') }}</q-item-label>
+      </q-item-section>
+      <q-item-section side>
+        <q-select
+          outlined
+          emit-value
+          map-options
+          v-model="startOfWeekDay"
+          color="grey-8"
+          :options="startOfWeekOptions"
+        />
+      </q-item-section>
+    </q-item>
+    <q-item class="q-my-md">
       <q-item-section @click="wakeLock=!wakeLock">
         <q-item-label>{{ $t('settingsWakeLockText') }}</q-item-label>
         <q-item-label caption>{{ $t('settingsWakeLockHint') }}</q-item-label>
@@ -93,6 +109,7 @@ export default {
     return {
       volume: null,
       locale: '',
+      startOfWeekDay: '',
       wakeLock: false,
       dndMode: true,
       publicProfile: false,
@@ -107,6 +124,7 @@ export default {
   mounted () {
     this.volume = this.$store.state.app.soundVolume
     this.locale = this.$i18n.locale
+    this.startOfWeekDay = this.$store.getters['app/startOfWeekDay']
     this.duration = this.$store.state.app.sessionDuration / 60
     this.deferral = this.$store.state.app.bellsDeferral / 60
     this.wakeLock = this.$store.state.app.wakeLock
@@ -116,6 +134,9 @@ export default {
   computed: {
     langOptions () {
       return this.$store.state.app.languages
+    },
+    startOfWeekOptions () {
+      return this.$store.getters['app/startOfWeekOptions']
     },
     lowerSessionLimit () {
       return this.duration === MIN_SESSION
@@ -154,6 +175,7 @@ export default {
     saveSettings () {
       this.$store.dispatch('app/setSoundVolume', this.volume)
       this.$store.dispatch('app/setLocale', this.locale)
+      this.$store.dispatch('app/setStartOfWeekDay', this.startOfWeekDay)
       this.$store.dispatch('app/setSessionDuration', this.duration * 60)
       this.$store.dispatch('app/setBellsDeferral', this.deferral * 60)
       this.$store.dispatch('app/setWakeLock', this.wakeLock)

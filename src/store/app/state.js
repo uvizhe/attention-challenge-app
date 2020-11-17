@@ -14,6 +14,7 @@ export default function () {
     publicProfile: false,
     username: '',
     locale: '',
+    startOfWeekDay: '',
     /* Config variables END */
     /* Data variables BEGIN */
     lastActionTime: 0,
@@ -32,7 +33,7 @@ export default function () {
         value: 'en-us'
       },
       {
-        label: 'Русский',
+        label: 'русский',
         value: 'ru-ru'
       }
     ]

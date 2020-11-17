@@ -120,7 +120,7 @@ export default {
           ...this.$store.state.app.friendsSessions
         }
       }
-      const eventlog = makeEL(sessionsDict)
+      const eventlog = makeEL(sessionsDict, this.$store.getters['app/startOfWeekDay'])
       return eventlog
     }
   },

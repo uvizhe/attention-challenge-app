@@ -36,6 +36,8 @@ export default {
   offlineDialogTex: 'Приложение будет работать в офлайн-режиме с ограниченным функционалом.',
   settingsVolumeText: 'Громкость звука',
   settingsLanguageText: 'Язык приложения',
+  settingsStartOfWeekDayText: 'Первый день недели',
+  settingsStartOfWeekDayHint: 'Используется в журнале медитации',
   settingsWakeLockText: 'Не гасить экран во время сессии',
   settingsWakeLockHint: 'На случай, если таймер останавливается при выключенном экране',
   settingsDNDModeText: 'Переходить в режим "не беспокоить"',

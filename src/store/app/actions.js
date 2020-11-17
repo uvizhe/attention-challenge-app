@@ -32,6 +32,15 @@ export function setLocale (context, value) {
   })
 }
 
+export function setStartOfWeekDay (context, value) {
+  if (context.state.startOfWeekDay === value) return
+  saveConfig('startOfWeekDay', value)
+  context.commit('setStateValue', {
+    key: 'startOfWeekDay',
+    value: value
+  })
+}
+
 export function setLocaleIfNotSet (context) {
   if (!context.state.locale) {
     context.commit('setStateValue', {

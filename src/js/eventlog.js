@@ -7,7 +7,7 @@ export function userDate () {
   return moment().subtract(4, 'hours').format('YYYY-MM-DD')
 }
 
-export function makeEL (sessionsDict) {
+export function makeEL (sessionsDict, startOfWeekDay) {
   /* Convert sessions:
       { username0: [
         {
@@ -36,7 +36,7 @@ export function makeEL (sessionsDict) {
   if (isEmpty(sessionsDict)) {
     return eventlog
   }
-  const leaders = populateWeekStats(sessionsDict)
+  const leaders = populateWeekStats(sessionsDict, startOfWeekDay)
   const sessions = combineSessions(sessionsDict)
   const today = userDate()
   const twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD')
@@ -71,11 +71,12 @@ function isEmpty (sessionsDict) {
   return true
 }
 
-function populateWeekStats (sessionsDict) {
+function populateWeekStats (sessionsDict, startOfWeekDay) {
   const weekStats = {}
-  // TODO?: let users choose the first day of week (Mon, Sun or Sat)
-  // instead of guessing from locale
-  const weekStart = moment().startOf('week').locale('en').format('YYYY-MM-DD')
+  const weekStartShift = { 1: 0, 0: 1, 6: 2 }
+  const weekStart = moment().startOf('isoWeek')
+    .subtract(weekStartShift[startOfWeekDay], 'days')
+    .locale('en').format('YYYY-MM-DD')
   for (const username in sessionsDict) {
     if (!sessionsDict[username].length) continue
     let weekTotal = 0
