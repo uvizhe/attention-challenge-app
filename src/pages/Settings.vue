@@ -152,26 +152,6 @@ export default {
     }
   },
   methods: {
-    adjustSession (min) {
-      this.duration += Number(min)
-      if (this.duration < MIN_SESSION) {
-        this.duration = MIN_SESSION
-      } else if (this.duration > MAX_SESSION) {
-        this.duration = MAX_SESSION
-      }
-      if (this.duration - this.deferral < MIN_SESSION) {
-        this.deferral = this.duration - MIN_SESSION
-      }
-    },
-    adjustDeferral (min) {
-      const change = Number(min)
-      if (this.duration - this.deferral - change >= MIN_SESSION) {
-        this.deferral += change
-        if (this.deferral < 0) {
-          this.deferral = 0
-        }
-      }
-    },
     saveSettings () {
       this.$store.dispatch('app/setSoundVolume', this.volume)
       this.$store.dispatch('app/setLocale', this.locale)
