@@ -154,7 +154,6 @@ export default {
       const username = this.username.trim()
       const email = this.email.trim()
       if (!(username && this.password && this.password2 && email)) {
-        console.log('SHOW ERROR')
         this.showBanner(this.$t('signupError0'), 3)
       } else if (username.length < 2) {
         this.showBanner(this.$t('signupError1'), 3)
