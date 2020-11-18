@@ -59,7 +59,7 @@ export default {
   greetingHeader: 'Welcome,',
   greetingText1: 'First time here?',
   greetingText2: 'Click',
-  greetingText3: 'button on the buttom for introduction.',
+  greetingText3: 'button on the bottom for introduction.',
   ratingHeader: 'Rate your session',
   ratingReset: 'Reset',
   eventlogTitle: 'Meditation Log',
