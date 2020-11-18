@@ -1,8 +1,8 @@
 <template>
-  <q-banner v-if="visible"
+  <q-banner v-if="show"
     :class="bannerClass"
   >
-    {{ bannerText }}
+    {{ message }}
   </q-banner>
 </template>
 
@@ -14,16 +14,12 @@ export default {
     severity: Number, // 0 - debug, 1 - notice, 2 - warning, 3 - error
     message: String
   },
-  data () {
-    return {
-      visible: false,
-      bannerText: ''
-    }
-  },
   watch: {
     show (val) {
       if (val) {
-        this.showNotification(this.message)
+        setTimeout(() => {
+          this.$emit('close')
+        }, 4000)
       }
     }
   },
@@ -35,15 +31,6 @@ export default {
       else if (this.severity === 2) cls += ' bg-warning'
       else if (this.severity === 3) cls += ' bg-negative'
       return cls
-    }
-  },
-  methods: {
-    showNotification (message) {
-      this.bannerText = message
-      this.visible = true
-      setTimeout(() => {
-        this.visible = false
-      }, 3000)
     }
   }
 }

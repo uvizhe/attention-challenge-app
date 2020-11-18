@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" />
+    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" @close="hideBanner()" />
     <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
     <q-input v-model="search" type="search"
       square outlined dense
@@ -97,6 +97,9 @@ export default {
       this.bannerMessage = message
       this.bannerSeverity = severity
       this.banner = true
+    },
+    hideBanner () {
+      this.banner = false
     },
     poppingRule (idx) {
       if (this.users[idx].friend) {

@@ -2,7 +2,7 @@
 <q-page padding class="flex flex-center content-center">
   <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
   <div class="column items-center">
-    <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
+    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" @close="hideBanner()" />
     <div class="q-my-sm text-center">{{ $t('recoverInfo') }}</div>
     <q-input
       outlined
@@ -27,40 +27,39 @@
 </template>
 <script>
 import { recover } from '../js/remotedb'
+import SimpleBanner from 'components/SimpleBanner'
 export default {
   // name: 'PageName',
+  components: {
+    SimpleBanner
+  },
   data () {
     return {
       email: '',
-      error: false,
-      errMsg: '',
+      banner: false,
+      bannerMessage: '',
+      bannerSeverity: 0,
       wait: false
     }
   },
   computed: {
-    errorBannerClass () {
-      let cls = 'fixed-top bg-red text-white text-center'
-      if (!this.error) {
-        cls += ' hidden'
-      }
-      return cls
-    },
     progressClass () {
       const cls = 'fixed-top'
       return this.wait ? cls : cls.concat(' invisible')
     }
   },
   methods: {
-    showError (error) {
-      this.errMsg = error
-      this.error = true
-      setTimeout(() => {
-        this.error = false
-      }, 3000)
+    showBanner (message, severity) {
+      this.bannerMessage = message
+      this.bannerSeverity = severity
+      this.banner = true
+    },
+    hideBanner () {
+      this.banner = false
     },
     async submit () {
       if (!/^.+@[^.]+\..+$/.test(this.email)) {
-        this.showError(this.$t('signupError3'))
+        this.showBanner(this.$t('signupError3'), 3)
       } else {
         let status
         try {
@@ -68,7 +67,7 @@ export default {
           status = await recover(this.email, this.$q.lang.getLocale())
         } catch (e) {
           this.wait = false
-          this.showError(e.message)
+          this.showBanner(e.message, 3)
           return
         }
         this.wait = false

@@ -2,7 +2,7 @@
 <q-page padding class="flex flex-center content-center">
   <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
   <div class="column items-center">
-    <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
+    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" @close="hideBanner()" />
     <div class="text-h5 q-my-sm text-uppercase">
       {{ $t('loginTitle') }}
     </div>
@@ -54,8 +54,12 @@
 
 <script>
 import { authenticate } from '../js/remotedb'
+import SimpleBanner from 'components/SimpleBanner'
 export default {
   // name: 'PageName',
+  components: {
+    SimpleBanner
+  },
   created () {
     this.$i18n.locale = this.$q.lang.getLocale()
   },
@@ -64,36 +68,31 @@ export default {
       username: '',
       password: '',
       isPwd: true,
-      error: false,
-      errMsg: '',
+      banner: false,
+      bannerMessage: '',
+      bannerSeverity: 0,
       wait: false
     }
   },
   computed: {
-    errorBannerClass () {
-      let cls = 'fixed-top bg-red text-white text-center'
-      if (!this.error) {
-        cls += ' hidden'
-      }
-      return cls
-    },
     progressClass () {
       const cls = 'fixed-top'
       return this.wait ? cls : cls.concat(' invisible')
     }
   },
   methods: {
-    showError (error) {
-      this.errMsg = error
-      this.error = true
-      setTimeout(() => {
-        this.error = false
-      }, 3000)
+    showBanner (message, severity) {
+      this.bannerMessage = message
+      this.bannerSeverity = severity
+      this.banner = true
+    },
+    hideBanner () {
+      this.banner = false
     },
     async submit () {
       const username = this.username.trim()
       if (!(username && this.password)) {
-        this.showError(this.$t('signupError0'))
+        this.showBanner(this.$t('signupError0'), 3)
       } else {
         try {
           this.wait = true
@@ -101,7 +100,7 @@ export default {
           this.$store.dispatch('app/fetchStats')
         } catch (e) {
           this.wait = false
-          this.showError(e.message)
+          this.showBanner(e.message, 3)
           return
         }
         this.wait = false

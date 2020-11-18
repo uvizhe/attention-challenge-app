@@ -1,6 +1,5 @@
 <template>
   <q-page padding class="flex">
-    <q-banner :class="errorBannerClass">{{ errMsg }}</q-banner>
     <greeting-dialog :show="greetingDialog" @close="closeGreetingDialog" />
     <rating-dialog :show="ratingDialog" :wait="ratingDialogWait" @rated="reportScore" />
     <q-page-sticky position="top-left" class="hover">
@@ -128,8 +127,6 @@ export default {
       sessionPause: false,
       timer: null,
       signals: [],
-      error: false,
-      errMsg: '',
       greetingDialog: false,
       ratingDialog: false,
       ratingDialogWait: false,
@@ -139,13 +136,6 @@ export default {
     }
   },
   computed: {
-    errorBannerClass () {
-      let cls = 'absolute-top z-top bg-red text-white text-center'
-      if (!this.error) {
-        cls += ' hidden'
-      }
-      return cls
-    },
     sessionDurationMin () {
       return this.sessionDuration / 60
     },
@@ -177,13 +167,6 @@ export default {
       if (this.$route.path === '/app') {
         this.$store.dispatch('app/routineTasks')
       }
-    },
-    showError (error) {
-      this.errMsg = error
-      this.error = true
-      setTimeout(() => {
-        this.error = false
-      }, 3000)
     },
     closeGreetingDialog () {
       this.greetingDialog = false
@@ -267,17 +250,11 @@ export default {
       }
     },
     async reportScore (score) {
-      try {
-        this.ratingDialogWait = true
-        await this.$store.dispatch('app/reportSession', {
-          score: score,
-          duration: this.sessionDurationMin
-        })
-      } catch (e) {
-        this.ratingDialogWait = false
-        this.showError(e.message)
-        return
-      }
+      this.ratingDialogWait = true
+      await this.$store.dispatch('app/reportSession', {
+        score: score,
+        duration: this.sessionDurationMin
+      })
       this.ratingDialogWait = false
       this.ratingDialog = false
       this.$store.dispatch('app/routineTasks')
