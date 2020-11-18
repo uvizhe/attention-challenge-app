@@ -22,9 +22,9 @@ export function startOfWeekOptions (state) {
 
 export function startOfWeekDay (state) {
   if (state.startOfWeekDay === '') {
-    return moment().locale(state.locale).startOf('week').format('d')
+    return Number(moment().locale(state.locale).startOf('week').format('d'))
   } else {
-    return state.startOfWeekDay
+    return Number(state.startOfWeekDay)
   }
 }
 
