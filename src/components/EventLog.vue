@@ -43,7 +43,7 @@
       <q-list class="">
         <q-item v-for="event in eventlog"
           :key="event.id"
-          :class="eventClass(event.user)"
+          class="event"
         >
           <q-item-section side class="eventlog-date">
             <div class="fit">
@@ -51,7 +51,7 @@
             </div>
           </q-item-section>
           <q-item-section :class="eventPartialClass(event)">
-            <div>
+            <div :class="userClass(event.user)">
               <span v-if="event.user" class="eventlog-name ellipsis vertical-top">{{ event.user }}</span>
               <span v-if="event.score === 0" class="text-mysecondary">&star;&star;&star;&star;&star;</span>
               <span v-else-if="event.score === 1" class="text-mysecondary">&starf;&star;&star;&star;&star;</span>
@@ -76,7 +76,6 @@
 
 <script>
 import { makeEL } from '../js/eventlog'
-const colors = ['yellow-3', 'blue-1', 'orange-2', 'pinky']
 export default {
   name: 'EventLog',
   data () {
@@ -125,9 +124,9 @@ export default {
     }
   },
   methods: {
-    eventClass (username) {
+    userClass (username) {
       const idx = this.$store.getters['app/friends'].indexOf(username)
-      return 'event bg-' + colors[idx]
+      return 'friend-' + idx
     },
     eventPartialClass (event) {
       if (this.unseenEvent(event)) {
