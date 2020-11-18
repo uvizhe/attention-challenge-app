@@ -5,7 +5,7 @@
     <q-page-sticky position="top-left" class="hover">
       <q-icon v-if="$store.state.app.offline"
         name="error"
-        color="deep-orange-5"
+        color="deep-orange-9"
         class="text-h5 q-ma-sm"
       >
         <q-tooltip :hide-delay="1000">

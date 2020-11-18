@@ -2,7 +2,7 @@
 <q-page padding class="flex flex-center content-center">
   <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
   <div class="column items-center">
-    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" @close="hideBanner()" />
+    <simple-banner :show="banner" :message="bannerMessage" @close="hideBanner()" />
     <div class="text-h5 q-my-sm text-uppercase">
       {{ $t('signupTitle') }}
     </div>
@@ -131,7 +131,6 @@ export default {
       publicProfile: false,
       banner: false,
       bannerMessage: '',
-      bannerSeverity: 0,
       wait: false
     }
   },
@@ -142,9 +141,8 @@ export default {
     }
   },
   methods: {
-    showBanner (message, severity) {
+    showBanner (message) {
       this.bannerMessage = message
-      this.bannerSeverity = severity
       this.banner = true
     },
     hideBanner () {
@@ -154,17 +152,17 @@ export default {
       const username = this.username.trim()
       const email = this.email.trim()
       if (!(username && this.password && this.password2 && email)) {
-        this.showBanner(this.$t('signupError0'), 3)
+        this.showBanner(this.$t('signupError0'))
       } else if (username.length < 2) {
-        this.showBanner(this.$t('signupError1'), 3)
+        this.showBanner(this.$t('signupError1'))
       } else if (!/^[\w\d\-_]+$/.test(username)) {
-        this.showBanner(this.$t('signupError2'), 3)
+        this.showBanner(this.$t('signupError2'))
       } else if (!/^.+@[^.]+\..+$/.test(email)) {
-        this.showBanner(this.$t('signupError3'), 3)
+        this.showBanner(this.$t('signupError3'))
       } else if (this.password !== this.password2) {
-        this.showBanner(this.$t('signupError4'), 3)
+        this.showBanner(this.$t('signupError4'))
       } else if (this.password.length < 6) {
-        this.showBanner(this.$t('signupError5'), 3)
+        this.showBanner(this.$t('signupError5'))
       } else {
         try {
           this.wait = true
@@ -177,7 +175,7 @@ export default {
           )
         } catch (e) {
           this.wait = false
-          this.showBanner(e.message, 3)
+          this.showBanner(e.message)
           return
         }
         this.wait = false

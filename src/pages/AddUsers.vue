@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" @close="hideBanner()" />
+    <simple-banner :show="banner" :message="bannerMessage" @close="hideBanner()" />
     <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
     <q-input v-model="search" type="search"
       square outlined dense
@@ -66,7 +66,7 @@ export default {
     try {
       users = await getUsers()
     } catch (e) {
-      this.showBanner(this.$t('networkError'), 3)
+      this.showBanner(this.$t('networkError'))
       this.$store.commit('app/setOffline')
     }
     this.users = this.prepareUserList(users)
@@ -78,8 +78,7 @@ export default {
       search: '',
       wait: false,
       banner: false,
-      bannerMessage: '',
-      bannerSeverity: 0
+      bannerMessage: ''
     }
   },
   watch: {
@@ -93,9 +92,8 @@ export default {
     }
   },
   methods: {
-    showBanner (message, severity) {
+    showBanner (message) {
       this.bannerMessage = message
-      this.bannerSeverity = severity
       this.banner = true
     },
     hideBanner () {
@@ -112,7 +110,7 @@ export default {
     checkSelected (idx) {
       if (this.users.filter(i => i.checked).length > 4) {
         this.users[idx].checked = !this.users[idx].checked
-        this.showBanner(this.$t('addUsersBanner'), 2)
+        this.showBanner(this.$t('addUsersBanner'))
       } else if (!this.users[idx].checked) {
         this.users[idx].friend = false
       }

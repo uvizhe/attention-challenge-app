@@ -2,7 +2,7 @@
 <q-page padding class="flex flex-center content-center">
   <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
   <div class="column items-center">
-    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" @close="hideBanner()" />
+    <simple-banner :show="banner" :message="bannerMessage" @close="hideBanner()" />
     <div class="q-my-sm text-center">{{ $t('recoverInfo') }}</div>
     <q-input
       outlined
@@ -38,7 +38,6 @@ export default {
       email: '',
       banner: false,
       bannerMessage: '',
-      bannerSeverity: 0,
       wait: false
     }
   },
@@ -49,9 +48,8 @@ export default {
     }
   },
   methods: {
-    showBanner (message, severity) {
+    showBanner (message) {
       this.bannerMessage = message
-      this.bannerSeverity = severity
       this.banner = true
     },
     hideBanner () {
@@ -59,7 +57,7 @@ export default {
     },
     async submit () {
       if (!/^.+@[^.]+\..+$/.test(this.email)) {
-        this.showBanner(this.$t('signupError3'), 3)
+        this.showBanner(this.$t('signupError3'))
       } else {
         let status
         try {

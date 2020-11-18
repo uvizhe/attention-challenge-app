@@ -2,7 +2,7 @@
 <q-page padding class="flex flex-center content-center">
   <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
   <div class="column items-center">
-    <simple-banner :show="banner" :severity="bannerSeverity" :message="bannerMessage" @close="hideBanner()" />
+    <simple-banner :show="banner" :message="bannerMessage" @close="hideBanner()" />
     <div class="text-h5 q-my-sm text-uppercase">
       {{ $t('loginTitle') }}
     </div>
@@ -70,7 +70,6 @@ export default {
       isPwd: true,
       banner: false,
       bannerMessage: '',
-      bannerSeverity: 0,
       wait: false
     }
   },
@@ -81,9 +80,8 @@ export default {
     }
   },
   methods: {
-    showBanner (message, severity) {
+    showBanner (message) {
       this.bannerMessage = message
-      this.bannerSeverity = severity
       this.banner = true
     },
     hideBanner () {
@@ -92,7 +90,7 @@ export default {
     async submit () {
       const username = this.username.trim()
       if (!(username && this.password)) {
-        this.showBanner(this.$t('signupError0'), 3)
+        this.showBanner(this.$t('signupError0'))
       } else {
         try {
           this.wait = true
@@ -100,7 +98,7 @@ export default {
           this.$store.dispatch('app/fetchStats')
         } catch (e) {
           this.wait = false
-          this.showBanner(e.message, 3)
+          this.showBanner(e.message)
           return
         }
         this.wait = false

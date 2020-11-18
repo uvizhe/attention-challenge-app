@@ -8,7 +8,7 @@
     <q-card-section class="q-pt-none">
       <div class="row justify-evenly">
         <div class="col-shrink self-center on-left">
-          <q-icon name="error" color="deep-orange" size="md" />
+          <q-icon name="error" color="deep-orange-9" size="md" />
         </div>
         <div class="col">
           {{ $t('offlineDialogText') }}
@@ -17,7 +17,7 @@
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn flat label="OK" color="primary" @click="close" />
+      <q-btn flat label="OK" color="grey-8" @click="close" />
     </q-card-actions>
   </q-card>
 </q-dialog>
