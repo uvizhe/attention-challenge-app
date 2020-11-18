@@ -118,12 +118,12 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-    this.$i18n.locale = this.locale
+    this.$i18n.locale = this.$store.state.app.locale
     next()
   },
   mounted () {
     this.volume = this.$store.state.app.soundVolume
-    this.locale = this.$i18n.locale
+    this.locale = this.$store.state.app.locale
     this.startOfWeekDay = this.$store.getters['app/startOfWeekDay']
     this.duration = this.$store.state.app.sessionDuration / 60
     this.deferral = this.$store.state.app.bellsDeferral / 60
