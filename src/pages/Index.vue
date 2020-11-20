@@ -31,9 +31,16 @@
           @click="startSession"
         />
         <q-page-sticky position="bottom-left">
-          <q-btn v-if="sessionOn"
+          <q-btn v-if="sessionOn && !sessionPause"
             round
             icon="pause"
+            color="grey-8"
+            class="q-ma-md"
+            @click="pauseTimer(!sessionPause)"
+          />
+          <q-btn v-else-if="sessionOn && sessionPause"
+            round
+            icon="play_arrow"
             color="grey-8"
             class="q-ma-md"
             @click="pauseTimer(!sessionPause)"
