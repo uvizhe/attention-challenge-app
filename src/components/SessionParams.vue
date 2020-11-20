@@ -3,7 +3,7 @@
     <div class="text-center text-subtitle1 text-bold">
       {{ $t('sessionParams') }}
       <q-icon name="help" class="text-grey-8">
-        <q-tooltip :hide-delay="2000" offset="[0,0]">
+        <q-tooltip :hide-delay="2000" :offset="[0,0]">
           {{ $t('sessionParamsDeferralHint') }}<br/>
           {{ $t('sessionParamsDurationHint') }}
         </q-tooltip>

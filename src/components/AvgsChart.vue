@@ -3,7 +3,7 @@
     <div class="text-subtitle1 text-bold text-center">
       {{ $t('avgsChartTitle') }}
       <q-icon name="help" class="text-grey-8">
-        <q-tooltip :hide-delay="2000" offset="[0,0]">
+        <q-tooltip :hide-delay="2000" :offset="[0,0]">
           {{ $t('avgsChartHint') }}
         </q-tooltip>
       </q-icon>

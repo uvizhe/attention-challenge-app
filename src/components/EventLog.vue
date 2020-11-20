@@ -3,7 +3,7 @@
     <div class="fixed-top text-subtitle1 text-bold text-center hover">
       {{ $t('eventlogTitle') }}
       <q-icon name="help" class="text-grey-8">
-        <q-tooltip :hide-delay="3000" offset="[0,0]">
+        <q-tooltip :hide-delay="3000" :offset="[0,0]">
           {{ $t('eventlogHint') }}
         </q-tooltip>
       </q-icon>
