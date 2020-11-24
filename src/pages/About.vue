@@ -10,13 +10,17 @@
         {{ $t('aboutP2') }}
       </p>
       <p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" >
-          <rect x="0" y="0" width="300" height="100" style="fill: none; stroke: black; stroke-width: 1px;"/>
-        </svg>
-      </p>
-      <p>
         {{ $t('aboutP3') }}
       </p>
+      <div class="q-mb-md">
+        <img src="~assets/bells_explained.svg" class="full-width" />
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-3 text-italic">{{ $t('aboutPictureText1') }}</div>
+          <div class="col-2"></div>
+          <div class="col text-italic">{{ $t('aboutPictureText2') }}</div>
+        </div>
+      </div>
       <p>
         {{ $t('aboutP4') }}
       </p>
