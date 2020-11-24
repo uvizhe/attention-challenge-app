@@ -29,8 +29,7 @@ export default {
   props: {
     disabled: Boolean,
     duration: Number,
-    remaining: String,
-    tooltip: Boolean
+    remaining: String
   },
   methods: {
     onClick () {

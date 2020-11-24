@@ -8,7 +8,7 @@
         color="deep-orange-9"
         class="text-h5 q-ma-sm"
       >
-        <q-tooltip :hide-delay="1000">
+        <q-tooltip :hide-delay="2000">
           {{ $t('offlineMode') }}
         </q-tooltip>
       </q-icon>
