@@ -50,8 +50,8 @@
               <span>{{ DateI18n(event.date) }}</span>
             </div>
           </q-item-section>
-          <q-item-section :class="eventPartialClass(event)">
-            <div :class="userClass(event.user)">
+          <q-item-section>
+            <div :class="eventClass(event)">
               <span v-if="event.user" class="eventlog-name ellipsis vertical-top">{{ event.user }}</span>
               <span v-if="event.score === 0" class="text-mysecondary">&star;&star;&star;&star;&star;</span>
               <span v-else-if="event.score === 1" class="text-mysecondary">&starf;&star;&star;&star;&star;</span>
@@ -124,14 +124,13 @@ export default {
     }
   },
   methods: {
-    userClass (username) {
-      const idx = this.$store.getters['app/friends'].indexOf(username)
-      return 'friend-' + idx
-    },
-    eventPartialClass (event) {
+    eventClass (event) {
+      const idx = this.$store.getters['app/friends'].indexOf(event.user)
+      let cls = 'friend-' + idx
       if (this.unseenEvent(event)) {
-        return 'event-new'
+        cls += ' event-new'
       }
+      return cls
     },
     toggleFriends () {
       this.$store.commit('app/toggleFriends')
