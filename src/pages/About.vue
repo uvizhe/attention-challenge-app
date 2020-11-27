@@ -49,6 +49,11 @@
       {{ $t('aboutAppLicense') }}
       <a :href="$t('aboutAppLicenseHref')">{{ $t('aboutAppLicenseText') }}</a>.
     </div>
+    <div class="text-center q-mt-sm">
+      <a :href="$t('aboutSourceCodeURL')" class="icon-link q-mx-md">
+        <q-icon name="mdi-gitlab" size="sm" color="grey-8" />
+      </a>
+    </div>
   </q-page>
 </template>
 
