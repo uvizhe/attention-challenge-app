@@ -2,6 +2,7 @@ export default function () {
   return {
     pageHeader: false,
     pageHeaderTitle: '',
+    newUser: false,
     offline: false,
     initialized: false,
     showFriends: true,

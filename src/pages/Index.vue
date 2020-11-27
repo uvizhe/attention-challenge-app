@@ -109,7 +109,7 @@ export default {
     this.dingSound = new Media('/android_asset/www/sounds/Ding.ogg')
     // eslint-disable-next-line no-undef
     this.bowlSound = new Media('/android_asset/www/sounds/Bowl.ogg')
-    if (this.$router.currentRoute.query.newuser) {
+    if (this.$store.state.app.newUser) {
       this.greetingDialog = true
     }
   },
@@ -176,6 +176,7 @@ export default {
       }
     },
     closeGreetingDialog () {
+      this.$store.commit('app/setNewUser', false)
       this.greetingDialog = false
     },
     changeSessionParams (values) {

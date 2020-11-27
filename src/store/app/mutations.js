@@ -12,6 +12,10 @@ export function setStateValue (state, { key, value }) {
   state[key] = value
 }
 
+export function setNewUser (state, bool = true) {
+  state.newUser = bool
+}
+
 export function setOffline (state, offline = true) {
   state.offline = offline
 }

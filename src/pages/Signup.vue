@@ -181,7 +181,8 @@ export default {
         this.wait = false
         this.$store.dispatch('app/setUsername', username)
         this.$store.dispatch('app/setPublicProfile', this.publicProfile)
-        this.$router.replace('/app?newuser=1')
+        this.$store.commit('app/setNewUser')
+        this.$router.replace('/app')
       }
     }
   }
