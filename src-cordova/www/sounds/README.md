@@ -1,4 +1,4 @@
-## Copyright notice
+# Copyright Notice
 
 **Bowl.ogg** is a derivative of [Sound-Bowl-belly--A2.wav](https://freesound.org/people/Cpt_Asteroid/sounds/138667/) by [Cpt_Asteroid](https://freesound.org/people/Cpt_Asteroid/) licensed under [CC BY-NC](http://creativecommons.org/licenses/by-nc/3.0).
 
