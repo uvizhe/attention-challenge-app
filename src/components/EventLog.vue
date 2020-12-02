@@ -148,12 +148,15 @@ export default {
       return false
     },
     DateI18n (date) {
-      if (date === 'Today') {
+      if (!date) {
+        // pass
+      } else if (date === 1) {
         return this.$t('eventlogToday')
-      } else if (date === 'Yesterday') {
+      } else if (date === -1) {
         return this.$t('eventlogYesterday')
+      } else {
+        return this.$store.getters['app/getLocalDayString'](date)
       }
-      return date
     },
     weekUnitI18n (unit) {
       if (unit === 'hr') {

@@ -1,10 +1,8 @@
 import moment from 'moment'
 
-const TD = 'Today'
-const YD = 'Yesterday'
-
-export function userDate () {
-  return moment().subtract(4, 'hours').format('YYYY-MM-DD')
+export function userDate (string = false) {
+  const date = moment().subtract(4, 'hours')
+  return string ? date.format('YYYY-MM-DD') : date
 }
 
 export function makeEL (sessionsDict, startOfWeekDay) {
@@ -39,9 +37,8 @@ export function makeEL (sessionsDict, startOfWeekDay) {
   const leaders = populateWeekStats(sessionsDict, startOfWeekDay)
   const sessions = combineSessions(sessionsDict)
   const today = userDate()
-  const twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD')
   for (const session of sessions) {
-    const date = calcDate(session.date, today, twoDaysAgo)
+    const date = calcDate(session.date, today)
     const score = session.score !== undefined ? session.score : null
     eventlog.push({
       date: date,
@@ -133,12 +130,13 @@ function combineSessions (sessionsDict) {
   return sessions
 }
 
-function calcDate (sessionDate, today, twoDaysAgo) {
+function calcDate (sessionDate, today) {
   let date = sessionDate
-  if (sessionDate === today) {
-    date = TD
-  } else if (sessionDate < today && sessionDate > twoDaysAgo) {
-    date = YD
+  const diffDays = today.diff(sessionDate, 'days')
+  if (diffDays === 0) {
+    date = 1 // today
+  } else if (diffDays === 1) {
+    date = -1 // yesterday
   }
   return date
 }
@@ -171,24 +169,10 @@ export function displayDate (date, prevDate) {
 */
 
 function removeDateDuplicates (eventlog) {
-  let isTDFound = false
-  let isYDFound = false
   let date
   for (let i = 0; i < eventlog.length; i++) {
     let dup = false
-    if (eventlog[i].date === TD) {
-      if (!isTDFound) {
-        isTDFound = true
-      } else {
-        dup = true
-      }
-    } else if (eventlog[i].date === YD) {
-      if (!isYDFound) {
-        isYDFound = true
-      } else {
-        dup = true
-      }
-    } else if (eventlog[i].date === date) {
+    if (eventlog[i].date === date) {
       dup = true
     }
     date = eventlog[i].date

@@ -28,6 +28,14 @@ export function startOfWeekDay (state) {
   }
 }
 
+export function getLocalDayString (state) {
+  return function (date) {
+    const regex = /(\S+\s\S+)\s(\S+?)[.,]\s.+/
+    const localeString = moment(date).locale(state.locale).format('llll')
+    return localeString.replace(regex, '$1$2')
+  }
+}
+
 export function sessionsCopy (state) {
   return state.sessions.slice()
 }

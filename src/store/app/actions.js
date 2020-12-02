@@ -188,7 +188,7 @@ export async function reportSession (context, payload) {
   } catch (e) {
     context.commit('setOffline')
   }
-  const date = userDate()
+  const date = userDate(true)
   const ts = Math.floor(Date.now() / 1000)
   let sessionsToday = context.state.sessionsToday
   let sessions = context.getters.sessionsCopy
