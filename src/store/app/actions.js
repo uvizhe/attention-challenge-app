@@ -161,22 +161,28 @@ export async function syncServerData (context) {
 }
 
 export async function routineTasks (context) {
-  if (context.state.offlineSessions.length) {
+  if (context.state.offline) {
     try {
       await authorize()
-      if (context.state.offline) {
-        context.commit('setOffline', false)
-      }
+      context.commit('setOffline', false)
     } catch (e) {
-      context.commit('setOffline')
-    }
-    if (!context.state.offline) {
-      await context.dispatch('reportOfflineSessions')
-      context.dispatch('fetchStats')
+      // pass
     }
   }
+  if (!context.state.offline) {
+    if (context.state.offlineSessions.length) {
+      await context.dispatch('reportOfflineSessions')
+    }
+    // FIXME: investigate if this can be run in async manner (needs tests)
+    context.dispatch('fetchStats')
+  }
+  // FIXME: updateLastActionTime can probably be safely moved
+  // on top of reportOfflineSessions but we need tests to be sure
   context.dispatch('updateLastActionTime')
-  context.dispatch('syncWithFriends')
+  if (!context.state.offline) {
+    // FIXME: investigate if this can be run in async manner (needs tests)
+    context.dispatch('syncWithFriends')
+  }
 }
 
 export async function reportSession (context, payload) {
