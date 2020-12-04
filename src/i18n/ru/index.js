@@ -15,6 +15,8 @@ export default {
   signupPublicProfileText: 'Дать другим пользователям доступ к некоторой информации о ваших медитациях (наличие и длительность сессий).',
   signupPublicProfileHint: '(это можно менять в настройках приложения)',
   signupButton: 'Начать',
+  signupOptionLabel: 'или просто',
+  signupTryoutButton: 'Попробовать',
   signupError0: 'Пожалуйста, заполните все поля',
   signupError1: 'Логин не может быть короче 2 символов',
   signupError2: 'Логин может содержать только латинские буквы, цифры и символы _ -',

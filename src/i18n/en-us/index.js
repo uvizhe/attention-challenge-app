@@ -15,6 +15,8 @@ export default {
   signupPublicProfileText: 'Allow other users to access some of your meditation data (sessions\' presence and duration).',
   signupPublicProfileHint: '(this can be changed later in app settings)',
   signupButton: 'Sign up',
+  signupOptionLabel: 'or simply',
+  signupTryoutButton: 'Try out',
   signupError0: 'Please fill in all fields',
   signupError1: 'Username can\'t be shorter than 2 characters',
   signupError2: 'Username can contain _ - and latin alphanumeric characters only',

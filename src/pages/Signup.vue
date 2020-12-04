@@ -43,7 +43,7 @@
         />
       </template>
     </q-input>
-    <q-input
+    <q-input v-if="password.length >= MIN_PASS_LENGTH"
       outlined
       class="q-my-sm login-input"
       maxlength="500"
@@ -97,12 +97,20 @@
       </q-item-section>
     </q-item>
     <q-btn
-      class="q-ma-md entrance-button"
+      class="q-mt-md q-mb-sm entrance-button"
       :label="$t('signupButton')"
       size="xl"
       color="grey-8"
       @click="submit"
       :disable="!userGeneralAgreement || wait"
+    />
+    <div class="text-center">{{ $t('signupOptionLabel') }}</div>
+    <q-btn
+      class="q-mt-sm q-mb-md entrance-button"
+      :label="$t('signupTryoutButton')"
+      size="xl"
+      color="grey-8"
+      to="/tryout"
     />
   </div>
 </q-page>
@@ -121,13 +129,14 @@ export default {
   },
   data () {
     return {
+      MIN_PASS_LENGTH: 6,
       username: '',
       password: '',
       password2: '',
       email: '',
       isPwd: true,
       isPwd2: true,
-      userGeneralAgreement: true,
+      userGeneralAgreement: false,
       publicProfile: false,
       banner: false,
       bannerMessage: '',
@@ -161,7 +170,7 @@ export default {
         this.showBanner(this.$t('signupError3'))
       } else if (this.password !== this.password2) {
         this.showBanner(this.$t('signupError4'))
-      } else if (this.password.length < 6) {
+      } else if (this.password.length < this.MIN_PASS_LENGTH) {
         this.showBanner(this.$t('signupError5'))
       } else {
         try {
