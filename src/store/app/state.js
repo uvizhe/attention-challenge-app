@@ -4,6 +4,7 @@ export default function () {
     pageHeaderTitle: '',
     newUser: false,
     offline: false,
+    tryout: false,
     initialized: false,
     showFriends: true,
     /* Config variables BEGIN */

@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     proceed () {
-      this.$store.dispatch('app/setTryoutMode')
+      this.$store.commit('app/setTryoutMode')
       this.$router.replace('/app')
     }
   }

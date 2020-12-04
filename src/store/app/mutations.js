@@ -20,6 +20,10 @@ export function setOffline (state, offline = true) {
   state.offline = offline
 }
 
+export function setTryoutMode (state, bool = true) {
+  state.tryout = bool
+}
+
 export function setInitialized (state) {
   state.initialized = true
 }
