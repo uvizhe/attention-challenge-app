@@ -15,6 +15,10 @@ const routes = [
         component: () => import('pages/Login.vue')
       },
       {
+        path: '/tryout',
+        component: () => import('pages/Tryout.vue')
+      },
+      {
         path: '/recover',
         component: () => import('pages/Recover.vue')
       },
