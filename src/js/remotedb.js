@@ -48,6 +48,28 @@ export async function authenticate (user, pass) {
   }
 }
 
+export async function tryout (uuid) {
+  const data = {
+    uuid: uuid
+  }
+  let res
+  try {
+    res = await axios.post('/newid', data)
+  } catch (e) {
+    if (e.response) {
+      throw new DatabaseConnectionError(e.response.data.msg)
+    } else {
+      throw new DatabaseConnectionError(e.message)
+    }
+  }
+  if (res.status === 200) {
+    LocalStorage.set('auth-token', res.data.token)
+    axios.defaults.headers.common.Authorization =
+      'Bearer ' + res.data.token
+    return true
+  }
+}
+
 export async function signup (user, pass, email, publicProfile, locale) {
   const passHash = new SHA256().update(pass).digest('hex')
   const data = {

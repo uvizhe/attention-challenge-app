@@ -1,4 +1,4 @@
-import { authenticated } from '../js/localdb'
+import { authenticated, getConfig } from '../js/localdb'
 
 const routes = [
   {
@@ -32,6 +32,9 @@ const routes = [
       if (authenticated()) { // user has auth-token
         // authorize user on a server
         next({ path: '/waiting/auth', replace: true })
+      } else if (getConfig('tryout')) { // unfinished tryout process
+        // attempt to finish tryout process
+        next({ path: '/waiting/tryout', replace: true })
       } else {
         next()
       }

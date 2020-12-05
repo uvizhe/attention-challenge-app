@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { authorize } from '../js/remotedb'
+import { authorize, tryout } from '../js/remotedb'
 import OfflineDialog from 'components/OfflineDialog'
 export default {
   // name: 'PageName',
@@ -28,6 +28,8 @@ export default {
   created () {
     if (this.action === 'auth') {
       this.authorize()
+    } else if (this.action === 'tryout') {
+      this.tryout()
     }
   },
   methods: {
@@ -47,6 +49,12 @@ export default {
         }
         return
       }
+      this.$router.replace('/app')
+    },
+    async tryout () {
+      try {
+        await tryout(window.device.uuid)
+      } catch (e) {}
       this.$router.replace('/app')
     },
     closeOfflineDialog () {

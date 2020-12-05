@@ -124,6 +124,14 @@ export function setUsername (context, username) {
   })
 }
 
+export function setTryout (context) {
+  saveConfig('tryout', true)
+  context.commit('setStateValue', {
+    key: 'tryout',
+    value: true
+  })
+}
+
 export async function setPublicProfile (context, isPublic) {
   try {
     await setProfilePublic(isPublic)
