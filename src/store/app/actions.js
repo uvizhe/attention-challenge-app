@@ -147,6 +147,9 @@ export async function setPublicProfile (context, isPublic) {
 }
 
 export async function syncServerData (context) {
+  if (context.state.tryout) {
+    return
+  }
   let data = {}
   try {
     data = await getServerData()
@@ -177,7 +180,7 @@ export async function routineTasks (context) {
       // pass
     }
   }
-  if (!context.state.offline) {
+  if (!context.state.offline && !context.state.tryout) {
     if (context.state.offlineSessions.length) {
       await context.dispatch('reportOfflineSessions')
     }
@@ -194,13 +197,15 @@ export async function routineTasks (context) {
 }
 
 export async function reportSession (context, payload) {
-  try {
-    await postSession(payload.score, payload.duration)
-    if (context.state.offline) {
-      context.commit('setOffline', false)
+  if (!context.state.tryout) {
+    try {
+      await postSession(payload.score, payload.duration)
+      if (context.state.offline) {
+        context.commit('setOffline', false)
+      }
+    } catch (e) {
+      context.commit('setOffline')
     }
-  } catch (e) {
-    context.commit('setOffline')
   }
   const date = userDate(true)
   const ts = Math.floor(Date.now() / 1000)
@@ -257,7 +262,7 @@ export async function reportSession (context, payload) {
     key: 'avgs',
     value: avgs
   })
-  if (context.state.offline) {
+  if (context.state.tryout || context.state.offline) {
     const offlineSessions = context.getters.offlineSessionsCopy
     offlineSessions.push(session)
     saveData('offlineSessions', offlineSessions)
