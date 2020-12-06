@@ -75,7 +75,23 @@
         />
       </q-item-section>
     </q-item>
-    <q-item class="q-my-md">
+    <q-item class="q-my-md" v-if="$store.state.app.tryout">
+      <q-item-section>
+        <q-item-label>
+          <q-btn
+            class="full-width"
+            :label="$t('settingsSignupButton')"
+            size="md"
+            color="grey-8"
+            to="/signup"
+          />
+        </q-item-label>
+        <q-item-label caption>
+          {{ $t('settingsSignupHint') }}
+        </q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-item class="q-my-md" v-if="!$store.state.app.tryout">
       <q-item-section @click="publicProfile=!publicProfile">
         <q-item-label>{{ $t('settingsDataSharingText') }}</q-item-label>
         <q-item-label caption>{{ $t('settingsDataSharingHint') }}</q-item-label>

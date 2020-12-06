@@ -15,9 +15,9 @@
       :disable="wait"
     />
     <q-btn
-      class="q-ma-md entrance-button"
+      class="q-ma-md wide250"
       :label="$t('recoverButton')"
-      size="xl"
+      size="lg"
       color="grey-8"
       @click="submit"
       :disable="wait"

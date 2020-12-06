@@ -61,7 +61,7 @@
         />
       </template>
     </q-input>
-    <q-item>
+    <q-item class="wide300">
       <q-item-section avatar top>
         <q-checkbox
           v-model="userGeneralAgreement"
@@ -77,7 +77,7 @@
         </q-item-label>
       </q-item-section>
     </q-item>
-    <q-item>
+    <q-item class="wide300">
       <q-item-section avatar top>
         <q-checkbox
           v-model="publicProfile"
@@ -97,21 +97,30 @@
       </q-item-section>
     </q-item>
     <q-btn
-      class="q-mt-md q-mb-sm entrance-button"
+      class="q-mt-md q-mb-sm wide250"
       :label="$t('signupButton')"
-      size="xl"
+      size="lg"
       color="grey-8"
       @click="submit"
       :disable="!userGeneralAgreement || wait"
     />
-    <div class="text-center">{{ $t('signupOptionLabel') }}</div>
-    <q-btn
-      class="q-mt-sm q-mb-md entrance-button"
+    <div v-if="!$store.state.app.tryout"
+      class="text-center"
+    >
+      {{ $t('signupOptionLabel') }}
+    </div>
+    <q-btn v-if="!$store.state.app.tryout"
+      class="q-mt-sm q-mb-md wide250"
       :label="$t('signupTryoutButton')"
-      size="xl"
+      size="lg"
       color="grey-8"
       to="/tryout"
     />
+    <div v-if="$store.state.app.tryout"
+      class="q-my-lg"
+    >
+      <a href="javascript:void(0)" @click="$router.back()">{{ $t('recoverInfo2Back') }}</a>
+    </div>
   </div>
 </q-page>
 </template>

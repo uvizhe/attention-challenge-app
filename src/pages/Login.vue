@@ -34,9 +34,9 @@
       </template>
     </q-input>
     <q-btn
-      class="q-ma-md entrance-button"
+      class="q-ma-md wide250"
       :label="$t('loginButton')"
-      size="xl"
+      size="lg"
       color="grey-8"
       @click="submit"
       :disable="wait"

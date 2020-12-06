@@ -30,8 +30,13 @@ const routes = [
     ],
     beforeEnter: async (to, from, next) => {
       if (authenticated()) { // user has auth-token
-        // authorize user on a server
-        next({ path: '/waiting/auth', replace: true })
+        if (to.path === '/signup' && getConfig('tryout')) {
+          // user wants to register
+          next()
+        } else {
+          // authorize user on a server
+          next({ path: '/waiting/auth', replace: true })
+        }
       } else if (getConfig('tryout')) { // unfinished tryout process
         // attempt to finish tryout process
         next({ path: '/waiting/tryout', replace: true })

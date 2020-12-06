@@ -1,12 +1,12 @@
 <template>
 <q-page padding class="flex flex-center content-center">
   <q-linear-progress indeterminate :class="progressClass" color="grey-8" />
-  <p class="q-my-sm entrance-button">{{ $t('tryoutInfo') }}</p>
-  <p class="q-my-sm entrance-button">{{ $t('tryoutInfo2') }}</p>
+  <p class="q-my-sm wide250">{{ $t('tryoutInfo') }}</p>
+  <p class="q-my-sm wide250">{{ $t('tryoutInfo2') }}</p>
   <q-btn
-    class="q-ma-md entrance-button"
+    class="q-ma-md wide250"
     :label="$t('tryoutButton')"
-    size="xl"
+    size="lg"
     color="grey-8"
     @click="proceed"
   />
