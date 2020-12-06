@@ -209,7 +209,7 @@ export async function reportSession (context, payload) {
   }
   const date = userDate(true)
   const ts = Math.floor(Date.now() / 1000)
-  let sessionsToday = context.state.sessionsToday
+  let sessionsToday = context.state.sessionsToday + 1
   let sessions = context.getters.sessionsCopy
   let avgs = context.getters.avgsCopy
   const session = {
@@ -228,9 +228,8 @@ export async function reportSession (context, payload) {
       // new session this day
       average = avgs.pop()
       average =
-        (average * sessionsToday + payload.score) /
-          (sessionsToday + 1)
-      sessionsToday += 1
+        (average * (sessionsToday - 1) + payload.score) /
+          sessionsToday
     } else {
       // first session this day
       average = payload.score
