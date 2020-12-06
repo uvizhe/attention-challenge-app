@@ -3,7 +3,10 @@
     <div class="text-h5 text-center q-mb-sm">Attention Challenge</div>
     <div class="text-justify">
       <p>
-        {{ $t('aboutGreeting') }}, <strong>{{ $store.state.app.username }}</strong>!<br/>
+        {{ $t('aboutGreeting') }}<span v-if="$store.state.app.username">
+          , <strong>{{ $store.state.app.username }}</strong>
+        </span>!
+        <br/>
         {{ $t('aboutP1') }}
       </p>
       <p>
