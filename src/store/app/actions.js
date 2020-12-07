@@ -124,11 +124,11 @@ export function setUsername (context, username) {
   })
 }
 
-export function setTryout (context) {
-  saveConfig('tryout', true)
+export function setTryout (context, bool = true) {
+  saveConfig('tryout', bool)
   context.commit('setStateValue', {
     key: 'tryout',
-    value: true
+    value: bool
   })
 }
 
