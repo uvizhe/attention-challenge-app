@@ -29,6 +29,7 @@
       v-model="values"
       class="session-params text-grey-8"
       @input="value => check(value)"
+      :disable="disable"
     />
   </div>
 </template>
@@ -37,6 +38,9 @@
 import { MIN_SESSION, MAX_SESSION } from '../js/constants'
 export default {
   // name: 'ComponentName',
+  props: {
+    disable: Boolean
+  },
   data () {
     return {
       values: {}

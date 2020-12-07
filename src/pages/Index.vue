@@ -24,7 +24,7 @@
         <avgs-chart />
       </div>
       <div class="col-auto">
-        <session-params @change="changeSessionParams"/>
+        <session-params :disable="sessionOn" @change="changeSessionParams"/>
       </div>
       <div class="col-auto big-red-btn-div row relative-position justify-between items-center">
         <big-button
