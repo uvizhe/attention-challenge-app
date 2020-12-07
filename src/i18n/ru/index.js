@@ -39,7 +39,7 @@ export default {
   recoverInfo2Back: 'Вернуться назад',
   offlineMode: 'Офлайн-режим',
   offlineDialogHeader: 'Ошибка связи с сервером',
-  offlineDialogTex: 'Приложение будет работать в офлайн-режиме с ограниченным функционалом.',
+  offlineDialogText: 'Приложение будет работать в офлайн-режиме с ограниченным функционалом.',
   settingsVolumeText: 'Громкость звука',
   settingsLanguageText: 'Язык приложения',
   settingsStartOfWeekDayText: 'Первый день недели',

@@ -38,7 +38,7 @@ export default {
   recoverInfo2Error: 'Wrong email',
   recoverInfo2Back: 'Go back',
   offlineMode: 'Offline mode',
-  offlineDialogHeader: 'Connectivity problem',
+  offlineDialogHeader: 'Server connection error',
   offlineDialogText: 'The app will work in offline mode with limited functionality.',
   settingsVolumeText: 'Sound volume',
   settingsLanguageText: 'App language',
