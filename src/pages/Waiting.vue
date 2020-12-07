@@ -2,7 +2,6 @@
   <q-layout>
     <q-page-container>
       <q-page>
-        <offline-dialog :show="offlineDialog" @close="closeOfflineDialog" />
         <q-spinner-tail size="lg" color="grey-8" class="fixed-center" />
       </q-page>
     </q-page-container>
@@ -12,18 +11,12 @@
 <script>
 import { authorize, tryout } from '../js/remotedb'
 import { getConfig } from '../js/localdb'
-import OfflineDialog from 'components/OfflineDialog'
 export default {
   // name: 'PageName',
-  components: {
-    OfflineDialog
-  },
   props: ['action'],
   data () {
     return {
-      offlineDialog: false,
-      offlineTimer: null,
-      retryTimer: null
+      offlineTimer: null
     }
   },
   created () {
@@ -41,14 +34,14 @@ export default {
         try {
           await authorize()
         } catch (e) {
-          this.retryTimer = setTimeout(() => {
+          setTimeout(() => {
             // retry every second until considered offline
             this.authorize()
           }, 1000)
           if (this.offlineTimer === null) {
             this.offlineTimer = setTimeout(() => {
-              clearTimeout(this.retryTimer)
-              this.offlineDialog = true
+              this.$store.commit('app/setOffline')
+              this.$router.replace('/app')
             }, 5000)
           }
           return
@@ -60,11 +53,6 @@ export default {
       try {
         await tryout(window.device.uuid)
       } catch (e) {}
-      this.$router.replace('/app')
-    },
-    closeOfflineDialog () {
-      this.$store.commit('app/setOffline')
-      this.offlineDialog = false
       this.$router.replace('/app')
     }
   }
