@@ -109,5 +109,5 @@ export default {
   sessionParamsDeferralHint: 'Delay: the time before an active session starts',
   sessionParamsDurationHint: 'Duration: the duration of a whole session',
   rbMin: 'min',
-  networkError: 'Network error. App is switched to offline mode.'
+  networkError: 'Server connection error. Please, try again later'
 }

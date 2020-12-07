@@ -11,6 +11,7 @@
 
 <script>
 import { authorize, tryout } from '../js/remotedb'
+import { getConfig } from '../js/localdb'
 import OfflineDialog from 'components/OfflineDialog'
 export default {
   // name: 'PageName',
@@ -34,20 +35,24 @@ export default {
   },
   methods: {
     async authorize () {
-      try {
-        await authorize()
-      } catch (e) {
-        this.retryTimer = setTimeout(() => {
-          // retry every second until considered offline
-          this.authorize()
-        }, 1000)
-        if (this.offlineTimer === null) {
-          this.offlineTimer = setTimeout(() => {
-            clearTimeout(this.retryTimer)
-            this.offlineDialog = true
-          }, 5000)
+      if (getConfig('tryout')) {
+        authorize() // don't wait for a server in tryout mode
+      } else {
+        try {
+          await authorize()
+        } catch (e) {
+          this.retryTimer = setTimeout(() => {
+            // retry every second until considered offline
+            this.authorize()
+          }, 1000)
+          if (this.offlineTimer === null) {
+            this.offlineTimer = setTimeout(() => {
+              clearTimeout(this.retryTimer)
+              this.offlineDialog = true
+            }, 5000)
+          }
+          return
         }
-        return
       }
       this.$router.replace('/app')
     },

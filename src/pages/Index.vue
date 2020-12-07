@@ -2,8 +2,11 @@
   <q-page padding class="flex">
     <greeting-dialog :show="greetingDialog" @close="closeGreetingDialog" />
     <rating-dialog :show="ratingDialog" :wait="ratingDialogWait" @rated="reportScore" />
-    <q-page-sticky position="top-left" class="hover">
-      <q-icon v-if="$store.state.app.offline"
+    <q-page-sticky v-if="$store.state.app.offline && !$store.state.app.tryout"
+      position="top-left"
+      class="hover"
+    >
+      <q-icon
         name="error"
         color="deep-orange-9"
         class="text-h5 q-ma-sm"

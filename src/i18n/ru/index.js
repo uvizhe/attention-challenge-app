@@ -38,7 +38,7 @@ export default {
   recoverInfo2Error: 'Неверная электронная почта',
   recoverInfo2Back: 'Вернуться назад',
   offlineMode: 'Офлайн-режим',
-  offlineDialogHeader: 'Проблема со связью',
+  offlineDialogHeader: 'Ошибка связи с сервером',
   offlineDialogTex: 'Приложение будет работать в офлайн-режиме с ограниченным функционалом.',
   settingsVolumeText: 'Громкость звука',
   settingsLanguageText: 'Язык приложения',
@@ -105,5 +105,5 @@ export default {
   sessionParamsDeferralHint: 'Задержка: время перед началом активной сессии ',
   sessionParamsDurationHint: 'Длительность: общая продолжительность сессии',
   rbMin: 'мин',
-  networkError: 'Сетевая ошибка. Приложение переведено в офлайн-режим.'
+  networkError: 'Ошибка связи с сервером. Попробуйте повторить попытку позже'
 }
