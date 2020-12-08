@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import { signup } from '../js/remotedb'
+import { signup, translateServerError } from '../js/remotedb'
 import SimpleBanner from 'components/SimpleBanner'
 export default {
   // name: 'PageName',
@@ -193,7 +193,7 @@ export default {
           )
         } catch (e) {
           this.wait = false
-          this.showBanner(e.message)
+          this.showBanner(this.$t(translateServerError(e.message)))
           return
         }
         this.wait = false

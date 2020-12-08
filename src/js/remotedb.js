@@ -257,3 +257,19 @@ export async function getPublicStatus (usernames) {
   }
   return res.data.public
 }
+
+export function translateServerError (msg) {
+  /* Translate server/network errors to vue-i18n strings */
+  switch (msg) {
+    case 'Network Error':
+      return 'networkError'
+    case 'This username is already registered':
+      return 'serverError1'
+    case 'This email is already registered':
+      return 'serverError2'
+    case 'Wrong username or password':
+      return 'serverError3'
+    default:
+      return msg
+  }
+}

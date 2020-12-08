@@ -26,7 +26,7 @@
 </q-page>
 </template>
 <script>
-import { recover } from '../js/remotedb'
+import { recover, translateServerError } from '../js/remotedb'
 import SimpleBanner from 'components/SimpleBanner'
 export default {
   // name: 'PageName',
@@ -65,7 +65,7 @@ export default {
           status = await recover(this.email, this.$q.lang.getLocale())
         } catch (e) {
           this.wait = false
-          this.showBanner(e.message, 3)
+          this.showBanner(this.$t(translateServerError(e.message)))
           return
         }
         this.wait = false
