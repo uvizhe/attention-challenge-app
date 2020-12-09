@@ -8,7 +8,7 @@ export default function () {
     showFriends: true,
     /* Config variables BEGIN */
     sessionDuration: 15 * 60,
-    bellsDeferral: 0,
+    bellsDeferral: 2,
     soundVolume: 2,
     wakeLock: false,
     dndMode: true,
