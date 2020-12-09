@@ -76,7 +76,7 @@ export default {
   aboutAppLicense: 'This app is an open-source software licensed under',
   aboutAppLicenseHref: 'https://www.gnu.org/licenses/gpl-3.0.en.html',
   aboutAppLicenseText: 'GPLv3',
-  aboutSourceCodeURL: 'https://gitlab.com/uvizhe/atchallenge',
+  aboutSourceCodeURL: 'https://gitlab.com/uvizhe/achallenge',
   addUsersBanner: 'You can select only 4 users',
   addUsersTableUsername: 'Username',
   addUsersButton: 'Add to chart',
