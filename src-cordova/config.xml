@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="org.supersapiens.achallenge" version="0.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Attention Challenge</name>
-    <description>Attention Challenge social meditation app</description>
-    <author email="uvizhe@yandex.ru" href="http://supersapiens.org/attention-challenge">
+    <description>Attention Challenge meditation app with scientific and social features</description>
+    <author email="uvizhe@yandex.ru">
         Alexander Uvizhev
     </author>
     <content src="index.html" />

@@ -1,8 +1,7 @@
 {
   "name": "org.supersapiens.achallenge",
   "displayName": "Attention Challenge",
-  "version": "1.0.0",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "description": "Attention Challenge meditation app with scientific and social features",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +9,8 @@
   "keywords": [
     "ecosystem:cordova"
   ],
-  "author": "Apache Cordova Team",
-  "license": "Apache-2.0",
+  "author": "Alexander Uvizhev <uvizhe@yandex.ru>",
+  "license": "GPL-3.0",
   "dependencies": {
     "clovelced-plugin-audiomanagement": "^1.0.2",
     "cordova-plugin-background-mode": "^0.7.3",
