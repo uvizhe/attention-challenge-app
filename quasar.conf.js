@@ -99,7 +99,7 @@ module.exports = function (ctx) {
       },
       env: ctx.dev || process.env.DEV  // the latter is for specifying dev build with DEV=true
         ? {
-          BACKEND: 'http://192.168.0.222:5000',
+          BACKEND: 'http://achallenge-dev:5000',
           VERSION: version,
           ...conditionalDevVariables()
         }
