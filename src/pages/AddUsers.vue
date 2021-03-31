@@ -42,13 +42,15 @@
         </q-item>
       </div>
     </q-list>
-    <q-btn
-      :label="$t('addUsersButton')"
-      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
-      color="grey-8"
-      size="large"
-      @click="addUsers"
-    />
+    <q-footer elevated>
+      <q-btn
+        :label="$t('addUsersButton')"
+        class="full-width square-button"
+        color="grey-8"
+        size="large"
+        @click="addUsers"
+      />
+    </q-footer>
   </q-page>
 </template>
 

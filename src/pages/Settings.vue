@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <q-item class="q-my-md">
+    <q-item class="q-my-sm">
       <q-item-section>
         <q-item-label>{{ $t('settingsVolumeText') }}</q-item-label>
       </q-item-section>
@@ -14,7 +14,7 @@
         />
       </q-item-section>
     </q-item>
-    <q-item class="q-my-md">
+    <q-item class="q-my-sm">
       <q-item-section>
         <q-item-label>{{ $t('settingsLanguageText') }}</q-item-label>
       </q-item-section>
@@ -29,7 +29,7 @@
         />
       </q-item-section>
     </q-item>
-    <q-item class="q-my-md">
+    <q-item class="q-my-sm">
       <q-item-section>
         <q-item-label>{{ $t('settingsStartOfWeekDayText') }}</q-item-label>
         <q-item-label caption>{{ $t('settingsStartOfWeekDayHint') }}</q-item-label>
@@ -45,7 +45,7 @@
         />
       </q-item-section>
     </q-item>
-    <q-item class="q-my-md">
+    <q-item class="q-my-sm">
       <q-item-section @click="wakeLock=!wakeLock">
         <q-item-label>{{ $t('settingsWakeLockText') }}</q-item-label>
         <q-item-label caption>{{ $t('settingsWakeLockHint') }}</q-item-label>
@@ -60,7 +60,7 @@
         />
       </q-item-section>
     </q-item>
-    <q-item class="q-my-md">
+    <q-item class="q-my-sm">
       <q-item-section @click="dndMode=!dndMode">
         <q-item-label>{{ $t('settingsDNDModeText') }}</q-item-label>
         <q-item-label caption>{{ $t('settingsDNDModeHint') }}</q-item-label>
@@ -75,7 +75,7 @@
         />
       </q-item-section>
     </q-item>
-    <q-item class="q-my-md" v-if="$store.state.app.tryout">
+    <q-item class="q-mt-sm" v-if="$store.state.app.tryout">
       <q-item-section>
         <q-item-label>
           <q-btn
@@ -91,7 +91,7 @@
         </q-item-label>
       </q-item-section>
     </q-item>
-    <q-item class="q-my-md" v-if="!$store.state.app.tryout">
+    <q-item class="q-mt-sm" v-if="!$store.state.app.tryout">
       <q-item-section @click="publicProfile=!publicProfile">
         <q-item-label>{{ $t('settingsDataSharingText') }}</q-item-label>
         <q-item-label caption>{{ $t('settingsDataSharingHint') }}</q-item-label>
@@ -107,13 +107,15 @@
         />
       </q-item-section>
     </q-item>
-    <q-btn
-      :label="$t('settingsButton')"
-      class="full-width q-mt-md fixed-bottom shadow-up-3 square-button"
-      size="large"
-      color="grey-8"
-      @click="saveSettings"
-    />
+    <q-footer elevated>
+      <q-btn
+        :label="$t('settingsButton')"
+        class="full-width square-button"
+        color="grey-8"
+        size="large"
+        @click="saveSettings"
+      />
+    </q-footer>
   </q-page>
 </template>
 
