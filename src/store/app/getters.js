@@ -30,12 +30,14 @@ export function startOfWeekDay (state) {
 
 export function getLocalDayString (state) {
   return function (date) {
-    let regex = /(\S+\s\S+)\s(\S+?)[.,]\s.+/
-    if (state.locale === 'ru-ru') { // patch russian locale months abbreviation
-      regex = /(\S+\s\S+)\s(\S{3}).+/
+    let dateStr
+    // Moment.js l10n isn't good
+    if (state.locale === 'en-us') {
+      dateStr = moment(date).locale(state.locale).format('MMM DD|dd')
+    } else {
+      dateStr = moment(date).locale(state.locale).format('DD MMM|dd').replace('.', '')
     }
-    const localeString = moment(date).locale(state.locale).format('llll')
-    return localeString.replace(regex, '$1$2')
+    return dateStr
   }
 }
 
