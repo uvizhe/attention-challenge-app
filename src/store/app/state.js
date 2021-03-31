@@ -35,6 +35,10 @@ export default function () {
         value: 'en-us'
       },
       {
+        label: 'Español',
+        value: 'es-es'
+      },
+      {
         label: 'русский',
         value: 'ru-ru'
       }
