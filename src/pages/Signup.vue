@@ -134,7 +134,7 @@ export default {
     SimpleBanner
   },
   created () {
-    this.$i18n.locale = this.$q.lang.getLocale()
+    this.$i18n.locale = this.$store.state.app.locale || this.$q.lang.getLocale()
   },
   data () {
     return {
