@@ -1,6 +1,10 @@
-# Attention Challenge
+# Attention Challenge (Android app)
 
-Attention Challenge social meditation app
+Attention Challenge is a social meditation app, which helps you measure the progress of your practice.
+
+Get it in the [Play Store](https://play.google.com/store/apps/details?id=org.supersapiens.achallenge).
+
+# Build instructions
 
 ## Install the dependencies
 ```bash
